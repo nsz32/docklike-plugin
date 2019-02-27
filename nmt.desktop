@@ -1,0 +1,10 @@
+[Xfce Panel]
+Type=X-XFCE-PanelPlugin
+Encoding=UTF-8
+Name=New Minimalist Taskbar
+Comment=A dock-style taskbar for XFCE4
+Icon=xfce4-nmt-plugin
+X-XFCE-Module=nmt
+X-XFCE-Internal=false
+X-XFCE-Unique=false
+X-XFCE-API=2.0
