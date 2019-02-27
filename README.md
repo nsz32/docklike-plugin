@@ -1,6 +1,8 @@
 NMT New Minimalist Taskbar
 --------------------------
 
+![nmt](https://i.imgur.com/FWwvwRn.png)
+
 First draft of a nextgen taskbar for XFCE
 Many todos next ...
 
