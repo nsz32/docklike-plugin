@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#include "Utility.hpp"
+
 nmt::Window::Window(WnckWindow* wnckWindow, Group* group):
 	mWnckWindow(wnckWindow),
 	mGroup(group)
@@ -20,23 +22,23 @@ bool nmt::Window::getState(WnckWindowState flagMask)
 
 gulong nmt::Window::getXID()
 {
-	return wnck_window_get_xid(mWnckWindow);
+	return nmt::Utils::Wnck::getXID(mWnckWindow);
 }
 
 void nmt::Window::activate(guint32 timestamp)
 {
-	wnck_window_activate(mWnckWindow, timestamp);
+	nmt::Utils::Wnck::activate(mWnckWindow, timestamp);
 }
 
 void nmt::Window::minimize()
 {
-	wnck_window_minimize(mWnckWindow);
+	nmt::Utils::Wnck::minimize(mWnckWindow);
 }
 
 void nmt::Window::init()
 {
 	//initial state
-	updateState(wnck_window_get_state(mWnckWindow));
+	updateState(nmt::Utils::Wnck::getState(mWnckWindow));
 
 	//signal connection
 	g_signal_connect(G_OBJECT(mWnckWindow), "state-changed",
@@ -44,7 +46,7 @@ void nmt::Window::init()
 	{ me->updateState(new_state, changed_mask); }), this);
 }
 
-void nmt::Window::updateState(unsigned short state, unsigned short changeMask)
+void nmt::Window::updateState(ushort state, ushort changeMask)
 {
 	mState = state;
 

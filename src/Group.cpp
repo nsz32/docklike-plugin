@@ -6,13 +6,14 @@
 #include <iostream>
 
 #include "XDG.hpp"
+#include "Utility.hpp"
 
-nmt::Group::Group(std::string classGroupName)
+nmt::Group::Group(std::string groupName)
 {
-	className = classGroupName;
+	mGroupName = groupName;
 
 	set_label("");
-	set_tooltip_text(className);
+	set_tooltip_text(mGroupName);
 
 	add_events(Gdk::EventMask::SCROLL_MASK);
 
@@ -47,7 +48,7 @@ void nmt::Group::updateVisibility()
 
 bool nmt::Group::onButtonClicked(GdkEventButton* event)
 {
-	if(active)
+	if(mActive)
 	{
 		mWindows.last()->minimize();
 	}
@@ -62,22 +63,28 @@ bool nmt::Group::onButtonClicked(GdkEventButton* event)
 
 bool nmt::Group::onMouseScroll(GdkEventScroll* event)
 {
+	if(mWindows.size() == 1)
+		return true;
+
+	guint32 timestamp = event->time;
+
+	if(!mActive)
+	{
+		mWindows.forEach([&timestamp](std::pair<gulong, Window*> w)->void { w.second->activate(timestamp); });
+		return true;
+	}
+
 	if(event->direction == GDK_SCROLL_DOWN)
 	{
 		mWindows.shiftToBack();
-
-		guint32 timestamp = event->time;
-
 		mWindows.last()->activate(timestamp);
 	}
 	else if(event->direction == GDK_SCROLL_UP)
 	{
 		mWindows.shiftToFront();
-		
-		guint32 timestamp = event->time;
-
 		mWindows.last()->activate(timestamp);
 	}
+
 	return true;
 }
 
@@ -85,15 +92,15 @@ void nmt::Group::onWindowActivate(gulong XID)
 {
 	Window* window = mWindows.moveBack(XID);
 
-	active = true;
+	mActive = true;
 	get_style_context()->add_class("active");
 
-	set_label(wnck_window_get_name(window->mWnckWindow));
+	set_label(nmt::Utils::Wnck::getName(window->mWnckWindow));
 }
 
 void nmt::Group::onWindowUnactivate()
 {
-	active = false;
+	mActive = false;
 	get_style_context()->remove_class("active");
 
 	set_label("");
@@ -107,7 +114,7 @@ void nmt::Group::init()
 
 void nmt::Group::initIcon()
 {
-	std::string df = nmt::XDG::findDesktopFile(className);
+	std::string df = nmt::XDG::findDesktopFile(mGroupName);
 	if(!df.empty())
 	{
 		std::string in = nmt::XDG::readIconName(df);

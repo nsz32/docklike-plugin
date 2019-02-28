@@ -54,7 +54,7 @@ namespace nmt
 				if(!desktopFile.empty())
 					return desktopFile;
 				
-				uint sep = className.find("-");
+				uint sep = className.find("-"); //bad one (works for gimp-2.80), remove -n.nn.nn is better
 				if(sep != std::string::npos)
 				{
 					desktopFile = searchNameInDirs(className.substr(0, sep));
@@ -62,7 +62,7 @@ namespace nmt
 						return desktopFile;
 				}
 
-				//TODO try with many transformations of className (against exotics)
+				//ADDIT transformations of className (against exotics)
 				return "";
 			}
 
@@ -94,7 +94,7 @@ namespace nmt
 					DIR *directory = opendir(dirit->c_str());
 					if(directory == NULL) continue;
 					
-					struct dirent *entry;
+					struct dirent* entry;
 					std::list<std::string> matches;
 					while((entry = readdir(directory)) != NULL )
 					{

@@ -18,7 +18,7 @@ namespace nmt {
 	{
 		public:
 			Group();
-			Group(std::string classGroupName);
+			Group(std::string groupName);
 
 			void addWindow(Window* window);
 			void removeWindow(gulong XID);
@@ -33,11 +33,11 @@ namespace nmt {
 
 
 		private:
-			std::string className;
+			std::string mGroupName;
 			void init();
 			void initIcon();
 
-			bool active;
+			bool mActive;
 
 			KeyStore<gulong, Window*> mWindows;
 

@@ -14,6 +14,7 @@
 #include "Store.tpp"
 #include "Window.hpp" //go to cpp / rm class decl \/
 #include "Group.hpp"
+#include "Utility.hpp"
 
 
 namespace nmt {

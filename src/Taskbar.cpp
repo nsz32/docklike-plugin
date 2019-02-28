@@ -4,9 +4,10 @@
 
 #define RETURN_IF(b) if(b)return;
 
-nmt::Taskbar::Taskbar():
-	mWnckScreen(wnck_screen_get_default())
+nmt::Taskbar::Taskbar()
 {
+	mWnckScreen = nmt::Utils::Wnck::getScreen();
+
 	init();
 	show();
 }
@@ -18,16 +19,6 @@ nmt::Taskbar::~Taskbar()
 
 void nmt::Taskbar::init()
 {
-	wnck_screen_force_update (mWnckScreen);
-
-	//already oppened windows
-	for (GList* window_l = wnck_screen_get_windows (mWnckScreen); window_l != NULL; window_l = window_l->next)
-    {
-      onWnckWindowOpened(WNCK_WINDOW(window_l->data));
-    }
-
-	onWnckWindowActivate(wnck_screen_get_active_window(mWnckScreen));
-
 	//signal connection
 	g_signal_connect(G_OBJECT(mWnckScreen), "window-opened",
 	G_CALLBACK(+[](WnckScreen* screen, WnckWindow* window, Taskbar* me)
@@ -44,21 +35,30 @@ void nmt::Taskbar::init()
 	g_signal_connect(G_OBJECT(mWnckScreen), "active-window-changed",
 	G_CALLBACK(+[](WnckScreen* screen, WnckWindow* previously_active_window, Taskbar* me)
 	{ 
-		WnckWindow* window = wnck_screen_get_active_window(screen);
+		WnckWindow* window = nmt::Utils::Wnck::getActiveWindow();
 		RETURN_IF(!WNCK_IS_WINDOW (window));
 		me->onWnckWindowActivate(window);
 	}), this);
+
+
+	//already oppened windows
+	for (GList* window_l = nmt::Utils::Wnck::getWindowsList(); window_l != NULL; window_l = window_l->next)
+	{
+		onWnckWindowOpened(WNCK_WINDOW(window_l->data));
+	}
+
+	onWnckWindowActivate(nmt::Utils::Wnck::getActiveWindow());
 }
 
 void nmt::Taskbar::onWnckWindowOpened(WnckWindow* wnckWindow)
 {
-	std::string classGroupName = wnck_window_get_class_group_name(wnckWindow);
+	std::string groupName = nmt::Utils::Wnck::getGroupName(wnckWindow);
 
-	Group* group = mGroups.get(classGroupName);
+	Group* group = mGroups.get(groupName);
 	if(group == NULL)
 	{
-		group = new Group(classGroupName);
-		mGroups.push(classGroupName, group);
+		group = new Group(groupName);
+		mGroups.push(groupName, group);
 
 		add(*group);
 	}
@@ -68,23 +68,22 @@ void nmt::Taskbar::onWnckWindowOpened(WnckWindow* wnckWindow)
 
 void nmt::Taskbar::onWnckWindowClosed(WnckWindow* wnckWindow)
 {
-	std::string classGroupName = wnck_window_get_class_group_name(wnckWindow);
+	std::string groupName = nmt::Utils::Wnck::getGroupName(wnckWindow);
 
-	Group* group = mGroups.get(classGroupName);
-	group->removeWindow(wnck_window_get_xid(wnckWindow));
+	Group* group = mGroups.get(groupName);
+	group->removeWindow(nmt::Utils::Wnck::getXID(wnckWindow));
 }
 
 void nmt::Taskbar::onWnckWindowActivate(WnckWindow* wnckWindow)
 {
-	gulong XID = wnck_window_get_xid(wnckWindow);
-	std::string classGroupName = wnck_window_get_class_group_name(wnckWindow);
+	gulong XID = nmt::Utils::Wnck::getXID(wnckWindow);
+	std::string groupName = nmt::Utils::Wnck::getGroupName(wnckWindow);
 	
-	mGroups.forEach([&classGroupName, &XID](std::pair<std::string, Group*> g)->void
+	mGroups.forEach([&groupName, &XID](std::pair<std::string, Group*> g)->void
 	{
-		if(g.first == classGroupName)
+		if(g.first == groupName)
 			g.second->onWindowActivate(XID);
 		else
 			g.second->onWindowUnactivate();
 	});
-	//Group* group = mGroups.get(classGroupName);
 }
