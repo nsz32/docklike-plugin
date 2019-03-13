@@ -4,9 +4,13 @@
 #define PLUGIN_HPP
 
 #include <string>
+#include <iostream> 
 
 #include <gtkmm.h>
 #include <libwnck/libwnck.h>
+
+#include "AppInfos.hpp"
+#include "Group.hpp"
 
 extern "C"
 {
@@ -16,19 +20,9 @@ extern "C"
 
 #include "Taskbar.hpp"
 
-namespace nmt {
-
-	class Plugin: public Gtk::Box
-	{
-		public:
-			Plugin(XfcePanelPlugin* xfPlugin);
-
-		private:
-			void init();
-
-			Taskbar* mTaskbar;
-	};
-
+namespace Plugin
+{
+	
 }
 
 #endif

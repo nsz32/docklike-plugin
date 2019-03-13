@@ -1,27 +1,31 @@
 // ** opensource.org/licenses/GPL-3.0
 
-#ifndef WINDOW_HPP
-#define WINDOW_HPP
+#ifndef GROUPWINDOW_HPP
+#define GROUPWINDOW_HPP
 
 #include <gtkmm.h>
 #include <libwnck/libwnck.h>
 
+#include "Helpers.hpp"
+#include "Wnck.hpp"
 #include "Group.hpp"
 
-namespace nmt {
-
+#include <iostream>
+	
 	class Group;
 
-	class Window
+	class GroupWindow
 	{
 		public:
-			Window(WnckWindow* wnckWindow, Group* group);
+			GroupWindow(WnckWindow* wnckWindow, Group* group);
 
 			bool getState(WnckWindowState flagMask);
 			gulong getXID();
 
 			void activate(guint32 timestamp);
 			void minimize();
+
+			void showMenu();
 
 			WnckWindow* mWnckWindow;
 			
@@ -33,7 +37,5 @@ namespace nmt {
 
 			unsigned short mState;
 	};
-
-}
 
 #endif

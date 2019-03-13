@@ -12,33 +12,22 @@
 #include <libwnck/libwnck.h>
 
 #include "Store.tpp"
-#include "Window.hpp" //go to cpp / rm class decl \/
+#include "GroupWindow.hpp"
 #include "Group.hpp"
-#include "Utility.hpp"
+#include "Wnck.hpp"
+#include "Helpers.hpp"
 
+class Group;
 
-namespace nmt {
-
-	class Window;
-	class Group;
-
-	class Taskbar: public Gtk::Box
+namespace Taskbar
 	{
-		public:
-			Taskbar();
-			~Taskbar();
-			
-		private:
 			void init();
+			
+			void moveButton(Group* group, Group* button);
 
-			void onWnckWindowOpened(WnckWindow* wnckWindow);
-			void onWnckWindowClosed(WnckWindow* wnckWindow);
-			void onWnckWindowActivate(WnckWindow* wnckWindow);
-
-			WnckScreen* mWnckScreen;
-
-			KeyStore<std::string, Group*> mGroups;
-	};
-}
+			extern GtkWidget* mWidget;
+			extern WnckScreen* mWnckScreen;
+			extern Store::KeyStore<std::string, Group*> mGroups;
+	}
 
 #endif

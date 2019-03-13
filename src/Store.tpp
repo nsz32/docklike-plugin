@@ -4,9 +4,13 @@
 #define STORE_HPP
 
 #include <list>
+#include <map>
 #include <utility>
+#include <functional>
+#include <algorithm>
 
-namespace nmt
+
+namespace Store
 {
 	template <typename K, typename V>
 	class KeyStore
@@ -94,6 +98,28 @@ namespace nmt
 
 		private:
 			std::list<std::pair<const K, V>> mList;
+	};
+
+	template <typename K, typename V>
+	class Map
+	{
+		public:
+			void set (K k, V v)
+			{
+				mMap[k] = v;
+			}
+			
+			V get(K k)
+			{
+				typename std::map<const K, V>::iterator it = mMap.find(k);
+				if(it != mMap.end())
+					return it->second;
+
+				return NULL;
+			}
+
+		private:
+			std::map<const K, V> mMap;
 	};
 }
 
