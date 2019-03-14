@@ -6,6 +6,10 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 {
 	mGroupName = groupName;
 	mAppInfo = appInfo;
+	mPinned = pinned;
+	
+
+	set_data("groupObject", this);
 
 	set_tooltip_text(appInfo->name);
 
@@ -44,10 +48,8 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 		set_image_from_icon_name("application-x-executable");
 	}
 
-
 	Gtk::TargetEntry te;
 	te.set_target("NMT-Group");
-	//te.set_flags(Gtk::TargetFlags::TARGET_SAME_WIDGET);
 
 	std::vector<Gtk::TargetEntry> v;
 	v.push_back(te);
@@ -61,6 +63,8 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 void Group::addWindow(GroupWindow* window)
 {
 	mWindows.push(window->getXID(), window);
+
+	get_style_context()->add_class("opened");
 }
 
 void Group::removeWindow(gulong XID)
@@ -68,14 +72,17 @@ void Group::removeWindow(gulong XID)
 	GroupWindow* window = mWindows.pop(XID);
 	delete window;
 
+	if(!hasWindows())
+		get_style_context()->remove_class("opened");
+
 	updateVisibility();
 }
 
 void Group::updateVisibility()
 {
-	GroupWindow* window = mWindows.findIf([](std::pair<gulong, GroupWindow*> r)->bool
-		{ return !r.second->getState(WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST); });
-	if(window != NULL)
+	if(mPinned)
+		show();
+	else if(hasWindows())
 		show();
 	else
 		hide();
@@ -83,9 +90,10 @@ void Group::updateVisibility()
 
 bool Group::onButtonPress(GdkEventButton* event)
 {
+
 	std::cout << "button:" << event->button << std::endl;
 
-	if(event->state & GDK_CONTROL_MASK)
+	if(event->state & GDK_SHIFT_MASK)
 	{
 		/* send the event to the panel plugin 
 		panel_plugin = xfce_tasklist_get_panel_plugin (child->tasklist);
@@ -95,60 +103,42 @@ bool Group::onButtonPress(GdkEventButton* event)
 		return true;
 	}
 	
-	if(event->button != 3) return true;
+	if(!hasWindows() || event->button != 3) return true;
 	else
 	{
 		GtkWidget* menu = Wnck::getActionMenu(mWindows.last()->mWnckWindow);
 
-		//non pinnée
-		/*GtkWidget* sep = gtk_separator_menu_item_new();
-		GtkWidget* pin = gtk_menu_item_new_with_label("Pin this app");
+		GtkWidget* launchAnother = gtk_menu_item_new_with_label("Launch another");
+		GtkWidget* separator = gtk_separator_menu_item_new();
+		GtkWidget* pinToggle = mPinned ? 
+			gtk_menu_item_new_with_label("Unpin") :
+			gtk_menu_item_new_with_label("Pin this app");
 
-		gtk_widget_show(sep);
-		gtk_widget_show(pin);
+		gtk_widget_show(separator);
+		gtk_widget_show(launchAnother);
+		gtk_widget_show(pinToggle);
 
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(sep), 0, 1, 0, 1);
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(pin), 0, 1, 0, 1);*/
+		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(launchAnother), 0, 1, 0, 1);
+		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(separator), 1, 2, 0, 2);
+		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(pinToggle), 1, 2, 0, 2);
 
-		//pinnée
-
-		GtkWidget* sep = gtk_separator_menu_item_new();
-		GtkWidget* pin = gtk_menu_item_new_with_label("Launch another");
-		GtkWidget* pin2 = gtk_menu_item_new_with_label("Pin this app");
-
-		gtk_widget_show(sep);
-		gtk_widget_show(pin);
-		gtk_widget_show(pin2);
-
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(pin), 0, 1, 0, 1);
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(sep), 1, 2, 0, 2);
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(pin2), 1, 2, 0, 2);
-
-		g_signal_connect(G_OBJECT(pin), "activate",
+		g_signal_connect(G_OBJECT(launchAnother), "activate",
 		G_CALLBACK(+[](GtkMenuItem *menuitem, Group* me)
 		{
 			AppInfos::launch(me->mAppInfo);
 		}), this);
 
-		/*GtkWidget* sep = gtk_separator_menu_item_new();
-		GtkWidget* pin = gtk_menu_item_new_with_label("Pin this app");
-		GtkWidget* pin2 = gtk_menu_item_new_with_label("Pin this app2");
-
-
-		gtk_widget_show(sep);
-		gtk_widget_show(pin);
-		gtk_widget_show(pin2);
-		
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(sep), 0, 1, 0, 1);
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(pin), 1, 2, 1, 2);
-		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(pin2), 0, 1, 0, 1);*/
+		g_signal_connect(G_OBJECT(pinToggle), "activate",
+		G_CALLBACK(+[](GtkMenuItem *menuitem, Group* me)
+		{
+			me->mPinned = !me->mPinned;
+			if(!me->mPinned)
+				me->updateVisibility();
+		}), this);
 
 		gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET(this->gobj()), NULL);
 
-		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(this->gobj()),
-		GDK_GRAVITY_SOUTH_WEST,
-		GDK_GRAVITY_NORTH_WEST,
-		(GdkEvent *) event);
+		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(this->gobj()), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);
 
 		//then destroy TODO
 		/* g_signal_connect (G_OBJECT (menu), "selection-done",
@@ -172,24 +162,14 @@ bool Group::onButtonPress(GdkEventButton* event)
 
 bool Group::onButtonRelease(GdkEventButton* event)
 {
-	std::cout << "button:" << event->button << std::endl;
-	
-	if(event->state & GDK_CONTROL_MASK)
+	std::cout << "RELEASE:" << 1 << std::endl;
+	if(event->button != 1) return true;
+
+	if(event->state & GDK_SHIFT_MASK || (mPinned && hasWindows() == false))
 	{
-
-		/*Gtk::TargetEntry te;
-		te.set_target("lol");
-
-		std::vector<Gtk::TargetEntry> v;
-		v.push_back(te);
-		Glib::RefPtr<Gtk::TargetList> tl = Gtk::TargetList::create(v);
-
-		drag_begin(tl, Gdk::DragAction::ACTION_MOVE, 1, event);
-
-		std::cout << "on y va !" << std::endl;*/
+		AppInfos::launch(mAppInfo);
 	}
-	else
-	if(mActive)
+	else if(mActive)
 	{
 		mWindows.last()->minimize();
 	}
@@ -231,7 +211,7 @@ bool Group::onMouseScroll(GdkEventScroll* event)
 
 void Group::onDragBegin(const Glib::RefPtr<Gdk::DragContext>& context)
 {
-	std::cout << "DB:" << 1 << std::endl;
+	gtk_drag_set_icon_name(context->gobj(), mAppInfo->icon.c_str(),0,0);
 }
 
 bool Group::OnDragMotion(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time)
@@ -247,14 +227,11 @@ void Group::onDragLeave(const Glib::RefPtr<Gdk::DragContext>& context, guint tim
 
 void Group::onDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time)
 {
-	std::cout << "SEND:" << (const guint8*)this << std::endl;
-
 	Group* me = this;
-
 	std::cout << "pme:" << me << std::endl;
 
 	//TODO is the source object copied or passed by a pointer ?
-	selection_data.set("button", 32, (const guchar*)me, sizeof (gpointer)*16);
+	selection_data.set("button", 32, (const guchar*)me, sizeof (gpointer)*32);
 }
 
 void Group::onDragDataReceived(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, const Gtk::SelectionData& selection_data, guint info, guint time)
@@ -265,6 +242,8 @@ void Group::onDragDataReceived(const Glib::RefPtr<Gdk::DragContext>& context, in
 	int s = 0;
 	Group* source = (Group*)selection_data.get_data(s);
 
+	std::cout << "psource:" << source << std::endl;
+
 	Taskbar::moveButton(source, this);
 }
 
@@ -274,7 +253,6 @@ void Group::onWindowActivate(gulong XID)
 
 	mActive = true;
 	get_style_context()->add_class("active");
-
 }
 
 void Group::onWindowUnactivate()
@@ -283,8 +261,10 @@ void Group::onWindowUnactivate()
 	get_style_context()->remove_class("active");
 }
 
-void Group::initIcon()
+bool Group::hasWindows()
 {
+	GroupWindow* window = mWindows.findIf([](std::pair<gulong, GroupWindow*> r)->bool
+		{ return !r.second->getState(WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST); });
 	
-	
+	return window != NULL;
 }

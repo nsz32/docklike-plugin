@@ -172,15 +172,12 @@ namespace AppInfos
 		return new AppInfo({"", "", id});
 	}
 
-	void launch(AppInfo* appInfo)
+	void launch(AppInfo* appInfo) //TODO move to AppInfo struct
 	{
 		GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(appInfo->path.c_str());
 		const gchar * const* actions = g_desktop_app_info_list_actions(info);
 
 		g_app_info_launch((GAppInfo*)info, NULL, NULL, NULL);
-
-		//g_desktop_app_info_launch_action (info, "launch", NULL);
-
 	}
 	
 }

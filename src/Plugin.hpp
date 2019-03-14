@@ -3,8 +3,10 @@
 #ifndef PLUGIN_HPP
 #define PLUGIN_HPP
 
-#include <string>
 #include <iostream> 
+
+#include <string>
+#include <vector>
 
 #include <gtkmm.h>
 #include <libwnck/libwnck.h>
@@ -22,7 +24,7 @@ extern "C"
 
 namespace Plugin
 {
-	
+	void save();
 }
 
 #endif

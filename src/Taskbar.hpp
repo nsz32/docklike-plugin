@@ -5,12 +5,14 @@
 
 #include <iostream>
 
+#include <vector>
 #include <string>
 
 #include <gtkmm.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
 
+#include "Plugin.hpp"
 #include "Store.tpp"
 #include "GroupWindow.hpp"
 #include "Group.hpp"
@@ -23,9 +25,10 @@ namespace Taskbar
 	{
 			void init();
 			
-			void moveButton(Group* group, Group* button);
+			std::vector<std::string> getPinnedList();
+			void moveButton(Group* moving, Group* dest);
 
-			extern GtkWidget* mWidget;
+			extern GtkWidget* mBoxWidget;
 			extern WnckScreen* mWnckScreen;
 			extern Store::KeyStore<std::string, Group*> mGroups;
 	}

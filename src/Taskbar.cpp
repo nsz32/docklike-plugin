@@ -8,7 +8,7 @@
 
 namespace Taskbar
 {
-	GtkWidget* mWidget;
+	GtkWidget* mBoxWidget;
 	WnckScreen* mWnckScreen;
 	Store::KeyStore<std::string, Group*> mGroups;
 
@@ -18,8 +18,8 @@ namespace Taskbar
 
 	void init()
 	{
-		mWidget = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-		gtk_widget_show(mWidget);
+		mBoxWidget = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+		gtk_widget_show(mBoxWidget);
 		
 		mWnckScreen = Wnck::getScreen();
 
@@ -43,8 +43,7 @@ namespace Taskbar
 			RETURN_IF(!WNCK_IS_WINDOW (window));
 			onWnckWindowActivate(window);
 		}), NULL);
-
-
+	
 		//already oppened windows
 		for (GList* window_l = Wnck::getWindowsList(); window_l != NULL; window_l = window_l->next)
 		{
@@ -54,15 +53,38 @@ namespace Taskbar
 		onWnckWindowActivate(Wnck::getActiveWindow());
 	}
 
+	std::vector<std::string> getPinnedList()
+	{
+		std::vector<std::string> list;
+
+		GList* children = gtk_container_get_children(GTK_CONTAINER(mBoxWidget));
+		GList* child;
+		for(child = children; child; child = child->next)
+		{
+			GtkWidget* widget = (GtkWidget*)child->data;
+			Group* group = (Group*)g_object_get_data(G_OBJECT(widget), "groupObject");
+
+			if(group->mPinned)
+			{
+				list.push_back(group->mGroupName);
+				list.push_back(group->mAppInfo->path);
+			}
+		}
+		
+		return list;
+	}
+
 	void moveButton(Group* moving, Group* dest)
 	{
-		int startpos = Help::Gtk::getChildPosition(GTK_CONTAINER(mWidget), GTK_WIDGET(moving->gobj()));
-		int destpos = Help::Gtk::getChildPosition(GTK_CONTAINER(mWidget), GTK_WIDGET(dest->gobj()));
+		int startpos = Help::Gtk::getChildPosition(GTK_CONTAINER(mBoxWidget), GTK_WIDGET(moving->gobj()));
+		int destpos = Help::Gtk::getChildPosition(GTK_CONTAINER(mBoxWidget), GTK_WIDGET(dest->gobj()));
 
 		if(startpos == destpos) return;
 		if(startpos < destpos) --destpos;
 		
-		gtk_box_reorder_child(GTK_BOX(mWidget), GTK_WIDGET(moving->gobj()), destpos);
+		gtk_box_reorder_child(GTK_BOX(mBoxWidget), GTK_WIDGET(moving->gobj()), destpos);
+
+		Plugin::save();
 	}
 
 	void onWnckWindowOpened(WnckWindow* wnckWindow)
@@ -76,7 +98,7 @@ namespace Taskbar
 			group = new Group(groupName, appInfo, false);
 			mGroups.push(groupName, group);
 
-			gtk_container_add(GTK_CONTAINER(mWidget), GTK_WIDGET(group->gobj()));
+			gtk_container_add(GTK_CONTAINER(mBoxWidget), GTK_WIDGET(group->gobj()));
 		}
 		
 		GroupWindow* window = new GroupWindow(wnckWindow, group);
