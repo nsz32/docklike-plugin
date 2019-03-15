@@ -1,7 +1,5 @@
 // ** opensource.org/licenses/GPL-3.0
 
-#include "AppInfos.hpp"
-
 #include "Taskbar.hpp"
 
 #define RETURN_IF(b) if(b)return;
@@ -43,7 +41,24 @@ namespace Taskbar
 			RETURN_IF(!WNCK_IS_WINDOW (window));
 			onWnckWindowActivate(window);
 		}), NULL);
-	
+
+		std::list<std::string> pinned = Plugin::mConfig->getPinned();
+		std::list<std::string>::iterator it = pinned.begin();
+		while(it != pinned.end())
+		{
+			std::string groupName = *it;
+			if(++it == pinned.end()) break;
+			AppInfo* appInfo = AppInfos::search(*it);
+			++it;
+
+			std::cout << "PINNED?:" << appInfo->path << std::endl;
+
+			Group* group = new Group(groupName, appInfo, true);
+			mGroups.push(groupName, group);
+
+			gtk_container_add(GTK_CONTAINER(mBoxWidget), GTK_WIDGET(group->gobj()));
+		}
+
 		//already oppened windows
 		for (GList* window_l = Wnck::getWindowsList(); window_l != NULL; window_l = window_l->next)
 		{
@@ -53,9 +68,9 @@ namespace Taskbar
 		onWnckWindowActivate(Wnck::getActiveWindow());
 	}
 
-	std::vector<std::string> getPinnedList()
+	void savePinned()
 	{
-		std::vector<std::string> list;
+		std::list<std::string> list;
 
 		GList* children = gtk_container_get_children(GTK_CONTAINER(mBoxWidget));
 		GList* child;
@@ -71,8 +86,10 @@ namespace Taskbar
 			}
 		}
 		
-		return list;
+		Plugin::mConfig->setPinned(list);
+		Plugin::mConfig->save();
 	}
+	
 
 	void moveButton(Group* moving, Group* dest)
 	{
@@ -84,8 +101,10 @@ namespace Taskbar
 		
 		gtk_box_reorder_child(GTK_BOX(mBoxWidget), GTK_WIDGET(moving->gobj()), destpos);
 
-		Plugin::save();
+		savePinned();
 	}
+
+
 
 	void onWnckWindowOpened(WnckWindow* wnckWindow)
 	{
@@ -116,6 +135,8 @@ namespace Taskbar
 
 	void onWnckWindowActivate(WnckWindow* wnckWindow)
 	{
+		RETURN_IF(wnckWindow == NULL);
+
 		gulong XID = Wnck::getXID(wnckWindow);
 		std::string groupName = Wnck::getGroupName(wnckWindow);
 		

@@ -5,7 +5,7 @@ LDLIBS = $(shell pkg-config --libs libxfce4panel-2.0 libxfce4ui-2 gtkmm-3.0 libw
 
 DEFINES = -DPACKAGE_VERSION="0.1" -DPACKAGE_NAME="\"nmt\"" -DGETTEXT_PACKAGE="\"gettext_package\"" -DPACKAGE_LOCALE_DIR="\"/\"" -DWNCK_I_KNOW_THIS_IS_UNSTABLE
 
-OBJS := obj/register.o obj/Plugin.o obj/Group.o obj/Taskbar.o obj/GroupWindow.o obj/AppInfos.o obj/Helpers.o obj/Wnck.o
+OBJS := obj/register.o obj/Plugin.o obj/Group.o obj/Taskbar.o obj/GroupWindow.o obj/AppInfos.o obj/Helpers.o obj/Config.o obj/Wnck.o
 -include $(OBJS:.o=.d)
 
 all : libnmt.so

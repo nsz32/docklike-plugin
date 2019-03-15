@@ -11,6 +11,7 @@
 #include <gtkmm.h>
 #include <libwnck/libwnck.h>
 
+#include "Config.hpp"
 #include "AppInfos.hpp"
 #include "Group.hpp"
 
@@ -24,7 +25,7 @@ extern "C"
 
 namespace Plugin
 {
-	void save();
+	extern Config* mConfig;
 }
 
 #endif

@@ -1,6 +1,5 @@
 TODO :
 
-+ Pinable dock buttons (load from config file)
 + Icon resizing
 + Drop down list of windows (near)
 + Orientation
@@ -15,6 +14,7 @@ Exotics windows :
 
 DONE :
 
+> + Pinable dock buttons
 > + CSS class
 > + Button reordering (d n'd)
 > + XDG Desktop Files integration

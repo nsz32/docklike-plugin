@@ -7,7 +7,8 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 	mGroupName = groupName;
 	mAppInfo = appInfo;
 	mPinned = pinned;
-	
+
+	if(mPinned) show();	
 
 	set_data("groupObject", this);
 
@@ -20,7 +21,7 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 	signal_button_release_event().connect(sigc::mem_fun(*this, &Group::onButtonRelease));
 	signal_scroll_event().connect(sigc::mem_fun(*this, &Group::onMouseScroll));
 	signal_drag_begin().connect(sigc::mem_fun(*this, &Group::onDragBegin));
-	signal_drag_motion().connect(sigc::mem_fun(*this, &Group::OnDragMotion));
+	signal_drag_motion().connect(sigc::mem_fun(*this, &Group::onDragMotion));
 	signal_drag_leave().connect(sigc::mem_fun(*this, &Group::onDragLeave));
 	signal_drag_data_get().connect(sigc::mem_fun(*this, &Group::onDragDataGet));
 	signal_drag_data_received().connect(sigc::mem_fun(*this, &Group::onDragDataReceived));
@@ -30,7 +31,7 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 			std::cout << "LOADIMAGE:" << mAppInfo->icon << std::endl;
 		if(mAppInfo->icon [0] == '/')
 		{
-			set_image_from_icon_name(mAppInfo->icon);
+			//set_image_from_icon_name(mAppInfo->icon);
 
 			/* TODO RESIZE : Gtk::Image* z = new Gtk::Image(ai->icon);
 			z->set_pixel_size(16);
@@ -49,7 +50,7 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 	}
 
 	Gtk::TargetEntry te;
-	te.set_target("NMT-Group");
+	te.set_target("NMT/Group");
 
 	std::vector<Gtk::TargetEntry> v;
 	v.push_back(te);
@@ -184,6 +185,8 @@ bool Group::onButtonRelease(GdkEventButton* event)
 
 bool Group::onMouseScroll(GdkEventScroll* event)
 {
+	if(mPinned && !hasWindows()) return true;
+
 	if(mWindows.size() == 1)
 		return true;
 
@@ -214,7 +217,7 @@ void Group::onDragBegin(const Glib::RefPtr<Gdk::DragContext>& context)
 	gtk_drag_set_icon_name(context->gobj(), mAppInfo->icon.c_str(),0,0);
 }
 
-bool Group::OnDragMotion(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time)
+bool Group::onDragMotion(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time)
 {
 	get_style_context()->add_class("drop");
 	return true;

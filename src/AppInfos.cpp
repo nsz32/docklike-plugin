@@ -115,7 +115,7 @@ namespace AppInfos
 	{
 		for(std::string xdgDir : mXdgDataDirs)
 		{
-			DIR *directory = opendir(xdgDir.c_str());
+			DIR* directory = opendir(xdgDir.c_str());
 			if(directory == NULL) continue;
 			
 			struct dirent* entry;

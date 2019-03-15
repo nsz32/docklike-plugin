@@ -39,7 +39,7 @@ class Group: public Gtk::Button
 		bool onMouseScroll(GdkEventScroll* scroll_event);
 
 		void onDragBegin(const Glib::RefPtr<Gdk::DragContext>& context);
-		bool OnDragMotion(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time);
+		bool onDragMotion(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time);
 		void onDragLeave(const Glib::RefPtr<Gdk::DragContext>& context, guint time);
 		void onDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time);
 		void onDragDataReceived(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, const Gtk::SelectionData& selection_data, guint info, guint time);
