@@ -135,6 +135,8 @@ bool Group::onButtonPress(GdkEventButton* event)
 			me->mPinned = !me->mPinned;
 			if(!me->mPinned)
 				me->updateVisibility();
+			Taskbar::savePinned();
+			
 		}), this);
 
 		gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET(this->gobj()), NULL);

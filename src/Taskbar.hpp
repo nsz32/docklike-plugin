@@ -26,10 +26,12 @@ namespace Taskbar
 			
 			std::vector<std::string> getPinnedList();
 			void moveButton(Group* moving, Group* dest);
+			void savePinned();
 
 			extern GtkWidget* mBoxWidget;
 			extern WnckScreen* mWnckScreen;
 			extern Store::KeyStore<std::string, Group*> mGroups;
+
 	}
 
 #endif

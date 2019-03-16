@@ -13,12 +13,12 @@ all : libnmt.so
 libnmt.so: $(OBJS)
 	$(CC) $(LDLIBS) -Wl,--no-undefined -shared -o libnmt.so $(OBJS)
 
+obj/register.o:
+	gcc $(CFLAGS) -fPIC -o $@ -c src/register.c
+
 obj/%.o: src/%.cpp
 	$(CC) $(DEFINES) $(CFLAGS) -fPIC -o $@ -c $<
 	$(CC) $(DEFINES) -MT $@ -MM $< > obj/$*.d
-
-obj/register.o:
-	gcc $(CFLAGS) -fPIC -o $@ -c src/register.c
 
 clean:
 	rm -f obj/*.o obj/*.d *.so
