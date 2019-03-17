@@ -15,7 +15,14 @@ SUBDIRS = src
 #desktopdir = $(datadir)/xfce4/panel/plugins
 #desktop_DATA = $(PACKAGE_NAME).desktop
 
-#EXTRA_DIST = $(desktop_DATA).in
+#
+# Desktop file
+#
+desktopdir = $(datadir)/xfce4/panel/plugins
+desktop_in_files = nmt.desktop
+desktop_DATA = $(desktop_in_files)
+
+EXTRA_DIST = $(desktop_in_files)
 
 # Clean generated files
 CLEANFILES = $(desktop_DATA)
