@@ -18,10 +18,10 @@ namespace Plugin
 		//--------------------------------------------------
 
 		gtk_container_add(GTK_CONTAINER(xfPlugin), GTK_WIDGET(Taskbar::mBoxWidget));
-		
-		Glib::ustring data = "button.opened {background-color:rgba(162, 212, 255, 0.15); border-bottom:1px solid dimgrey;}"
-		"button.active {background-color:rgba(122, 152, 181, 0.5); border-bottom:1px solid lightgrey;}"
-		"button.drop {border-left:5px solid purple;}";
+
+		Glib::ustring data = "button.opened { border-bottom: 2px solid shade(@theme_selected_bg_color, 0.75); }"
+		"button.active { border-bottom: 2px solid shade(@theme_selected_bg_color, 1.15); }"
+		"button.drop { border-left: 5px solid @theme_selected_bg_color; }";
 
 		Glib::RefPtr<Gtk::CssProvider> cssProvider = Gtk::CssProvider::create();
 
@@ -30,9 +30,9 @@ namespace Plugin
 		}
 
 		Glib::RefPtr<Gdk::Screen> screen = Gdk::Screen::get_default();
-		
+
 		Gtk::StyleContext::add_provider_for_screen(screen, cssProvider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-		
+
 		//TODO orientation, settings, ...
 
 		//--------------------------------------------------
