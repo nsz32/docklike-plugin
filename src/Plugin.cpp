@@ -19,8 +19,8 @@ namespace Plugin
 
 		gtk_container_add(GTK_CONTAINER(xfPlugin), GTK_WIDGET(Taskbar::mBoxWidget));
 		
-		Glib::ustring data = "button.opened {border-bottom:1px solid grey;}"
-		"button.active {background-color:rgba(40,70,100,0.7); border-bottom:1px solid lightgrey;}"
+		Glib::ustring data = "button.opened {background-color:rgba(162, 212, 255, 0.15); border-bottom:1px solid dimgrey;}"
+		"button.active {background-color:rgba(122, 152, 181, 0.5); border-bottom:1px solid lightgrey;}"
 		"button.drop {border-left:5px solid purple;}";
 
 		Glib::RefPtr<Gtk::CssProvider> cssProvider = Gtk::CssProvider::create();
@@ -46,7 +46,7 @@ extern "C" void construct(XfcePanelPlugin* xfPlugin)
 {
 	Gtk::Main::init_gtkmm_internals();
 
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+	//xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	Plugin::init(xfPlugin);
 }
