@@ -19,6 +19,7 @@ install-sh
 libtool
 ltmain.sh
 missing
+stamp-h1
 src/.deps/
 src/.libs/
 *.in
