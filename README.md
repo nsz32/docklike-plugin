@@ -10,6 +10,7 @@ C++ - GTK3 - CSS - DOCK-LIKE - MINIMALISM
 
 1. Build
 ```
+./autogen.sh
 make
 ```
 

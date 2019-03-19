@@ -25,4 +25,4 @@ desktop_DATA = $(desktop_in_files)
 EXTRA_DIST = $(desktop_in_files)
 
 # Clean generated files
-CLEANFILES = $(desktop_DATA)
+#CLEANFILES = $(desktop_DATA)
