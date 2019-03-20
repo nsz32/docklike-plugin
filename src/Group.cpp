@@ -12,6 +12,7 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 
 	set_data("groupObject", this);
 
+	set_relief(Gtk::RELIEF_NONE);
 	set_tooltip_text(appInfo->name);
 
 	add_events(Gdk::EventMask::SCROLL_MASK);
@@ -28,7 +29,9 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 
 	if(mAppInfo != NULL && !mAppInfo->icon.empty())
 	{
-			std::cout << "LOADIMAGE:" << mAppInfo->icon << std::endl;
+			std::cout << "NEW GROUP:" << mAppInfo->name << std::endl;
+			std::cout << "PATH:" << mAppInfo->path << std::endl;
+			std::cout << "ICON:" << mAppInfo->icon << std::endl << std::endl;
 		if(mAppInfo->icon [0] == '/')
 		{
 			//set_image_from_icon_name(mAppInfo->icon);
@@ -91,17 +94,9 @@ void Group::updateVisibility()
 
 bool Group::onButtonPress(GdkEventButton* event)
 {
-
-	std::cout << "button:" << event->button << std::endl;
-
-	if(event->state & GDK_SHIFT_MASK)
+	if(event->button == 3 && event->state & GDK_CONTROL_MASK)
 	{
-		/* send the event to the panel plugin 
-		panel_plugin = xfce_tasklist_get_panel_plugin (child->tasklist);
-		if (G_LIKELY (panel_plugin != NULL))
-		gtk_widget_event (panel_plugin, (GdkEvent *) event);*/
-
-		return true;
+		return false;
 	}
 	
 	if(!hasWindows() || event->button != 3) return true;

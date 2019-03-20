@@ -42,6 +42,7 @@ namespace Taskbar
 			onWnckWindowActivate(window);
 		}), NULL);
 
+		//pinned windows
 		std::list<std::string> pinned = Plugin::mConfig->getPinned();
 		std::list<std::string>::iterator it = pinned.begin();
 		while(it != pinned.end())

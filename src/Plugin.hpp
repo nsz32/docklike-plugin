@@ -25,6 +25,7 @@ extern "C"
 
 namespace Plugin
 {
+	extern XfcePanelPlugin* mXfPlugin;
 	extern Config* mConfig;
 }
 

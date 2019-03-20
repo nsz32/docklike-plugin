@@ -8,7 +8,8 @@ namespace AppInfos
 	namespace
 	{
 		std::list<std::string> mXdgDataDirs;
-		Store::Map<const std::string, AppInfo*> mAppInfoTable;
+		Store::Map<const std::string, AppInfo*> mAppInfoIds;
+		Store::Map<const std::string, AppInfo*> mAppInfoNames;
 
 		std::string parseId(const std::string id)
 		{
@@ -67,8 +68,8 @@ namespace AppInfos
 		AppInfo* info = new AppInfo({path, icon, name});
 
 		id = Help::String::toLowercase(id);
-		mAppInfoTable.set(path, info);
-		mAppInfoTable.set(id, info);
+		mAppInfoIds.set(id, info);
+		mAppInfoIds.set(path, info);
 
 		if(!name.empty()) 
 		{
@@ -76,7 +77,7 @@ namespace AppInfos
 			if(name.find(' ') == std::string::npos)
 			{
 				if(name != id)
-					mAppInfoTable.set(name, info);
+					mAppInfoNames.set(name, info);
 			}
 		}
 		
@@ -90,7 +91,7 @@ namespace AppInfos
 			if(exec != "env" && exec != "exo-open")
 			{
 				if(exec != id && exec != name)
-					mAppInfoTable.set(Help::String::toLowercase(exec), info);
+					mAppInfoNames.set(Help::String::toLowercase(exec), info);
 			}
 		}
 
@@ -101,7 +102,7 @@ namespace AppInfos
 			wmclass = Help::String::toLowercase(Help::String::trim(wmclass_));
 
 			if(wmclass != id && wmclass != name && wmclass != exec)
-				mAppInfoTable.set(wmclass, info);
+				mAppInfoNames.set(wmclass, info);
 		}
 
 		/*std::cout << "ID:" << id << std::endl;
@@ -142,7 +143,7 @@ namespace AppInfos
 
 	AppInfo* search(std::string id)
 	{
-		AppInfo* ai = mAppInfoTable.get(id);
+		AppInfo* ai = mAppInfoIds.get(id);
 		if(ai != NULL) return ai;
 
 		uint pos = id.find(' ');
@@ -150,7 +151,19 @@ namespace AppInfos
 		{
 			id = id.substr(0, pos);
 
-			ai = mAppInfoTable.get(id);
+			ai = mAppInfoIds.get(id);
+			if(ai != NULL) return ai;
+		}
+
+		ai = mAppInfoNames.get(id);
+		if(ai != NULL) return ai;
+
+		pos = id.find(' ');
+		if(pos != std::string::npos)
+		{
+			id = id.substr(0, pos);
+
+			ai = mAppInfoNames.get(id);
 			if(ai != NULL) return ai;
 		}
 
@@ -158,11 +171,16 @@ namespace AppInfos
 		
 		if(gioPath != NULL && gioPath[0] != NULL && gioPath[0][0] != NULL && gioPath[0][0][0] != '\0')
 		{
-			ai = mAppInfoTable.get(gioPath[0][0]);
+			std::string gioId = gioPath[0][0];
+			gioId = Help::String::toLowercase(gioId.substr(0, gioId.size()-8));
+
+			ai = mAppInfoIds.get(gioId);
+			std::cout << ">> GIO Path:" << gioId << std::endl;
 
 			for(int i = 0; gioPath[i] != NULL; ++i)
 				g_strfreev(gioPath[i]);
 			g_free(gioPath);
+
 
 			std::cout << ">> AppInfo got from GIO:" << id << std::endl;
 

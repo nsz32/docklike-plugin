@@ -19,9 +19,11 @@ namespace Plugin
 
 		gtk_container_add(GTK_CONTAINER(xfPlugin), GTK_WIDGET(Taskbar::mBoxWidget));
 
-		Glib::ustring data = "button.opened { box-shadow: inset 0px -1px shade(@theme_selected_bg_color, 0.75); }"
-		"button.active { box-shadow: inset 0px -1px shade(@theme_selected_bg_color, 1.15); }"
+		Glib::ustring data = "button { border-radius:0; }"
+		"button.opened { box-shadow: inset 0px -2px shade(@theme_selected_bg_color, 0.6); }"
+		"button.active { box-shadow: inset 0px -2px shade(@theme_selected_bg_color, 0.9); }"
 		"button.drop { border-left: 5px solid @theme_selected_bg_color; }";
+		
 
 		Glib::RefPtr<Gtk::CssProvider> cssProvider = Gtk::CssProvider::create();
 
