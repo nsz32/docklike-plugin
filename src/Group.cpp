@@ -26,6 +26,7 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 	signal_drag_leave().connect(sigc::mem_fun(*this, &Group::onDragLeave));
 	signal_drag_data_get().connect(sigc::mem_fun(*this, &Group::onDragDataGet));
 	signal_drag_data_received().connect(sigc::mem_fun(*this, &Group::onDragDataReceived));
+	signal_draw().connect(sigc::mem_fun(*this, &Group::onDraw));
 
 	if(mAppInfo != NULL && !mAppInfo->icon.empty())
 	{
@@ -62,6 +63,16 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 	drag_source_set(v, Gdk::ModifierType::BUTTON1_MASK, Gdk::DragAction::ACTION_MOVE);
 
 	drag_dest_set(v, Gtk::DestDefaults::DEST_DEFAULT_ALL, Gdk::DragAction::ACTION_MOVE);
+}
+
+bool Group::onDraw(const ::Cairo::RefPtr< ::Cairo::Context>& cr)
+{
+	cairo_set_operator (cr->cobj(), CAIRO_OPERATOR_DIFFERENCE);
+	cairo_set_source_rgba(cr->cobj(), 0, 0, 0, 0.5);
+	cairo_rectangle(cr->cobj(), 0, 0, 5, 80);
+	cairo_fill(cr->cobj());
+
+	return true;
 }
 
 void Group::addWindow(GroupWindow* window)

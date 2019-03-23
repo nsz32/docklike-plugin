@@ -3,7 +3,6 @@
 #ifndef GROUPWINDOW_HPP
 #define GROUPWINDOW_HPP
 
-#include <gtkmm.h>
 #include <libwnck/libwnck.h>
 
 #include "Helpers.hpp"

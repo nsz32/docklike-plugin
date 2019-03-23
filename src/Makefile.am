@@ -13,6 +13,7 @@ plugin_LTLIBRARIES = libnmt.la
 
 # List of source files needed to build the library
 libnmt_la_SOURCES = \
+						Theme.cpp Theme.hpp \
                       AppInfos.cpp AppInfos.hpp \
                       Config.cpp Config.hpp \
                       Group.cpp Group.hpp \

@@ -44,6 +44,8 @@ class Group: public Gtk::Button
 		void onDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time);
 		void onDragDataReceived(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, const Gtk::SelectionData& selection_data, guint info, guint time);
 
+		bool onDraw(const ::Cairo::RefPtr< ::Cairo::Context>& cr);
+
 		std::string mGroupName;
 		bool mPinned;
 		AppInfo* mAppInfo;

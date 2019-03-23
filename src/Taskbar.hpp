@@ -7,7 +7,6 @@
 
 #include <string>
 
-#include <gtkmm.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
 

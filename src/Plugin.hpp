@@ -11,6 +11,7 @@
 #include <gtkmm.h>
 #include <libwnck/libwnck.h>
 
+#include "Theme.hpp"
 #include "Config.hpp"
 #include "AppInfos.hpp"
 #include "Group.hpp"

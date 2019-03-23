@@ -15,25 +15,11 @@ namespace Plugin
 		AppInfos::init();
 		Taskbar::init();
 
+		Theme::init(gtk_widget_get_parent(GTK_WIDGET(xfPlugin)));
+
 		//--------------------------------------------------
 
 		gtk_container_add(GTK_CONTAINER(xfPlugin), GTK_WIDGET(Taskbar::mBoxWidget));
-
-		Glib::ustring data = "button { border-radius:0; }"
-		"button.opened { box-shadow: inset 0px -2px shade(@theme_selected_bg_color, 0.6); }"
-		"button.active { box-shadow: inset 0px -2px shade(@theme_selected_bg_color, 0.9); }"
-		"button.drop { border-left: 5px solid @theme_selected_bg_color; }";
-		
-
-		Glib::RefPtr<Gtk::CssProvider> cssProvider = Gtk::CssProvider::create();
-
-		if(!cssProvider->load_from_data(data)) {
-			std::cerr << "Failed to load css !!\n";
-		}
-
-		Glib::RefPtr<Gdk::Screen> screen = Gdk::Screen::get_default();
-
-		Gtk::StyleContext::add_provider_for_screen(screen, cssProvider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 		//TODO orientation, settings, ...
 
@@ -47,7 +33,6 @@ namespace Plugin
 extern "C" void construct(XfcePanelPlugin* xfPlugin)
 {
 	Gtk::Main::init_gtkmm_internals();
-
 	//xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	Plugin::init(xfPlugin);
