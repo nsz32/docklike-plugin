@@ -1,19 +1,19 @@
 TODO :
 
-+ Icon resizing
 + Drop down list of windows (near)
 + Orientation
-+ Workspaces integration
++ Workspaces managing
 + Setings UI
++ Launcher settings UI
 + i18n
-+ Remove gtkmm dependency (near to)
-+ Support for special launcher like mailwatch, places, music player, ...
++ Support for special launcher like mailwatch, places, music player (via MPRIS), ...
 
 Exotics windows :
 - Libreoffice / Openoffice (imply changing the group of a window)
 
 DONE :
 
+> + Icon resizing
 > + Pinable dock buttons
 > + CSS class
 > + Button reordering (d n'd)

@@ -22,5 +22,6 @@ sudo make install
 Build dependency :
 libxfce4panel-2.0
 libxfce4ui-2
-gtkmm-3.0 (will be removed)
+gtk-3.0
+cairo-1.16
 libwnck-3.0
