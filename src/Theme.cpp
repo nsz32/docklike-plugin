@@ -15,24 +15,24 @@ namespace Theme
 		g_signal_connect(G_OBJECT(mStyleContext), "changed",
 		G_CALLBACK(+[](GtkStyleContext* stylecontext)
 		{
-			reload();
+			load();
 		}), NULL);
 
-		reload();
+		load();
 	}
 
-	void reload()
+	void load()
 	{
 		GdkRGBA color;
-		gtk_style_context_get_background_color(mStyleContext, GTK_STATE_FLAG_NORMAL, &color);
+		gtk_style_context_get_background_color(mStyleContext, GTK_STATE_FLAG_FOCUSED, &color);
 		color.red = 1 - color.red; color.green = 1 - color.green; color.blue = 1 - color.blue;
 
 		std::string bgColor = gdk_rgba_to_string(&color);
 
 		std::string cssStyle = "@define-color docklike_bg_color " + bgColor + ";"
-		"button { border:none; border-radius:0; }"
-		"button.opened { box-shadow: inset 0px -2px alpha(@docklike_bg_color, 0.5); }"
-		"button.active { box-shadow: inset 0px -2px alpha(@docklike_bg_color, 1); }"
+		"button { border:none; border-radius:0; background:none; }"
+		/*"button.opened { box-shadow: inset 0px -2px alpha(@docklike_bg_color, 0.5); }"
+		"button.active { box-shadow: inset 0px -2px alpha(@docklike_bg_color, 1); }"*/
 		"button.drop { border-left: 5px solid @theme_selected_bg_color; }";
 
 		if(!gtk_css_provider_load_from_data(mCssProvider, cssStyle.c_str(), -1, NULL))

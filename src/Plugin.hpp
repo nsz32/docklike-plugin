@@ -3,12 +3,12 @@
 #ifndef PLUGIN_HPP
 #define PLUGIN_HPP
 
-#include <iostream> 
+#include <iostream>
 
 #include <string>
 #include <vector>
 
-#include <gtkmm.h>
+#include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
 
 #include "Theme.hpp"
@@ -18,11 +18,11 @@
 
 extern "C"
 {
-#include <libxfce4panel/libxfce4panel.h>
-#include <libxfce4ui/libxfce4ui.h>
+	#include <libxfce4panel/libxfce4panel.h>
+	#include <libxfce4ui/libxfce4ui.h>
 }
 
-#include "Taskbar.hpp"
+#include "Dock.hpp"
 
 namespace Plugin
 {

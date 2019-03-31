@@ -17,10 +17,11 @@ libnmt_la_SOURCES = \
                       AppInfos.cpp AppInfos.hpp \
                       Config.cpp Config.hpp \
                       Group.cpp Group.hpp \
+					  DockButton.cpp DockButton.hpp \
                       GroupWindow.cpp GroupWindow.hpp \
                       Helpers.cpp Helpers.hpp \
                       Plugin.cpp Plugin.hpp \
-                      Taskbar.cpp Taskbar.hpp \
+                      Dock.cpp Dock.hpp \
                       Wnck.cpp Wnck.hpp \
                       register.c
 
@@ -38,7 +39,8 @@ libnmt_la_CPPFLAGS = \
 libnmt_la_LIBADD = \
                         @LIBXFCE4PANEL_LIBS@ \
                         @LIBXFCE4UI_LIBS@ \
-                        $(GTKMM_LIBS) \
+                        $(GTK_LIBS) \
+						$(CAIRO_LIBS) \
 						$(WNCK_LIBS)
 
 
@@ -48,4 +50,4 @@ libnmt_la_LIBADD = \
 # default configuration - 4.9.2 is bundled with Debian Jessie (2015),
 # presumably when 2020 comes around I can consider addition of the std
 # flag deprecated
-AM_CXXFLAGS = -DWNCK_I_KNOW_THIS_IS_UNSTABLE $(GTKMM_CFLAGS) $(WNCK_CFLAGS) $(SENSORS_CFLAGS) --std=c++11
+AM_CXXFLAGS = -DWNCK_I_KNOW_THIS_IS_UNSTABLE $(GTK_CFLAGS) $(CAIRO_CFLAGS) $(WNCK_CFLAGS) $(SENSORS_CFLAGS) --std=c++11

@@ -1,4 +1,4 @@
-NMT New Minimalist Taskbar for XFCE
+NMT New Minimalist Dock for XFCE
 -----------------------------------
 
 ![nmt-plugin](https://i.imgur.com/9wrvuM4.png)

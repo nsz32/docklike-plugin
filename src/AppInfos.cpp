@@ -49,8 +49,6 @@ namespace AppInfos
 	{
 		std::string path = xdgDir + id + ".desktop";
 
-		std::cout << "ENTRY:" << path << std::endl;
-
 		GDesktopAppInfo* gAppInfo = g_desktop_app_info_new_from_filename(path.c_str());
 
 		if(gAppInfo == NULL) return;
@@ -175,14 +173,10 @@ namespace AppInfos
 			gioId = Help::String::toLowercase(gioId.substr(0, gioId.size()-8));
 
 			ai = mAppInfoIds.get(gioId);
-			std::cout << ">> GIO Path:" << gioId << std::endl;
 
 			for(int i = 0; gioPath[i] != NULL; ++i)
 				g_strfreev(gioPath[i]);
 			g_free(gioPath);
-
-
-			std::cout << ">> AppInfo got from GIO:" << id << std::endl;
 
 			if(ai != NULL) return ai;
 		}

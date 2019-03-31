@@ -13,17 +13,24 @@ namespace Plugin
 		mConfig = new Config(xfce_panel_plugin_save_location(mXfPlugin, true));
 
 		AppInfos::init();
-		Taskbar::init();
+		Theme::init(gtk_widget_get_parent(GTK_WIDGET(mXfPlugin)));
 
-		Theme::init(gtk_widget_get_parent(GTK_WIDGET(xfPlugin)));
+		Dock::init(mXfPlugin);
 
 		//--------------------------------------------------
 
-		gtk_container_add(GTK_CONTAINER(xfPlugin), GTK_WIDGET(Taskbar::mBoxWidget));
+		gtk_container_add(GTK_CONTAINER(xfPlugin), GTK_WIDGET(Dock::mBox));
 
 		//TODO orientation, settings, ...
 
 		//--------------------------------------------------
+
+		g_signal_connect(G_OBJECT(GTK_WIDGET(mXfPlugin)), "size-changed",
+		G_CALLBACK(+[](XfcePanelPlugin *plugin, gint size){
+			Dock::onPanelResize(size);
+			return true;
+		}), NULL);
+		
 	}
 }
 
@@ -32,7 +39,6 @@ namespace Plugin
 
 extern "C" void construct(XfcePanelPlugin* xfPlugin)
 {
-	Gtk::Main::init_gtkmm_internals();
 	//xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	Plugin::init(xfPlugin);

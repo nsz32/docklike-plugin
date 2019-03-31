@@ -6,8 +6,6 @@ Config::Config(std::string path)
 
 	mFile = g_key_file_new();
 	g_key_file_load_from_file(mFile, mPath.c_str(), G_KEY_FILE_NONE, NULL);
-
-	std::cout << "HERE:" << 1 << std::endl;
 }
 
 void Config::save()

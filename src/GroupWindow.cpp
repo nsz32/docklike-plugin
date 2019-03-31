@@ -54,5 +54,5 @@ void GroupWindow::updateState(ushort state, ushort changeMask)
 	mState = state;
 
 	if(changeMask & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
-		mGroup->updateVisibility();
+		mGroup->updateStyle();
 }

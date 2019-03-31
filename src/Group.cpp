@@ -2,31 +2,48 @@
 
 #include "Group.hpp"
 
-Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
+static GtkTargetEntry entries[1] = { { "application/docklike_group", 0 ,0 } };
+
+Group::Group(std::string groupName, AppInfo* appInfo, bool pinned): DockButton(pinned)
 {
 	mGroupName = groupName;
 	mAppInfo = appInfo;
 	mPinned = pinned;
 
-	if(mPinned) show();	
+	if(mPinned) gtk_widget_show(mButton);
 
-	set_data("groupObject", this);
+	g_object_set_data(G_OBJECT(mButton),"group", this);
 
-	set_relief(Gtk::RELIEF_NONE);
-	set_tooltip_text(appInfo->name);
+	gtk_button_set_relief(GTK_BUTTON(mButton), GTK_RELIEF_NONE);
+	gtk_widget_set_tooltip_text(mButton, appInfo->name.c_str());
 
-	add_events(Gdk::EventMask::SCROLL_MASK);
-	set_always_show_image(true);
+	gtk_widget_add_events(mButton, GDK_SCROLL_MASK);
+	gtk_button_set_always_show_image(GTK_BUTTON(mButton), true);
 
-	signal_button_press_event().connect(sigc::mem_fun(*this, &Group::onButtonPress));
-	signal_button_release_event().connect(sigc::mem_fun(*this, &Group::onButtonRelease));
-	signal_scroll_event().connect(sigc::mem_fun(*this, &Group::onMouseScroll));
-	signal_drag_begin().connect(sigc::mem_fun(*this, &Group::onDragBegin));
-	signal_drag_motion().connect(sigc::mem_fun(*this, &Group::onDragMotion));
-	signal_drag_leave().connect(sigc::mem_fun(*this, &Group::onDragLeave));
-	signal_drag_data_get().connect(sigc::mem_fun(*this, &Group::onDragDataGet));
-	signal_drag_data_received().connect(sigc::mem_fun(*this, &Group::onDragDataReceived));
-	signal_draw().connect(sigc::mem_fun(*this, &Group::onDraw));
+
+	g_signal_connect(G_OBJECT(mButton), "button-press-event",
+	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, Group* me){
+		std::cout << "press:" << 1 << std::endl;
+		me->onButtonPress((GdkEventButton*)event);
+	}), this);
+
+	g_signal_connect(G_OBJECT(mButton), "button-release-event",
+	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, Group* me){
+		return me->onButtonRelease((GdkEventButton*)event);
+	}), this);
+
+
+	g_signal_connect(G_OBJECT(mButton), "scroll-event",
+	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, Group* me){
+		return me->onScroll((GdkEventScroll*)event);
+	}), this);
+
+
+	g_signal_connect(G_OBJECT(mButton), "drag-begin",
+	G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, Group* me){
+		std::cout << "dbegin:" << 1 << std::endl;
+		me->onDragBegin(context);
+	}), this);
 
 	if(mAppInfo != NULL && !mAppInfo->icon.empty())
 	{
@@ -44,42 +61,27 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned)
 		}
 		else
 		{
-			
-			set_image_from_icon_name(mAppInfo->icon);
+			GtkWidget* icon = gtk_image_new_from_icon_name(mAppInfo->icon.c_str(), GTK_ICON_SIZE_BUTTON);
+			gtk_button_set_image(GTK_BUTTON(mButton), icon);
 		}
 	}
 	else
 	{
-		set_image_from_icon_name("application-x-executable");
+		GtkWidget* icon = gtk_image_new_from_icon_name("application-x-executable", GTK_ICON_SIZE_BUTTON);
+		gtk_button_set_image(GTK_BUTTON(mButton), icon);
 	}
 
-	Gtk::TargetEntry te;
-	te.set_target("NMT/Group");
+	gtk_drag_source_set(mButton, GDK_BUTTON1_MASK, entries, 1, GDK_ACTION_MOVE);
+	gtk_drag_dest_set(mButton, GTK_DEST_DEFAULT_DROP, entries, 1, GDK_ACTION_MOVE);
 
-	std::vector<Gtk::TargetEntry> v;
-	v.push_back(te);
-	Glib::RefPtr<Gtk::TargetList> tl = Gtk::TargetList::create(v);
-
-	drag_source_set(v, Gdk::ModifierType::BUTTON1_MASK, Gdk::DragAction::ACTION_MOVE);
-
-	drag_dest_set(v, Gtk::DestDefaults::DEST_DEFAULT_ALL, Gdk::DragAction::ACTION_MOVE);
-}
-
-bool Group::onDraw(const ::Cairo::RefPtr< ::Cairo::Context>& cr)
-{
-	cairo_set_operator (cr->cobj(), CAIRO_OPERATOR_DIFFERENCE);
-	cairo_set_source_rgba(cr->cobj(), 0, 0, 0, 0.5);
-	cairo_rectangle(cr->cobj(), 0, 0, 5, 80);
-	cairo_fill(cr->cobj());
-
-	return true;
+	resize();
 }
 
 void Group::addWindow(GroupWindow* window)
 {
 	mWindows.push(window->getXID(), window);
 
-	get_style_context()->add_class("opened");
+	updateStyle();
 }
 
 void Group::removeWindow(gulong XID)
@@ -87,30 +89,71 @@ void Group::removeWindow(gulong XID)
 	GroupWindow* window = mWindows.pop(XID);
 	delete window;
 
-	if(!hasWindows())
-		get_style_context()->remove_class("opened");
-
-	updateVisibility();
+	updateStyle();
 }
 
-void Group::updateVisibility()
+void Group::updateStyle()
 {
-	if(mPinned)
-		show();
-	else if(hasWindows())
-		show();
+	int wCount = hasVisibleWindows();
+
+	if(mPinned || wCount)
+		gtk_widget_show(mButton);
 	else
-		hide();
+		gtk_widget_hide(mButton);
+
+	if(wCount)
+		setStyle(Style::Opened, true);
+	else
+		setStyle(Style::Opened, false);
+
+	if(wCount > 1)
+		setStyle(Style::Many, true);
+	else
+		setStyle(Style::Many, false);
+	
 }
+
+int Group::hasVisibleWindows()
+{
+	int count = 0;
+
+	std::cout << "CNT:" << mWindows.size() << std::endl;
+
+	mWindows.findIf([&count](std::pair<gulong, GroupWindow*> e)->bool
+		{
+			if(!e.second->getState(WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST))
+			{
+				++count;
+				if(count == 2) return true;
+			}
+			return false;
+		});
+	
+	return count;
+}
+
+void Group::onWindowActivate(gulong XID)
+{
+	GroupWindow* window = mWindows.moveBack(XID);
+
+	mActive = true;
+	setStyle(Style::Focus, true);
+}
+
+void Group::onWindowUnactivate()
+{
+	mActive = false;
+	setStyle(Style::Focus, false);
+}
+
 
 bool Group::onButtonPress(GdkEventButton* event)
 {
-	if(event->button == 3 && event->state & GDK_CONTROL_MASK)
-	{
+
+	if(event->button != 3 || event->state & GDK_CONTROL_MASK)
 		return false;
-	}
 	
-	if(!hasWindows() || event->button != 3) return true;
+	if(!hasVisibleWindows() || event->button != 3) return true;
 	else
 	{
 		GtkWidget* menu = Wnck::getActionMenu(mWindows.last()->mWnckWindow);
@@ -140,14 +183,14 @@ bool Group::onButtonPress(GdkEventButton* event)
 		{
 			me->mPinned = !me->mPinned;
 			if(!me->mPinned)
-				me->updateVisibility();
-			Taskbar::savePinned();
+				me->updateStyle();
+			Dock::savePinned();
 			
 		}), this);
 
-		gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET(this->gobj()), NULL);
+		gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET(mButton), NULL);
 
-		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(this->gobj()), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);
+		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);
 
 		//then destroy TODO
 		/* g_signal_connect (G_OBJECT (menu), "selection-done",
@@ -174,7 +217,7 @@ bool Group::onButtonRelease(GdkEventButton* event)
 	std::cout << "RELEASE:" << 1 << std::endl;
 	if(event->button != 1) return true;
 
-	if(event->state & GDK_SHIFT_MASK || (mPinned && hasWindows() == false))
+	if(event->state & GDK_SHIFT_MASK || (mPinned && !hasVisibleWindows()))
 	{
 		AppInfos::launch(mAppInfo);
 	}
@@ -191,9 +234,9 @@ bool Group::onButtonRelease(GdkEventButton* event)
 	return true;
 }
 
-bool Group::onMouseScroll(GdkEventScroll* event)
+bool Group::onScroll(GdkEventScroll* event)
 {
-	if(mPinned && !hasWindows()) return true;
+	if(mPinned && !hasVisibleWindows()) return true;
 
 	if(mWindows.size() == 1)
 		return true;
@@ -220,62 +263,12 @@ bool Group::onMouseScroll(GdkEventScroll* event)
 	return true;
 }
 
-void Group::onDragBegin(const Glib::RefPtr<Gdk::DragContext>& context)
+
+
+
+
+
+void Group::onDragBegin(GdkDragContext* context)
 {
-	gtk_drag_set_icon_name(context->gobj(), mAppInfo->icon.c_str(),0,0);
-}
-
-bool Group::onDragMotion(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time)
-{
-	get_style_context()->add_class("drop");
-	return true;
-}
-
-void Group::onDragLeave(const Glib::RefPtr<Gdk::DragContext>& context, guint time)
-{
-	get_style_context()->remove_class("drop");
-}
-
-void Group::onDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time)
-{
-	Group* me = this;
-	std::cout << "pme:" << me << std::endl;
-
-	//TODO is the source object copied or passed by a pointer ?
-	selection_data.set("button", 32, (const guchar*)me, sizeof (gpointer)*32);
-}
-
-void Group::onDragDataReceived(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, const Gtk::SelectionData& selection_data, guint info, guint time)
-{
-	std::string dt = selection_data.get_data_type();
-	if(dt != "button") return;
-
-	int s = 0;
-	Group* source = (Group*)selection_data.get_data(s);
-
-	std::cout << "psource:" << source << std::endl;
-
-	Taskbar::moveButton(source, this);
-}
-
-void Group::onWindowActivate(gulong XID)
-{
-	GroupWindow* window = mWindows.moveBack(XID);
-
-	mActive = true;
-	get_style_context()->add_class("active");
-}
-
-void Group::onWindowUnactivate()
-{
-	mActive = false;
-	get_style_context()->remove_class("active");
-}
-
-bool Group::hasWindows()
-{
-	GroupWindow* window = mWindows.findIf([](std::pair<gulong, GroupWindow*> r)->bool
-		{ return !r.second->getState(WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST); });
-	
-	return window != NULL;
+	gtk_drag_set_icon_name(context, mAppInfo->icon.c_str(),0,0);
 }

@@ -9,7 +9,7 @@
 namespace Theme
 {
 	void init(GtkWidget* panel);
-	void reload();
+	void load();
 }
 
 #endif
