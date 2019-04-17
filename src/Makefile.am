@@ -18,6 +18,8 @@ libnmt_la_SOURCES = \
                       Config.cpp Config.hpp \
                       Group.cpp Group.hpp \
 					  DockButton.cpp DockButton.hpp \
+					  DockButtonMenu.cpp DockButtonMenu.hpp \
+					  DockButtonMenuItem.cpp DockButtonMenuItem.hpp \
                       GroupWindow.cpp GroupWindow.hpp \
                       Helpers.cpp Helpers.hpp \
                       Plugin.cpp Plugin.hpp \

@@ -3,11 +3,13 @@
 #ifndef GROUPWINDOW_HPP
 #define GROUPWINDOW_HPP
 
+#include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
 
 #include "Helpers.hpp"
 #include "Wnck.hpp"
 #include "Group.hpp"
+#include "DockButtonMenuItem.hpp"
 
 #include <iostream>
 	
@@ -26,14 +28,12 @@
 
 			void showMenu();
 
-			WnckWindow* mWnckWindow;
-			
-		private:
-			void init();
-			void updateState(unsigned short state, unsigned short changeMask = USHRT_MAX);
-
 			Group* mGroup;
 
+			WnckWindow* mWnckWindow;
+			DockButtonMenuItem mDockButtonMenuItem;
+
+			void updateState(unsigned short state, unsigned short changeMask = USHRT_MAX);
 			unsigned short mState;
 	};
 

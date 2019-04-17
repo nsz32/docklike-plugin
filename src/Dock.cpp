@@ -19,7 +19,7 @@ namespace Dock
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
-		mBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+		mBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 		gtk_widget_show(mBox);
 
 		mWnckScreen = Wnck::getScreen();
@@ -46,9 +46,6 @@ namespace Dock
 		}), NULL);
 
 
-
-		
-
 		//pinned windows
 		std::list<std::string> pinned = Plugin::mConfig->getPinned();
 		std::list<std::string>::iterator it = pinned.begin();
@@ -58,8 +55,6 @@ namespace Dock
 			if(++it == pinned.end()) break;
 			AppInfo* appInfo = AppInfos::search(*it);
 			++it;
-
-			std::cout << "PINNED?:" << appInfo->path << std::endl;
 
 			Group* group = new Group(groupName, appInfo, true);
 			mGroups.push(groupName, group);
@@ -102,7 +97,7 @@ namespace Dock
 	{
 		mPanelSize = size;
 
-		#if LIBXFCE4PANEL_CHECK_VERSION (4,13,0)
+		#if LIBXFCE4PANEL_CHECK_VERSION(4,13,0)
 			mIconSize = xfce_panel_plugin_get_icon_size(XFCE_PANEL_PLUGIN(Plugin::mXfPlugin));
 		#else
 			GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(mGroups.first()->mButton));
@@ -111,8 +106,6 @@ namespace Dock
 			gtk_style_context_get_border (context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &border);
 			int xthickness = padding.left + padding.right + border.left + border.right;
 			int ythickness = padding.top + padding.bottom + border.top + border.bottom;
-
-			std::cout << "BORDER:" << MAX(xthickness, ythickness) << std::endl;
 
 			int width = Dock::mPanelSize - MAX(xthickness, ythickness);
 				
@@ -164,8 +157,6 @@ namespace Dock
 	void onWnckWindowClosed(WnckWindow* wnckWindow)
 	{
 		std::string groupName = Wnck::getGroupName(wnckWindow);
-
-		std::cout << "closing:" << groupName << std::endl;
 
 		Group* group = mGroups.get(groupName);
 		group->removeWindow(Wnck::getXID(wnckWindow));

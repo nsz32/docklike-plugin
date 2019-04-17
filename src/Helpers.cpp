@@ -84,5 +84,35 @@ namespace Help
 
 			return g_value_get_int(&gv);
 		}
+
+		Timeout::Timeout()
+		{
+			mTimeoutId = NULL;
+		}
+
+		void Timeout::start(uint time, GSourceFunc function, void* data)
+		{
+			mFunction = function;
+			mData = data;
+
+			if(mTimeoutId != NULL) stop();
+
+			mTimeoutId = g_timeout_add(time, G_SOURCE_FUNC(+[](Timeout* me){
+				me->mFunction(me->mData);
+				me->mTimeoutId = NULL;
+				return false;
+			}), this);
+		}
+
+		void Timeout::stop()
+		{
+			if(mTimeoutId != NULL)
+			{
+				g_source_remove(mTimeoutId);
+				mTimeoutId = NULL;
+			}
+		}
 	}
+
+
 }

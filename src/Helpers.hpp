@@ -27,6 +27,20 @@ namespace Help
 	namespace Gtk
 	{
 		int getChildPosition(GtkContainer* container, GtkWidget* child);
+
+		class Timeout
+		{
+			public: 
+				Timeout();
+
+				void start(uint time, GSourceFunc function, void* data);
+				void stop();
+
+			private:
+				uint mTimeoutId;
+				GSourceFunc mFunction;
+				void* mData;
+		};
 	}
 }
 

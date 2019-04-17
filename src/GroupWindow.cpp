@@ -4,11 +4,28 @@
 
 GroupWindow::GroupWindow(WnckWindow* wnckWindow, Group* group):
 	mWnckWindow(wnckWindow),
+	mDockButtonMenuItem(this),
 	mGroup(group)
 { 
+	mDockButtonMenuItem.setLabel(wnck_window_get_name(wnckWindow));
 	mGroup->addWindow(this);
+	
 
-	init();
+	//initial state
+	updateState(Wnck::getState(mWnckWindow));
+
+	//signal connection
+	g_signal_connect(G_OBJECT(mWnckWindow), "name-changed",
+	G_CALLBACK(+[](WnckWindow* window, GroupWindow* me)
+	{ 
+		me->mDockButtonMenuItem.setLabel(wnck_window_get_name(window));
+	}), this);
+
+	g_signal_connect(G_OBJECT(mWnckWindow), "state-changed",
+	G_CALLBACK(+[](WnckWindow* window, WnckWindowState changed_mask, WnckWindowState new_state, GroupWindow* me)
+	{ 
+		me->updateState(new_state, changed_mask);
+	}), this);
 }
 
 bool GroupWindow::getState(WnckWindowState flagMask)
@@ -34,19 +51,6 @@ void GroupWindow::minimize()
 void GroupWindow::showMenu()
 {
 	
-}
-
-void GroupWindow::init()
-{
-	//initial state
-	updateState(Wnck::getState(mWnckWindow));
-
-	//signal connection
-	g_signal_connect(G_OBJECT(mWnckWindow), "state-changed",
-	G_CALLBACK(+[](WnckWindow* window, WnckWindowState changed_mask, WnckWindowState new_state, GroupWindow* me)
-	{ 
-		me->updateState(new_state, changed_mask);
-		}), this);
 }
 
 void GroupWindow::updateState(ushort state, ushort changeMask)

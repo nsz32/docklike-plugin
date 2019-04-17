@@ -6,6 +6,8 @@ namespace Theme
 	GtkCssProvider* mCssProvider;
 	GtkStyleContext* mStyleContext;
 
+	std::string setupColors();
+
 	void init(GtkWidget* panel)
 	{
 		mScreen = gdk_screen_get_default();
@@ -29,11 +31,18 @@ namespace Theme
 
 		std::string bgColor = gdk_rgba_to_string(&color);
 
-		std::string cssStyle = "@define-color docklike_bg_color " + bgColor + ";"
-		"button { border:none; border-radius:0; background:none; }"
-		/*"button.opened { box-shadow: inset 0px -2px alpha(@docklike_bg_color, 0.5); }"
-		"button.active { box-shadow: inset 0px -2px alpha(@docklike_bg_color, 1); }"*/
-		"button.drop { border-left: 5px solid @theme_selected_bg_color; }";
+		std::string cssStyle = setupColors() +
+		"button { border:none; border-radius:0; background:none; text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; }"
+		"button.docklike_menu { min-height:1.3em; }"
+		"button.docklike_menu:hover { background-color:alpha(@dl_menu_bgcolor_hover,0.1); border:none; }"
+		"box { margin:0; padding:0; }"
+		".drop { border-left:5px solid red; }";
+
+		/*"button { border:none; border-radius:0; background:none; text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; }"
+		"button.docklike_menu { min-height:1.3em; }"
+		"button.docklike_menu:hover { background-color:alpha(@dl_menu_bgcolor_hover,1); color:@dl_menu_color_hover; border:none; }"
+		"box { margin:0; padding:0; }"
+		".drop { border-left:5px solid red; }";*/
 
 		if(!gtk_css_provider_load_from_data(mCssProvider, cssStyle.c_str(), -1, NULL))
 		{
@@ -43,5 +52,32 @@ namespace Theme
 		{
 			gtk_style_context_add_provider_for_screen(mScreen, GTK_STYLE_PROVIDER(mCssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 		}
+
+		
+	}
+
+	std::string setupColors()
+	{
+		GtkWidget* item = gtk_menu_item_new();
+		gtk_style_context_add_class(gtk_widget_get_style_context(item), "menuitem");
+		gtk_style_context_add_class(gtk_widget_get_style_context(item), "button");
+		gtk_style_context_add_class(gtk_widget_get_style_context(item), "flat");
+
+		GtkStyleContext* sc = gtk_widget_get_style_context(item);
+
+		GValue gv = G_VALUE_INIT;
+		gtk_style_context_get_property(sc, "color", GTK_STATE_FLAG_PRELIGHT, &gv);
+		GdkRGBA* rgba = (GdkRGBA*)g_value_get_boxed(&gv);
+		std::string hover = gdk_rgba_to_string(rgba);
+
+		gv = G_VALUE_INIT;
+		gtk_style_context_get_property(sc, "background-color", GTK_STATE_FLAG_PRELIGHT, &gv);
+		rgba = (GdkRGBA*)g_value_get_boxed(&gv);
+		std::string bgh = gdk_rgba_to_string(rgba);
+
+		gtk_widget_destroy(item);
+
+		return	"@define-color dl_menu_color_hover " + hover + ";"
+				"@define-color dl_menu_bgcolor_hover @theme_selected_bg_color;";
 	}
 }

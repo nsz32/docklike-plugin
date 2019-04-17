@@ -5,7 +5,10 @@
 
 #include <gtk/gtk.h>
 
+#include "Helpers.hpp"
+#include "DockButtonMenu.hpp"
 
+//class DockButtonMenu;
 
 class DockButton
 {
@@ -26,6 +29,10 @@ class DockButton
 
 		void onDraw(cairo_t* cr);
 
+		void onMouseEnter();
+		void onMouseLeave();
+		void setMouseLeaveTimeout();
+
 		bool onDragMotion(GdkDragContext* context, int x, int y, guint time);
 		void onDragLeave(const GdkDragContext* context, guint time);
 		void onDragDataGet(const GdkDragContext* context, GtkSelectionData* selectionData, guint info, guint time);
@@ -34,12 +41,16 @@ class DockButton
 		bool mPinned;
 		GtkWidget* mButton;
 
+		DockButtonMenu mDockButtonMenu;
+
 	private:
 
 		bool mSFocus;
 		bool mSOpened;
 		bool mSMany;
 		bool mSHover;
+
+		Help::Gtk::Timeout mLeaveTimeout;
 
 };
 

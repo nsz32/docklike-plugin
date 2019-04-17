@@ -15,7 +15,6 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned): DockButton(p
 	g_object_set_data(G_OBJECT(mButton),"group", this);
 
 	gtk_button_set_relief(GTK_BUTTON(mButton), GTK_RELIEF_NONE);
-	gtk_widget_set_tooltip_text(mButton, appInfo->name.c_str());
 
 	gtk_widget_add_events(mButton, GDK_SCROLL_MASK);
 	gtk_button_set_always_show_image(GTK_BUTTON(mButton), true);
@@ -47,9 +46,9 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned): DockButton(p
 
 	if(mAppInfo != NULL && !mAppInfo->icon.empty())
 	{
-			std::cout << "NEW GROUP:" << mAppInfo->name << std::endl;
+		/*	std::cout << "NEW GROUP:" << mAppInfo->name << std::endl;
 			std::cout << "PATH:" << mAppInfo->path << std::endl;
-			std::cout << "ICON:" << mAppInfo->icon << std::endl << std::endl;
+			std::cout << "ICON:" << mAppInfo->icon << std::endl << std::endl;*/
 		if(mAppInfo->icon [0] == '/')
 		{
 			//set_image_from_icon_name(mAppInfo->icon);
@@ -80,6 +79,7 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned): DockButton(p
 void Group::addWindow(GroupWindow* window)
 {
 	mWindows.push(window->getXID(), window);
+	mDockButtonMenu.add(&(window->mDockButtonMenuItem));
 
 	updateStyle();
 }
@@ -87,6 +87,7 @@ void Group::addWindow(GroupWindow* window)
 void Group::removeWindow(gulong XID)
 {
 	GroupWindow* window = mWindows.pop(XID);
+	window->mGroup->mDockButtonMenu.remove(&(window->mDockButtonMenuItem));
 	delete window;
 
 	updateStyle();
@@ -117,7 +118,7 @@ int Group::hasVisibleWindows()
 {
 	int count = 0;
 
-	std::cout << "CNT:" << mWindows.size() << std::endl;
+	//std::cout << "CNT:" << mWindows.size() << std::endl;
 
 	mWindows.findIf([&count](std::pair<gulong, GroupWindow*> e)->bool
 		{
@@ -241,32 +242,25 @@ bool Group::onScroll(GdkEventScroll* event)
 	if(mWindows.size() == 1)
 		return true;
 
-	guint32 timestamp = event->time;
-
 	if(!mActive)
 	{
-		mWindows.last()->activate(timestamp);
+		mWindows.last()->activate(event->time);
 		return true;
 	}
 
 	if(event->direction == GDK_SCROLL_DOWN)
 	{
 		mWindows.shiftToBack();
-		mWindows.last()->activate(timestamp);
+		mWindows.last()->activate(event->time);
 	}
 	else if(event->direction == GDK_SCROLL_UP)
 	{
 		mWindows.shiftToFront();
-		mWindows.last()->activate(timestamp);
+		mWindows.last()->activate(event->time);
 	}
 
 	return true;
 }
-
-
-
-
-
 
 void Group::onDragBegin(GdkDragContext* context)
 {

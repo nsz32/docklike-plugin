@@ -1,8 +1,7 @@
 TODO :
 
-+ Drop down list of windows (near)
-+ Orientation
 + Workspaces managing
++ Orientation
 + Setings UI
 + Launcher settings UI
 + i18n
@@ -13,6 +12,7 @@ Exotics windows :
 
 DONE :
 
+> + Drop down list of windows (near)
 > + Icon resizing
 > + Pinable dock buttons
 > + CSS class
