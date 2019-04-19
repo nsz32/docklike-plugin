@@ -4,6 +4,8 @@ Config::Config(std::string path)
 {
 	mPath = path;
 
+	std::cout << "SAVEPATH:" << path << std::endl;
+
 	mFile = g_key_file_new();
 	g_key_file_load_from_file(mFile, mPath.c_str(), G_KEY_FILE_NONE, NULL);
 }

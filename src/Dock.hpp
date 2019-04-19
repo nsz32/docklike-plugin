@@ -28,17 +28,17 @@ class Group;
 
 namespace Dock
 {
-	void init(XfcePanelPlugin* xfPlugin);
+	void init();
 	
-	std::vector<std::string> getPinnedList();
+	Group* prepareGroup(AppInfo* appInfo);
+
 	void moveButton(DockButton* moving, DockButton* dest);
 	void savePinned();
 
 	void onPanelResize(int size);
 
 	extern GtkWidget* mBox;
-	extern WnckScreen* mWnckScreen;
-	extern Store::KeyStore<std::string, Group*> mGroups;
+	extern Store::KeyStore<AppInfo*, Group*> mGroups;
 
 	extern int mPanelSize;
 	extern int mIconSize;

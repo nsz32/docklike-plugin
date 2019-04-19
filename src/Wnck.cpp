@@ -2,15 +2,20 @@
 
 #include "Wnck.hpp"
 
+#define RETURN_IF(b) if(b)return;
+
 namespace Wnck
 {
-	namespace
+	WnckScreen* mWnckScreen;
+	Store::KeyStore<gulong, GroupWindow*> mGroupWindows;
+
+	namespace //private:
 	{
 		std::map<std::string, std::string> mGroupNameRename //ADDIT GroupName aliases
-			= {
-				{"soffice", "libreoffice"},
-				{"radium_linux.bin", "radium"},
-			}; 
+		= {
+			{"soffice", "libreoffice"},
+			{"radium_linux.bin", "radium"},
+		}; 
 
 		void groupNameTransform(std::string& groupName, WnckWindow* wnckWindow)
 		{
@@ -73,62 +78,84 @@ namespace Wnck
 		}
 	}
 
-
 	//public:
 
-	WnckScreen* getScreen()
+	void init()
 	{
-		WnckScreen* wnckScreen = wnck_screen_get_default();
-		wnck_screen_force_update (wnckScreen);
-		return wnckScreen;
+		mWnckScreen = wnck_screen_get_default();
+		wnck_screen_force_update(mWnckScreen);
+
+		//signal connection
+		g_signal_connect(G_OBJECT(mWnckScreen), "window-opened",
+		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* wnckWindow)
+		{
+			mGroupWindows.push(wnck_window_get_xid(wnckWindow), new GroupWindow(wnckWindow));
+		}), NULL);
+
+		g_signal_connect(G_OBJECT(mWnckScreen), "window-closed",
+		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* wnckWindow)
+		{
+			GroupWindow* groupWindow = mGroupWindows.pop(wnck_window_get_xid(wnckWindow));
+			delete groupWindow;
+		}), NULL);
+
+		g_signal_connect(G_OBJECT(mWnckScreen), "active-window-changed",
+		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* previousActiveWindow)
+		{ 
+			gulong activeXID = getActiveWindowXID();
+			if(activeXID != NULL)
+			{
+				mGroupWindows.first()->onUnactivate();
+				mGroupWindows.moveToStart(activeXID)->onActivate();
+			}
+		}), NULL);
+
+		//already oppened windows
+		for (GList* window_l = wnck_screen_get_windows(wnck_screen_get_default()); window_l != NULL; window_l = window_l->next)
+		{
+			WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
+			mGroupWindows.push(wnck_window_get_xid(wnckWindow), new GroupWindow(wnckWindow));
+		}
 	}
 
-	GList* getWindowsList()
+	gulong getActiveWindowXID()
 	{
-		return wnck_screen_get_windows(wnck_screen_get_default());
+		WnckWindow* activeWindow = wnck_screen_get_active_window(wnck_screen_get_default());
+		if(!WNCK_IS_WINDOW(activeWindow)) return NULL;
+
+		return wnck_window_get_xid(activeWindow);
 	}
 
-	WnckWindow* getActiveWindow()
+	std::string getName(GroupWindow* groupWindow)
 	{
-		return wnck_screen_get_active_window(wnck_screen_get_default());
+		return wnck_window_get_name(groupWindow->mWnckWindow);
 	}
 
-	std::string getName(WnckWindow* wnckWindow)
+	gushort getState(GroupWindow* groupWindow)
 	{
-		return wnck_window_get_name(wnckWindow);
+		return wnck_window_get_state(groupWindow->mWnckWindow);
 	}
 
-	gulong getXID(WnckWindow* wnckWindow)
+	void activate(GroupWindow* groupWindow, guint32 timestamp)
 	{
-		return wnck_window_get_xid(wnckWindow);
+		wnck_window_activate(groupWindow->mWnckWindow, timestamp);
 	}
 
-	gushort getState(WnckWindow* wnckWindow)
+	void minimize(GroupWindow* groupWindow)
 	{
-		return wnck_window_get_state(wnckWindow);
+		wnck_window_minimize(groupWindow->mWnckWindow);
 	}
 
-	void activate(WnckWindow* wnckWindow, guint32 timestamp)
+	std::string getGroupName(GroupWindow* groupWindow)
 	{
-		wnck_window_activate(wnckWindow, timestamp);
-	}
-
-	void minimize(WnckWindow* wnckWindow)
-	{
-		wnck_window_minimize(wnckWindow);
-	}
-
-	std::string getGroupName(WnckWindow* wnckWindow)
-	{
-		std::string groupName = Help::String::toLowercase(getGroupNameSys(wnckWindow));
-
-		groupNameTransform(groupName, wnckWindow);
+		std::string groupName = Help::String::toLowercase(getGroupNameSys(groupWindow->mWnckWindow));
+		groupNameTransform(groupName, groupWindow->mWnckWindow);
 
 		return groupName;
 	}
 
-	GtkWidget* getActionMenu(WnckWindow* wnckWindow)
+	GtkWidget* getActionMenu(GroupWindow* groupWindow)
 	{
-		return wnck_action_menu_new(wnckWindow);
+		return wnck_action_menu_new(groupWindow->mWnckWindow);
 	}
 }

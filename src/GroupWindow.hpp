@@ -7,6 +7,7 @@
 #include <libwnck/libwnck.h>
 
 #include "Helpers.hpp"
+#include "AppInfos.hpp"
 #include "Wnck.hpp"
 #include "Group.hpp"
 #include "DockButtonMenuItem.hpp"
@@ -18,14 +19,19 @@
 	class GroupWindow
 	{
 		public:
-			GroupWindow(WnckWindow* wnckWindow, Group* group);
+			GroupWindow(WnckWindow* wnckWindow);
+			~GroupWindow();
+
+			void getInGroup(Group* group);
+			void leaveGroup(Group* group);
+
+			void onActivate();
+			void onUnactivate();
 
 			bool getState(WnckWindowState flagMask);
-			gulong getXID();
 
 			void activate(guint32 timestamp);
 			void minimize();
-
 			void showMenu();
 
 			Group* mGroup;

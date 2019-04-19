@@ -2,13 +2,13 @@
 
 #include "Group.hpp"
 
-static GtkTargetEntry entries[1] = { { "application/docklike_group", 0 ,0 } };
-
-Group::Group(std::string groupName, AppInfo* appInfo, bool pinned): DockButton(pinned)
+Group::Group(AppInfo* appInfo, bool pinned): DockButton(pinned)
 {
-	mGroupName = groupName;
 	mAppInfo = appInfo;
 	mPinned = pinned;
+	mActive = false;
+
+	mTopWindowIndex = 0;
 
 	if(mPinned) gtk_widget_show(mButton);
 
@@ -21,26 +21,28 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned): DockButton(p
 
 
 	g_signal_connect(G_OBJECT(mButton), "button-press-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, Group* me){
-		std::cout << "press:" << 1 << std::endl;
-		me->onButtonPress((GdkEventButton*)event);
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me){
+		if(event->button != 3 || event->state & GDK_CONTROL_MASK) return false;
+		me->onButtonPress(event);
+		return true;
 	}), this);
 
 	g_signal_connect(G_OBJECT(mButton), "button-release-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, Group* me){
-		return me->onButtonRelease((GdkEventButton*)event);
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me){
+		if(event->button != 1) return false;
+		me->onButtonRelease(event);
+		return true;
 	}), this);
 
-
 	g_signal_connect(G_OBJECT(mButton), "scroll-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, Group* me){
-		return me->onScroll((GdkEventScroll*)event);
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventScroll* event, Group* me){
+		me->onScroll((GdkEventScroll*)event);
+		return true;
 	}), this);
 
 
 	g_signal_connect(G_OBJECT(mButton), "drag-begin",
 	G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, Group* me){
-		std::cout << "dbegin:" << 1 << std::endl;
 		me->onDragBegin(context);
 	}), this);
 
@@ -69,28 +71,6 @@ Group::Group(std::string groupName, AppInfo* appInfo, bool pinned): DockButton(p
 		GtkWidget* icon = gtk_image_new_from_icon_name("application-x-executable", GTK_ICON_SIZE_BUTTON);
 		gtk_button_set_image(GTK_BUTTON(mButton), icon);
 	}
-
-	gtk_drag_source_set(mButton, GDK_BUTTON1_MASK, entries, 1, GDK_ACTION_MOVE);
-	gtk_drag_dest_set(mButton, GTK_DEST_DEFAULT_DROP, entries, 1, GDK_ACTION_MOVE);
-
-	resize();
-}
-
-void Group::addWindow(GroupWindow* window)
-{
-	mWindows.push(window->getXID(), window);
-	mDockButtonMenu.add(&(window->mDockButtonMenuItem));
-
-	updateStyle();
-}
-
-void Group::removeWindow(gulong XID)
-{
-	GroupWindow* window = mWindows.pop(XID);
-	window->mGroup->mDockButtonMenu.remove(&(window->mDockButtonMenuItem));
-	delete window;
-
-	updateStyle();
 }
 
 void Group::updateStyle()
@@ -111,34 +91,52 @@ void Group::updateStyle()
 		setStyle(Style::Many, true);
 	else
 		setStyle(Style::Many, false);
-	
+}
+
+void Group::electNewTopWindow()
+{
+	if(mWindows.size() > 0)
+	{
+		GroupWindow* newTopWindow;
+
+		if(mWindows.size() == 1)
+			newTopWindow = mWindows.get(0);
+		else
+		{
+			newTopWindow = Wnck::mGroupWindows.findIf([this](std::pair<gulong, GroupWindow*> e)->bool
+			{
+				if(e.second->mGroup == this) return true;
+				return false;
+			});
+		}
+
+		setTopWindow(newTopWindow);
+	}
 }
 
 int Group::hasVisibleWindows()
 {
 	int count = 0;
 
-	//std::cout << "CNT:" << mWindows.size() << std::endl;
-
-	mWindows.findIf([&count](std::pair<gulong, GroupWindow*> e)->bool
+	mWindows.findIf([&count](GroupWindow* e)->bool
+	{
+		if(!e->getState(WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST))
 		{
-			if(!e.second->getState(WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST))
-			{
-				++count;
-				if(count == 2) return true;
-			}
-			return false;
-		});
+			++count;
+			if(count == 2) return true;
+		}
+		return false;
+	});
 	
 	return count;
 }
 
-void Group::onWindowActivate(gulong XID)
+void Group::onWindowActivate(GroupWindow* groupWindow)
 {
-	GroupWindow* window = mWindows.moveBack(XID);
-
 	mActive = true;
 	setStyle(Style::Focus, true);
+
+	setTopWindow(groupWindow);
 }
 
 void Group::onWindowUnactivate()
@@ -147,17 +145,22 @@ void Group::onWindowUnactivate()
 	setStyle(Style::Focus, false);
 }
 
-
-bool Group::onButtonPress(GdkEventButton* event)
+void Group::setTopWindow(GroupWindow* groupWindow)
 {
+	mWindows.forEach([](GroupWindow* gW)->void { Help::Gtk::cssClassRemove(gW->mDockButtonMenuItem.mTitleButton, "top"); });
+	Help::Gtk::cssClassAdd(groupWindow->mDockButtonMenuItem.mTitleButton, "top");
 
-	if(event->button != 3 || event->state & GDK_CONTROL_MASK)
-		return false;
+	mTopWindowIndex = mWindows.getIndex(groupWindow);
+}
+
+void Group::onButtonPress(GdkEventButton* event)
+{
+	std::cout << "PRESS MENU HERE:" << 1 << std::endl;
 	
-	if(!hasVisibleWindows() || event->button != 3) return true;
+	if(!hasVisibleWindows() || event->button != 3) return;
 	else
 	{
-		GtkWidget* menu = Wnck::getActionMenu(mWindows.last()->mWnckWindow);
+		/*GtkWidget* menu = Wnck::getActionMenu(mWindows.last()->mWnckWindow);
 
 		GtkWidget* launchAnother = gtk_menu_item_new_with_label("Launch another");
 		GtkWidget* separator = gtk_separator_menu_item_new();
@@ -191,7 +194,7 @@ bool Group::onButtonPress(GdkEventButton* event)
 
 		gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET(mButton), NULL);
 
-		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);
+		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);*/
 
 		//then destroy TODO
 		/* g_signal_connect (G_OBJECT (menu), "selection-done",
@@ -209,60 +212,54 @@ bool Group::onButtonPress(GdkEventButton* event)
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (child->button), FALSE);
 			}*/
 	}
-
-	return true;
 }
 
-bool Group::onButtonRelease(GdkEventButton* event)
+void Group::onButtonRelease(GdkEventButton* event)
 {
-	std::cout << "RELEASE:" << 1 << std::endl;
-	if(event->button != 1) return true;
-
 	if(event->state & GDK_SHIFT_MASK || (mPinned && !hasVisibleWindows()))
 	{
 		AppInfos::launch(mAppInfo);
 	}
 	else if(mActive)
 	{
-		mWindows.last()->minimize();
+		mWindows.get(mTopWindowIndex)->minimize();
 	}
 	else
 	{
 		guint32 timestamp = event->time;
-		mWindows.forEach([&timestamp](std::pair<gulong, GroupWindow*> w)->void { w.second->activate(timestamp); });
-	}
+		GroupWindow* groupWindow = mWindows.get(mTopWindowIndex);
 
-	return true;
+		mWindows.forEach([&timestamp, &groupWindow](GroupWindow* w)->void
+		{
+			if(w != groupWindow) w->activate(timestamp);
+		});
+
+		groupWindow->activate(timestamp);
+	}
 }
 
-bool Group::onScroll(GdkEventScroll* event)
+void Group::onScroll(GdkEventScroll* event)
 {
-	if(mPinned && !hasVisibleWindows()) return true;
-
-	if(mWindows.size() == 1)
-		return true;
+	if(mPinned && !hasVisibleWindows()) return;
 
 	if(!mActive)
 	{
-		mWindows.last()->activate(event->time);
-		return true;
+		mWindows.get(mTopWindowIndex)->activate(event->time);
 	}
-
-	if(event->direction == GDK_SCROLL_DOWN)
+	else
 	{
-		mWindows.shiftToBack();
-		mWindows.last()->activate(event->time);
+		if(event->direction == GDK_SCROLL_UP)
+		mTopWindowIndex = ++mTopWindowIndex % mWindows.size();
+		else if(event->direction == GDK_SCROLL_DOWN)
+		{
+			int size = mWindows.size();
+			mTopWindowIndex = (--mTopWindowIndex + size) % size;
+		}
+		mWindows.get(mTopWindowIndex)->activate(event->time);
 	}
-	else if(event->direction == GDK_SCROLL_UP)
-	{
-		mWindows.shiftToFront();
-		mWindows.last()->activate(event->time);
-	}
-
-	return true;
 }
 
 void Group::onDragBegin(GdkDragContext* context)
 {
-	gtk_drag_set_icon_name(context, mAppInfo->icon.c_str(),0,0);
+	gtk_drag_set_icon_name(context, mAppInfo->icon.c_str(), 0, 0);
 }

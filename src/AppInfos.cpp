@@ -165,6 +165,7 @@ namespace AppInfos
 			if(ai != NULL) return ai;
 		}
 
+
 		gchar*** gioPath = g_desktop_app_info_search(id.c_str());
 		
 		if(gioPath != NULL && gioPath[0] != NULL && gioPath[0][0] != NULL && gioPath[0][0][0] != '\0')

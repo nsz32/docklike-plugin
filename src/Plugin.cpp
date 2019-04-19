@@ -10,12 +10,15 @@ namespace Plugin
 	void init(XfcePanelPlugin* xfPlugin)
 	{
 		mXfPlugin = xfPlugin;
+
 		mConfig = new Config(xfce_panel_plugin_save_location(mXfPlugin, true));
 
 		AppInfos::init();
+
 		Theme::init(gtk_widget_get_parent(GTK_WIDGET(mXfPlugin)));
 
-		Dock::init(mXfPlugin);
+		Dock::init();
+		Wnck::init();
 
 		//--------------------------------------------------
 
@@ -40,6 +43,5 @@ namespace Plugin
 extern "C" void construct(XfcePanelPlugin* xfPlugin)
 {
 	//xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
-
 	Plugin::init(xfPlugin);
 }

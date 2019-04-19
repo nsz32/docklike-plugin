@@ -85,6 +85,16 @@ namespace Help
 			return g_value_get_int(&gv);
 		}
 
+		void cssClassAdd(GtkWidget* widget, char* className)
+		{
+			gtk_style_context_add_class(gtk_widget_get_style_context(widget), className);
+		}
+
+		void cssClassRemove(GtkWidget* widget, char* className)
+		{
+			gtk_style_context_remove_class(gtk_widget_get_style_context(widget), className);
+		}
+
 		Timeout::Timeout()
 		{
 			mTimeoutId = NULL;

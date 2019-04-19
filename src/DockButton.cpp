@@ -3,6 +3,8 @@
 #include "Dock.hpp"
 #include "DockButtonMenu.hpp"
 
+static GtkTargetEntry entries[1] = { { "application/docklike_group", 0 ,0 } };
+
 DockButton::DockButton(bool pinned):
 	mDockButtonMenu(this)
 {
@@ -38,7 +40,7 @@ DockButton::DockButton(bool pinned):
 	g_signal_connect(G_OBJECT(mButton), "enter-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, DockButton* me){
 		me->onMouseEnter();
-		return true;
+		return false;
 	}), this);
 
 	g_signal_connect(G_OBJECT(mButton), "leave-notify-event",
@@ -51,6 +53,11 @@ DockButton::DockButton(bool pinned):
 	G_CALLBACK(+[](GtkWidget* widget, cairo_t* cr, DockButton* me){
 		me->onDraw(cr); return false;
 	}), this);
+
+	gtk_drag_source_set(mButton, GDK_BUTTON1_MASK, entries, 1, GDK_ACTION_MOVE);
+	gtk_drag_dest_set(mButton, GTK_DEST_DEFAULT_DROP, entries, 1, GDK_ACTION_MOVE);
+
+	resize();
 }
 
 void DockButton::resize()

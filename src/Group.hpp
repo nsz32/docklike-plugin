@@ -24,36 +24,35 @@ class GroupWindow;
 class Group: public DockButton
 {
 	public:
-		Group(std::string groupName, AppInfo* appInfo, bool pinned);
-
-		void addWindow(GroupWindow* window);
-		void removeWindow(gulong XID);
+		Group(AppInfo* appInfo, bool pinned);
 
 		void updateStyle();
+		void electNewTopWindow();
 
 		int hasVisibleWindows();
 
-		void onWindowActivate(gulong XID);
+		void onWindowActivate(GroupWindow* groupWindow);
 		void onWindowUnactivate();
 
-		bool onButtonPress(GdkEventButton* event);
-		bool onButtonRelease(GdkEventButton* event);
-		bool onScroll(GdkEventScroll* scroll_event);
+		void onButtonPress(GdkEventButton* event);
+		void onButtonRelease(GdkEventButton* event);
+		void onScroll(GdkEventScroll* scroll_event);
 		bool onMouseEnter();
 		
 
 		void onDragBegin(GdkDragContext* context);
 
-		std::string mGroupName;
 		bool mPinned;
 		AppInfo* mAppInfo;
+		Store::List<GroupWindow*> mWindows;
+		uint mTopWindowIndex;
 
 
 	private:
+		void setTopWindow(GroupWindow* groupWindow);
 
 		bool mActive;
 		bool mDropHover;
-		Store::KeyStore<gulong, GroupWindow*> mWindows;
 
 };
 

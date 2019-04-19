@@ -15,8 +15,8 @@ class DockButtonMenu
 	public:
 		DockButtonMenu(DockButton* dockButton);
 
-		void add(DockButtonMenuItem* menuItem);
-		void remove(DockButtonMenuItem* menuItem);
+		void add(DockButtonMenuItem& menuItem);
+		void remove(DockButtonMenuItem& menuItem);
 
 		void popup();
 		void hide();
@@ -25,7 +25,6 @@ class DockButtonMenu
 		
 		GtkWidget* mWindow;
 		GtkWidget* mBox;
-		GtkWidget* mMenu;
 
 		bool mMouseHover;
 };

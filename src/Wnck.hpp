@@ -8,31 +8,28 @@
 
 #include <libwnck/libwnck.h>
 
+#include "GroupWindow.hpp"
+#include "Store.tpp"
 #include "Helpers.hpp"
+
+class GroupWindow;
 
 namespace Wnck
 {
+		void init();
 
-		WnckScreen* getScreen();
+		gulong getActiveWindowXID();
 
-		GList* getWindowsList();
+		std::string getName(GroupWindow* groupWindow);
+		gushort getState(GroupWindow* groupWindow);
+		std::string getGroupName(GroupWindow* groupWindow);
+		GtkWidget* getActionMenu(GroupWindow* groupWindow);
 
-		WnckWindow* getActiveWindow();
+		void activate(GroupWindow* groupWindow, guint32 timestamp);
+		void minimize(GroupWindow* groupWindow);
 
-		std::string getName(WnckWindow* wnckWindow);
-
-		gulong getXID(WnckWindow* wnckWindow);
-
-		gushort getState(WnckWindow* wnckWindow);
-
-		void activate(WnckWindow* wnckWindow, guint32 timestamp);
-
-		void minimize(WnckWindow* wnckWindow);
-
-		std::string getGroupName(WnckWindow* wnckWindow);
-
-		GtkWidget* getActionMenu(WnckWindow* wnckWindow);
-
+		extern WnckScreen* mWnckScreen;
+		extern Store::KeyStore<gulong, GroupWindow*> mGroupWindows;
 }
 
 

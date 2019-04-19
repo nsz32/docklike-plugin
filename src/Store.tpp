@@ -18,17 +18,12 @@ namespace Store
 		public:
 			void push(K k, V v)
 			{
-				mList.push_back(std::make_pair(k, v));
+				mList.insert(std::next(mList.begin()), std::make_pair(k, v));
 			}
 
-			V first()
+			void pushSecond(K k, V v)
 			{
-				return mList.front().second;
-			}
-
-			V last()
-			{
-				return mList.back().second;
+				mList.insert(std::next(mList.begin()), std::make_pair(k, v));
 			}
 
 			V pop(K k)
@@ -57,6 +52,14 @@ namespace Store
 				return NULL;
 			}
 
+			V moveToStart(K k)
+			{
+				V v = pop(k);
+				mList.push_front(std::make_pair(k, v));
+
+				return v;
+			}
+
 			V findIf(std::function<bool(std::pair<const K, V>)> pred)
 			{
 				typename std::list<std::pair<const K, V>>::iterator it = std::find_if(mList.begin(), mList.end(), pred);
@@ -64,26 +67,6 @@ namespace Store
 					return it->second;
 
 				return NULL;
-			}
-
-			V moveBack(K k)
-			{
-				V v = pop(k);
-				push(k, v);
-
-				return v;
-			}
-
-			void shiftToBack()
-			{
-				mList.push_back(mList.front());
-				mList.pop_front();
-			}
-
-			void shiftToFront()
-			{
-				mList.push_front(mList.back());
-				mList.pop_back();
 			}
 
 			void forEach(std::function<void(std::pair<const K, V>)> funct)
@@ -94,6 +77,11 @@ namespace Store
 			uint size()
 			{
 				return mList.size();
+			}
+
+			V first()
+			{
+				return mList.front().second;
 			}
 
 		private:
@@ -120,6 +108,54 @@ namespace Store
 
 		private:
 			std::map<const K, V> mMap;
+	};
+
+	template <typename V>
+	class List
+	{
+		public:
+			void push(V v)
+			{
+				mList.push_back(v);
+			}
+
+			void pop(V v)
+			{
+				mList.remove(v);
+			}
+
+			V get(uint index)
+			{
+				return *std::next(mList.begin(), index);
+			}
+
+			uint getIndex(V v)
+			{
+				typename std::list<V>::iterator it = std::find(mList.begin(), mList.end(), v);
+				return std::distance(mList.begin(), it);
+			}
+
+			void forEach(std::function<void(V)> funct)
+			{
+				std::for_each(mList.begin(), mList.end(), funct);
+			}
+
+			V findIf(std::function<bool(V)> pred)
+			{
+				typename std::list<V>::iterator it = std::find_if(mList.begin(), mList.end(), pred);
+				if(it != mList.end())
+					return *it;
+
+				return NULL;
+			}
+
+			uint size()
+			{
+				return mList.size();
+			}
+
+		private:
+			std::list<V> mList;
 	};
 }
 

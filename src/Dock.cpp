@@ -2,13 +2,10 @@
 
 #include "Dock.hpp"
 
-#define RETURN_IF(b) if(b)return;
-
 namespace Dock
 {
 	GtkWidget* mBox;
-	WnckScreen* mWnckScreen;
-	Store::KeyStore<std::string, Group*> mGroups;
+	Store::KeyStore<AppInfo*, Group*> mGroups;
 
 	int mPanelSize;
 	int mIconSize;
@@ -17,109 +14,40 @@ namespace Dock
 	void onWnckWindowClosed(WnckWindow* wnckWindow);
 	void onWnckWindowActivate(WnckWindow* wnckWindow);
 
-	void init(XfcePanelPlugin* xfPlugin)
+	void init()
 	{
 		mBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 		gtk_widget_show(mBox);
 
-		mWnckScreen = Wnck::getScreen();
-
-		//signal connection
-		g_signal_connect(G_OBJECT(mWnckScreen), "window-opened",
-		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* window)
-		{
-			onWnckWindowOpened(window);
-		}), NULL);
-
-		g_signal_connect(G_OBJECT(mWnckScreen), "window-closed",
-		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* window)
-		{
-			onWnckWindowClosed(window);
-		}), NULL);
-
-		g_signal_connect(G_OBJECT(mWnckScreen), "active-window-changed",
-		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* previously_active_window)
-		{ 
-			WnckWindow* window = Wnck::getActiveWindow();
-			RETURN_IF(!WNCK_IS_WINDOW (window));
-			onWnckWindowActivate(window);
-		}), NULL);
-
-
-		//pinned windows
+		//pinned groups
 		std::list<std::string> pinned = Plugin::mConfig->getPinned();
 		std::list<std::string>::iterator it = pinned.begin();
 		while(it != pinned.end())
 		{
-			std::string groupName = *it;
-			if(++it == pinned.end()) break;
 			AppInfo* appInfo = AppInfos::search(*it);
-			++it;
 
-			Group* group = new Group(groupName, appInfo, true);
-			mGroups.push(groupName, group);
+			Group* group = new Group(appInfo, true);
+			mGroups.push(appInfo, group);
+
+			gtk_container_add(GTK_CONTAINER(mBox), GTK_WIDGET(group->mButton));
+
+			++it;
+		}
+	}
+
+	Group* prepareGroup(AppInfo* appInfo)
+	{
+		Group* group = mGroups.get(appInfo);
+		if(group == NULL)
+		{
+			std::cout << "NEW GROUP:" << appInfo->name << std::endl;
+			group = new Group(appInfo, false);
+			mGroups.push(appInfo, group);
 
 			gtk_container_add(GTK_CONTAINER(mBox), GTK_WIDGET(group->mButton));
 		}
 
-		//already oppened windows
-		for (GList* window_l = Wnck::getWindowsList(); window_l != NULL; window_l = window_l->next)
-		{
-			onWnckWindowOpened(WNCK_WINDOW(window_l->data));
-		}
-
-		onWnckWindowActivate(Wnck::getActiveWindow());
-	}
-
-	void savePinned()
-	{
-		std::list<std::string> list;
-
-		GList* children = gtk_container_get_children(GTK_CONTAINER(mBox));
-		GList* child;
-		for(child = children; child; child = child->next)
-		{
-			GtkWidget* widget = (GtkWidget*)child->data;
-			Group* group = (Group*)g_object_get_data(G_OBJECT(widget), "group");
-
-			if(group->mPinned)
-			{
-				list.push_back(group->mGroupName);
-				list.push_back(group->mAppInfo->path);
-			}
-		}
-		
-		Plugin::mConfig->setPinned(list);
-		Plugin::mConfig->save();
-	}
-	
-	void onPanelResize(int size)
-	{
-		mPanelSize = size;
-
-		#if LIBXFCE4PANEL_CHECK_VERSION(4,13,0)
-			mIconSize = xfce_panel_plugin_get_icon_size(XFCE_PANEL_PLUGIN(Plugin::mXfPlugin));
-		#else
-			GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(mGroups.first()->mButton));
-			GtkBorder padding, border;
-			gtk_style_context_get_padding (context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &padding);
-			gtk_style_context_get_border (context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &border);
-			int xthickness = padding.left + padding.right + border.left + border.right;
-			int ythickness = padding.top + padding.bottom + border.top + border.bottom;
-
-			int width = Dock::mPanelSize - MAX(xthickness, ythickness);
-				
-			if (width <= 21)
-				mIconSize = 16;
-			else if (width >=22 && width <= 29)
-				mIconSize = 24;
-			else if (width >= 30 && width <= 40)
-				mIconSize = 32;
-			else
-				mIconSize = width;
-		#endif
-
-		mGroups.forEach([](std::pair<std::string, Group*> g)->void { g.second->resize(); });
+		return group;
 	}
 
 	void moveButton(DockButton* moving, DockButton* dest)
@@ -135,50 +63,54 @@ namespace Dock
 		savePinned();
 	}
 
-
-
-	void onWnckWindowOpened(WnckWindow* wnckWindow)
+	void savePinned()
 	{
-		std::string groupName = Wnck::getGroupName(wnckWindow);
-		AppInfo* appInfo = AppInfos::search(groupName);
+		std::list<std::string> list;
 
-		Group* group = mGroups.get(groupName);
-		if(group == NULL)
+		GList* children = gtk_container_get_children(GTK_CONTAINER(mBox));
+		GList* child;
+		for(child = children; child; child = child->next)
 		{
-			group = new Group(groupName, appInfo, false);
-			mGroups.push(groupName, group);
+			GtkWidget* widget = (GtkWidget*)child->data;
+			Group* group = (Group*)g_object_get_data(G_OBJECT(widget), "group");
 
-			gtk_container_add(GTK_CONTAINER(mBox), GTK_WIDGET(group->mButton));
+			if(group->mPinned)
+			{
+				list.push_back(group->mAppInfo->path);
+			}
 		}
 		
-		GroupWindow* window = new GroupWindow(wnckWindow, group);
+		Plugin::mConfig->setPinned(list);
+		Plugin::mConfig->save();
 	}
-
-	void onWnckWindowClosed(WnckWindow* wnckWindow)
+	
+	void onPanelResize(int size)
 	{
-		std::string groupName = Wnck::getGroupName(wnckWindow);
 
-		Group* group = mGroups.get(groupName);
-		group->removeWindow(Wnck::getXID(wnckWindow));
+		mPanelSize = size;
 
-		if(!group->hasVisibleWindows() && !group->mPinned)
-			gtk_box_reorder_child(GTK_BOX(mBox), GTK_WIDGET(group->mButton), -1);
-	}
-
-	void onWnckWindowActivate(WnckWindow* wnckWindow)
-	{
-		RETURN_IF(wnckWindow == NULL);
-
-		gulong XID = Wnck::getXID(wnckWindow);
-		std::string groupName = Wnck::getGroupName(wnckWindow);
-		
-		mGroups.forEach([&groupName, &XID](std::pair<std::string, Group*> g)->void
-		{
-			if(g.first == groupName)
-				g.second->onWindowActivate(XID);
+		#if LIBXFCE4PANEL_CHECK_VERSION(4,13,0)
+			mIconSize = xfce_panel_plugin_get_icon_size(XFCE_PANEL_PLUGIN(Plugin::mXfPlugin));
+		#else
+			GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(mGroups.first()->mButton));
+			GtkBorder padding, border;
+			gtk_style_context_get_padding (context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &padding);
+			gtk_style_context_get_border (context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &border);
+			int xthickness = padding.left + padding.right + border.left + border.right;
+			int ythickness = padding.top + padding.bottom + border.top + border.bottom;
+			
+			int width = Dock::mPanelSize - MAX(xthickness, ythickness);
+				
+			if (width <= 21)
+				mIconSize = 16;
+			else if (width >=22 && width <= 29)
+				mIconSize = 24;
+			else if (width >= 30 && width <= 40)
+				mIconSize = 32;
 			else
-				g.second->onWindowUnactivate();
-		});
-	}
+				mIconSize = width;
+		#endif
 
+		mGroups.forEach([](std::pair<AppInfo*, Group*> g)->void { g.second->resize(); });
+	}
 }

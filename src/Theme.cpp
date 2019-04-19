@@ -33,8 +33,11 @@ namespace Theme
 
 		std::string cssStyle = setupColors() +
 		"button { border:none; border-radius:0; background:none; text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; }"
-		"button.docklike_menu { min-height:1.3em; }"
-		"button.docklike_menu:hover { background-color:alpha(@dl_menu_bgcolor_hover,0.1); border:none; }"
+		"button.docklike_menu { min-height:1.3em; transition-property:none; }"
+		"button:not(:only-child).docklike_menu.top { background-color:alpha(@dl_menu_bgcolor_hover, 0.2); }"
+		"button.docklike_menu.active { background-color:@dl_menu_bgcolor_hover; color:@dl_menu_color_hover; }"
+		"button:not(:only-child).docklike_menu.active { background-color:@dl_menu_bgcolor_hover; color:@dl_menu_color_hover; }"
+		//"button.docklike_menu:hover { background-color:alpha(@dl_menu_bgcolor_hover,0.1); border:none; }"
 		"box { margin:0; padding:0; }"
 		".drop { border-left:5px solid red; }";
 

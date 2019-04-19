@@ -2,12 +2,14 @@
 
 #include "DockButton.hpp"
 #include "DockButtonMenuItem.hpp"
+#include "Group.hpp"
 
 #include "Plugin.hpp"
 
 DockButtonMenu::DockButtonMenu(DockButton* dockButton)
 {
 	mWindow = gtk_window_new(GtkWindowType::GTK_WINDOW_POPUP);
+	gtk_widget_add_events(mWindow, GDK_SCROLL_MASK);
 	//gtk_style_context_add_class(gtk_widget_get_style_context(mWindow), "popup");
 	gtk_window_set_default_size(GTK_WINDOW(mWindow), 1, 1);
 	mDockButton = dockButton;
@@ -34,16 +36,22 @@ DockButtonMenu::DockButtonMenu(DockButton* dockButton)
 		me->mMouseHover = false;
 		return true;
 	}), this);
+
+	g_signal_connect(G_OBJECT(mWindow), "scroll-event",
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventScroll* event, DockButtonMenu* me){
+		((Group*)me->mDockButton)->onScroll(event); //TODO BRAH
+		return true;
+	}), this);
 }
 
-void DockButtonMenu::add(DockButtonMenuItem* menuItem)
+void DockButtonMenu::add(DockButtonMenuItem& menuItem)
 {
-	gtk_box_pack_start(GTK_BOX(mBox), menuItem->mTitleButton, false, true, 0);
+	gtk_box_pack_end(GTK_BOX(mBox), menuItem.mTitleButton, false, true, 0);
 }
 
-void DockButtonMenu::remove(DockButtonMenuItem* menuItem)
+void DockButtonMenu::remove(DockButtonMenuItem& menuItem)
 {
-	gtk_container_remove(GTK_CONTAINER(mBox), menuItem->mTitleButton);
+	gtk_container_remove(GTK_CONTAINER(mBox), menuItem.mTitleButton);
 	gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);
 }
 
