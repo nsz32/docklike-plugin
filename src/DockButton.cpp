@@ -9,6 +9,7 @@ DockButton::DockButton(bool pinned):
 	mDockButtonMenu(this)
 {
 	mButton = gtk_button_new();
+	gtk_style_context_add_class(gtk_widget_get_style_context(mButton), "group");
 	gtk_style_context_add_class(gtk_widget_get_style_context(mButton), "flat");
 	
 	mPinned = pinned;

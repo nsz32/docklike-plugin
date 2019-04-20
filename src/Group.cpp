@@ -154,9 +154,6 @@ void Group::onWindowUnactivate()
 
 void Group::setTopWindow(GroupWindow* groupWindow)
 {
-	mWindows.forEach([](GroupWindow* gW)->void { Help::Gtk::cssClassRemove(GTK_WIDGET(gW->mDockButtonMenuItem.mItem), "top"); });
-	Help::Gtk::cssClassAdd(GTK_WIDGET(groupWindow->mDockButtonMenuItem.mItem), "top");
-
 	mTopWindowIndex = mWindows.getIndex(groupWindow);
 }
 
