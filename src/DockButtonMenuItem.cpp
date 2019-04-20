@@ -6,49 +6,65 @@ DockButtonMenuItem::DockButtonMenuItem(GroupWindow* groupWindow)
 {
 	mGroupWindow = groupWindow;
 
-	mTitleButton = gtk_button_new_with_label("_");
-	gtk_style_context_add_class(gtk_widget_get_style_context(mTitleButton), "docklike_menu");
-	gtk_widget_show(mTitleButton);
+	mItem = (GtkEventBox*)gtk_event_box_new();
+	Help::Gtk::cssClassAdd(GTK_WIDGET(mItem), "menu_item");
+	gtk_widget_show(GTK_WIDGET(mItem));
 
-	gtk_widget_set_focus_on_click(GTK_WIDGET(mTitleButton), false);
-	gtk_widget_set_can_focus(GTK_WIDGET(mTitleButton), false);
-	gtk_widget_set_can_default(GTK_WIDGET(mTitleButton), false);
-	
-	GtkLabel* label = (GtkLabel*)gtk_bin_get_child(GTK_BIN(mTitleButton));
-	gtk_label_set_xalign(label, 0);
-	gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_END);
-	gtk_label_set_width_chars(label, 32);
-	gtk_widget_set_hexpand(GTK_WIDGET(label), true);
+	mGrid = (GtkGrid*)gtk_grid_new();
+	gtk_widget_show(GTK_WIDGET(mGrid));
+	gtk_container_add(GTK_CONTAINER(mItem), GTK_WIDGET(mGrid));
+
+	mIcon = (GtkImage*)gtk_image_new();
+	gtk_widget_show(GTK_WIDGET(mIcon));
+	gtk_grid_attach(mGrid, GTK_WIDGET(mIcon), 0, 0, 1, 1);
+
+	mLabel = (GtkLabel*)gtk_label_new("");
+	gtk_label_set_xalign(mLabel, 0);
+	gtk_label_set_ellipsize(mLabel, PANGO_ELLIPSIZE_END);
+	gtk_label_set_width_chars(mLabel, 26);
+	gtk_widget_show(GTK_WIDGET(mLabel));
+	gtk_grid_attach(mGrid, GTK_WIDGET(mLabel), 1, 0, 1, 1);
+
+	mCloseButton = (GtkButton*)gtk_button_new_with_label("🗙");
+	gtk_widget_show(GTK_WIDGET(mCloseButton));
+	gtk_grid_attach(mGrid, GTK_WIDGET(mCloseButton), 2, 0, 1, 1);
 
 
-
-	g_signal_connect(G_OBJECT(mTitleButton), "button-press-event",
+	g_signal_connect(G_OBJECT(mItem), "button-press-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, DockButtonMenuItem* me){
 		gdk_device_ungrab((event)->device, (event)->time);
 		me->mGroupWindow->activate((event)->time);
 		return true;
 	}), this);
 
-	g_signal_connect(G_OBJECT(mTitleButton), "enter-notify-event",
+	g_signal_connect(G_OBJECT(mItem), "enter-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, DockButtonMenuItem* me){
+		Help::Gtk::cssClassAdd(GTK_WIDGET(me->mItem), "hover");
 		if(event->state & GDK_BUTTON1_MASK)
 			me->mGroupWindow->activate(event->time);
 		return true;
 	}), this);
 
-	g_signal_connect(G_OBJECT(mTitleButton), "leave-notify-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, DockButton* me){
+	g_signal_connect(G_OBJECT(mItem), "leave-notify-event",
+	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, DockButtonMenuItem* me){
+		Help::Gtk::cssClassRemove(GTK_WIDGET(me->mItem), "hover");
 		return true;
+	}), this);
+
+	g_signal_connect(G_OBJECT(mCloseButton), "clicked",
+	G_CALLBACK(+[](GtkButton* button, DockButtonMenuItem* me){
+		Wnck::close(me->mGroupWindow, 0);
 	}), this);
 }
 
-void DockButtonMenuItem::setLabel(std::string title)
+void DockButtonMenuItem::updateLabel()
 {
-	gtk_button_set_label(GTK_BUTTON(mTitleButton), title.c_str());
+	gtk_label_set_text(mLabel, Wnck::getName(mGroupWindow).c_str());
+}
 
-	GtkLabel* label = (GtkLabel*)gtk_bin_get_child(GTK_BIN(mTitleButton));
-	gtk_label_set_xalign(label, 0);
-	gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_END);
-	gtk_label_set_width_chars(label, 32);
-	gtk_widget_set_hexpand(GTK_WIDGET(label), true);
+void DockButtonMenuItem::updateIcon()
+{
+	GdkPixbuf* iconPixbuf = Wnck::getMiniIcon(mGroupWindow);
+	if(iconPixbuf != NULL)
+		gtk_image_set_from_pixbuf(GTK_IMAGE(mIcon), iconPixbuf);
 }

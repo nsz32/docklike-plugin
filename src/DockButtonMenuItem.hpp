@@ -14,10 +14,16 @@ class DockButtonMenuItem
 	public:
 		DockButtonMenuItem(GroupWindow* groupWindow);
 
-		void setLabel(std::string title);
+		void updateLabel();
+		void updateIcon();
 
-		GtkWidget* mTitleButton;
 		GroupWindow* mGroupWindow;
+		
+		GtkEventBox* mItem;
+		GtkGrid* mGrid;
+		GtkImage* mIcon;
+		GtkLabel* mLabel;
+		GtkButton* mCloseButton;
 };
 
 #endif 

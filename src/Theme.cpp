@@ -33,11 +33,20 @@ namespace Theme
 
 		std::string cssStyle = setupColors() +
 		"button { border:none; border-radius:0; background:none; text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; }"
-		"button.docklike_menu { min-height:1.3em; transition-property:none; }"
-		"button:not(:only-child).docklike_menu.top { background-color:alpha(@dl_menu_bgcolor_hover, 0.2); }"
-		"button.docklike_menu.active { background-color:@dl_menu_bgcolor_hover; color:@dl_menu_color_hover; }"
-		"button:not(:only-child).docklike_menu.active { background-color:@dl_menu_bgcolor_hover; color:@dl_menu_color_hover; }"
-		//"button.docklike_menu:hover { background-color:alpha(@dl_menu_bgcolor_hover,0.1); border:none; }"
+		//"grid { min-height:1.3em; background-color:red; }"
+		".menu_item image { margin-left:0.4em;  }"
+		".menu_item label { margin:0.5em 0.5em 0.4em 0.5em; }"
+
+		".menu_item.hover grid { background-color:alpha(@dl_menu_bgcolor_hover,0.06); }"
+		".menu_item.top:not(:only-child) grid { background-color:alpha(@dl_menu_bgcolor_hover, 0.12); }"
+		".menu_item.active grid { background-color:@dl_menu_bgcolor_hover; color:@dl_menu_color_hover; }"
+		".menu_item.active:not(:only-child) grid { background-color:@dl_menu_bgcolor_hover; color:@dl_menu_color_hover; }"
+		".menu_item.active button { color:@dl_menu_color_hover; }"
+		".menu_item grid button { background-color:alpha(#888, 0.5); }"
+		
+		".menu_item button { margin:0; padding:0; }"
+		".menu_item button label { margin:0em 0.6em 0 0.6em; padding:0; }"
+
 		"box { margin:0; padding:0; }"
 		".drop { border-left:5px solid red; }";
 

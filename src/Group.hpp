@@ -42,7 +42,6 @@ class Group: public DockButton
 
 		void onDragBegin(GdkDragContext* context);
 
-		bool mPinned;
 		AppInfo* mAppInfo;
 		Store::List<GroupWindow*> mWindows;
 		uint mTopWindowIndex;

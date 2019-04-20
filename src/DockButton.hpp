@@ -38,17 +38,18 @@ class DockButton
 		void onDragDataGet(const GdkDragContext* context, GtkSelectionData* selectionData, guint info, guint time);
 		void onDragDataReceived(const GdkDragContext* context, int x, int y, const GtkSelectionData* selectionData, guint info, guint time);
 
+		bool mHover;
 		bool mPinned;
 		GtkWidget* mButton;
 
 		DockButtonMenu mDockButtonMenu;
-
-	private:
-
 		bool mSFocus;
 		bool mSOpened;
 		bool mSMany;
 		bool mSHover;
+
+	private:
+
 
 		Help::Gtk::Timeout mLeaveTimeout;
 

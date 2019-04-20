@@ -59,7 +59,7 @@ namespace Wnck
 			if(fd >= 0)
 			{
 				int nbr = read(fd, buffer, 512);
-				close(fd);
+				::close(fd);
 
 				char* exe = basename(buffer);
 
@@ -95,6 +95,7 @@ namespace Wnck
 		g_signal_connect(G_OBJECT(mWnckScreen), "window-closed",
 		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* wnckWindow)
 		{
+			std::cout << "DELETE:" << 1 << std::endl;
 			GroupWindow* groupWindow = mGroupWindows.pop(wnck_window_get_xid(wnckWindow));
 			delete groupWindow;
 		}), NULL);
@@ -136,9 +137,19 @@ namespace Wnck
 		return wnck_window_get_state(groupWindow->mWnckWindow);
 	}
 
+	GdkPixbuf* getMiniIcon(GroupWindow* groupWindow)
+	{
+		return wnck_window_get_mini_icon(groupWindow->mWnckWindow);
+	}
+
 	void activate(GroupWindow* groupWindow, guint32 timestamp)
 	{
 		wnck_window_activate(groupWindow->mWnckWindow, timestamp);
+	}
+
+	void close(GroupWindow* groupWindow, guint32 timestamp)
+	{
+		wnck_window_close(groupWindow->mWnckWindow, 0);
 	}
 
 	void minimize(GroupWindow* groupWindow)

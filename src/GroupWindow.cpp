@@ -6,19 +6,23 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow):
 	mDockButtonMenuItem(this)
 { 
 	mWnckWindow = wnckWindow;
-	
-	mDockButtonMenuItem.setLabel(Wnck::getName(this));
 
 	std::string groupName = Wnck::getGroupName(this); //check here for exotic group association (like libreoffice)
 	AppInfo* appInfo = AppInfos::search(groupName);
-	mGroup = Dock::prepareGroup(appInfo);
-	getInGroup(mGroup);
+
+	getInGroup(Dock::prepareGroup(appInfo));
 
 	//signal connection
 	g_signal_connect(G_OBJECT(mWnckWindow), "name-changed",
 	G_CALLBACK(+[](WnckWindow* window, GroupWindow* me)
 	{ 
-		me->mDockButtonMenuItem.setLabel(Wnck::getName(me));
+		me->mDockButtonMenuItem.updateLabel();
+	}), this);
+
+	g_signal_connect(G_OBJECT(mWnckWindow), "icon-changed",
+	G_CALLBACK(+[](WnckWindow* window, GroupWindow* me)
+	{ 
+		me->mDockButtonMenuItem.updateIcon();
 	}), this);
 
 	g_signal_connect(G_OBJECT(mWnckWindow), "state-changed",
@@ -29,6 +33,9 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow):
 
 	//initial state
 	updateState(Wnck::getState(this));
+
+	mDockButtonMenuItem.updateIcon();
+	mDockButtonMenuItem.updateLabel();
 }
 
 GroupWindow::~GroupWindow()
@@ -38,6 +45,7 @@ GroupWindow::~GroupWindow()
 
 void GroupWindow::getInGroup(Group* group)
 {
+	mGroup = group;
 	group->mWindows.push(this);
 	group->mDockButtonMenu.add(mDockButtonMenuItem);
 
@@ -46,7 +54,7 @@ void GroupWindow::getInGroup(Group* group)
 
 void GroupWindow::leaveGroup(Group* group)
 {
-	bool wasTopWindow = group->mWindows.getIndex(this) == group-> mTopWindowIndex;
+	bool wasTopWindow = group->mWindows.getIndex(this) == group->mTopWindowIndex;
 
 	group->mWindows.pop(this);
 	group->mDockButtonMenu.remove(mDockButtonMenuItem);
@@ -58,16 +66,16 @@ void GroupWindow::leaveGroup(Group* group)
 
 void GroupWindow::onActivate()
 {
-	Help::Gtk::cssClassAdd(mDockButtonMenuItem.mTitleButton, "active");
-	gtk_widget_queue_draw(mDockButtonMenuItem.mTitleButton);
+	Help::Gtk::cssClassAdd(GTK_WIDGET(mDockButtonMenuItem.mItem), "active");
+	gtk_widget_queue_draw(GTK_WIDGET(mDockButtonMenuItem.mItem));
 
 	mGroup->onWindowActivate(this);
 }
 
 void GroupWindow::onUnactivate()
 {
-	Help::Gtk::cssClassRemove(mDockButtonMenuItem.mTitleButton, "active");
-	gtk_widget_queue_draw(mDockButtonMenuItem.mTitleButton);
+	Help::Gtk::cssClassRemove(GTK_WIDGET(mDockButtonMenuItem.mItem), "active");
+	gtk_widget_queue_draw(GTK_WIDGET(mDockButtonMenuItem.mItem));
 
 	mGroup->onWindowUnactivate();
 }
@@ -101,8 +109,8 @@ void GroupWindow::updateState(ushort state, ushort changeMask)
 		mGroup->updateStyle();
 		
 		if(state & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
-			gtk_widget_hide(mDockButtonMenuItem.mTitleButton);
+			gtk_widget_hide(GTK_WIDGET(mDockButtonMenuItem.mItem));
 		else
-			gtk_widget_show(mDockButtonMenuItem.mTitleButton);
+			gtk_widget_show(GTK_WIDGET(mDockButtonMenuItem.mItem));
 	}
 }

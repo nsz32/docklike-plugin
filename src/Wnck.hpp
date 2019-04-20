@@ -21,10 +21,14 @@ namespace Wnck
 		gulong getActiveWindowXID();
 
 		std::string getName(GroupWindow* groupWindow);
-		gushort getState(GroupWindow* groupWindow);
 		std::string getGroupName(GroupWindow* groupWindow);
+		gushort getState(GroupWindow* groupWindow);
+		GdkPixbuf* getMiniIcon(GroupWindow* groupWindow);
+
 		GtkWidget* getActionMenu(GroupWindow* groupWindow);
 
+
+		void close(GroupWindow* groupWindow, guint32 timestamp);
 		void activate(GroupWindow* groupWindow, guint32 timestamp);
 		void minimize(GroupWindow* groupWindow);
 

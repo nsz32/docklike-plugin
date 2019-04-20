@@ -51,7 +51,7 @@ Group::Group(AppInfo* appInfo, bool pinned): DockButton(pinned)
 		/*	std::cout << "NEW GROUP:" << mAppInfo->name << std::endl;
 			std::cout << "PATH:" << mAppInfo->path << std::endl;
 			std::cout << "ICON:" << mAppInfo->icon << std::endl << std::endl;*/
-		if(mAppInfo->icon [0] == '/')
+		if(mAppInfo->icon[0] == '/')
 		{
 			//set_image_from_icon_name(mAppInfo->icon);
 
@@ -71,11 +71,15 @@ Group::Group(AppInfo* appInfo, bool pinned): DockButton(pinned)
 		GtkWidget* icon = gtk_image_new_from_icon_name("application-x-executable", GTK_ICON_SIZE_BUTTON);
 		gtk_button_set_image(GTK_BUTTON(mButton), icon);
 	}
+
+	resize();
 }
 
 void Group::updateStyle()
 {
 	int wCount = hasVisibleWindows();
+
+	
 
 	if(mPinned || wCount)
 		gtk_widget_show(mButton);
@@ -85,7 +89,10 @@ void Group::updateStyle()
 	if(wCount)
 		setStyle(Style::Opened, true);
 	else
+	{
 		setStyle(Style::Opened, false);
+		setStyle(Style::Focus, false);
+	}
 
 	if(wCount > 1)
 		setStyle(Style::Many, true);
@@ -147,8 +154,8 @@ void Group::onWindowUnactivate()
 
 void Group::setTopWindow(GroupWindow* groupWindow)
 {
-	mWindows.forEach([](GroupWindow* gW)->void { Help::Gtk::cssClassRemove(gW->mDockButtonMenuItem.mTitleButton, "top"); });
-	Help::Gtk::cssClassAdd(groupWindow->mDockButtonMenuItem.mTitleButton, "top");
+	mWindows.forEach([](GroupWindow* gW)->void { Help::Gtk::cssClassRemove(GTK_WIDGET(gW->mDockButtonMenuItem.mItem), "top"); });
+	Help::Gtk::cssClassAdd(GTK_WIDGET(groupWindow->mDockButtonMenuItem.mItem), "top");
 
 	mTopWindowIndex = mWindows.getIndex(groupWindow);
 }
@@ -160,7 +167,7 @@ void Group::onButtonPress(GdkEventButton* event)
 	if(!hasVisibleWindows() || event->button != 3) return;
 	else
 	{
-		/*GtkWidget* menu = Wnck::getActionMenu(mWindows.last()->mWnckWindow);
+		GtkWidget* menu = Wnck::getActionMenu(mWindows.get(mTopWindowIndex));
 
 		GtkWidget* launchAnother = gtk_menu_item_new_with_label("Launch another");
 		GtkWidget* separator = gtk_separator_menu_item_new();
@@ -194,7 +201,7 @@ void Group::onButtonPress(GdkEventButton* event)
 
 		gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET(mButton), NULL);
 
-		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);*/
+		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);
 
 		//then destroy TODO
 		/* g_signal_connect (G_OBJECT (menu), "selection-done",

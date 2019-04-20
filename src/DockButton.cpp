@@ -10,7 +10,6 @@ DockButton::DockButton(bool pinned):
 {
 	mButton = gtk_button_new();
 	gtk_style_context_add_class(gtk_widget_get_style_context(mButton), "flat");
-	gtk_style_context_add_class(gtk_widget_get_style_context(mButton), "docklike_group");
 	
 	mPinned = pinned;
 
@@ -38,14 +37,17 @@ DockButton::DockButton(bool pinned):
 	}), this);
 
 	g_signal_connect(G_OBJECT(mButton), "enter-notify-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, DockButton* me){
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, DockButton* me){
 		me->onMouseEnter();
 		return false;
 	}), this);
 
 	g_signal_connect(G_OBJECT(mButton), "leave-notify-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, DockButton* me){
-		me->setMouseLeaveTimeout();
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, DockButton* me){
+		if(me->mPinned && ((Group*)me)->hasVisibleWindows() == 0) //TODO BRAH
+			me->onMouseLeave();
+		else
+			me->setMouseLeaveTimeout();
 		return true;
 	}), this);
 
@@ -56,8 +58,6 @@ DockButton::DockButton(bool pinned):
 
 	gtk_drag_source_set(mButton, GDK_BUTTON1_MASK, entries, 1, GDK_ACTION_MOVE);
 	gtk_drag_dest_set(mButton, GTK_DEST_DEFAULT_DROP, entries, 1, GDK_ACTION_MOVE);
-
-	resize();
 }
 
 void DockButton::resize()
@@ -88,6 +88,7 @@ void DockButton::setStyle(Style style, bool val)
 			break;
 		}
 	}
+
 }
 
 void DockButton::onDraw(cairo_t* cr)
@@ -138,8 +139,14 @@ void DockButton::onDraw(cairo_t* cr)
 
 void DockButton::onMouseEnter()
 {
-	setStyle(Style::Hover, true);
 	mLeaveTimeout.stop();
+
+	Dock::mGroups.forEach([](std::pair<AppInfo*, Group*> g)->void
+	{ 
+		g.second->mDockButtonMenu.mDockButton->onMouseLeave();
+	});
+
+	setStyle(Style::Hover, true);
 	mDockButtonMenu.popup();
 }
 
@@ -154,7 +161,7 @@ void DockButton::onMouseLeave()
 
 void DockButton::setMouseLeaveTimeout()
 {
-	mLeaveTimeout.start(5, G_SOURCE_FUNC(+[](DockButton* me){
+	mLeaveTimeout.start(350, G_SOURCE_FUNC(+[](DockButton* me){
 		me->onMouseLeave();
 	}), this);
 }
