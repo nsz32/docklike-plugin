@@ -29,7 +29,6 @@ DockButtonMenuItem::DockButtonMenuItem(GroupWindow* groupWindow)
 	gtk_widget_show(GTK_WIDGET(mCloseButton));
 	gtk_grid_attach(mGrid, GTK_WIDGET(mCloseButton), 2, 0, 1, 1);
 
-
 	g_signal_connect(G_OBJECT(mItem), "button-press-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, DockButtonMenuItem* me){
 		gdk_device_ungrab((event)->device, (event)->time);

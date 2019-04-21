@@ -18,7 +18,7 @@ namespace Store
 		public:
 			void push(K k, V v)
 			{
-				mList.insert(std::next(mList.begin()), std::make_pair(k, v));
+				mList.push_front(std::make_pair(k, v));
 			}
 
 			void pushSecond(K k, V v)

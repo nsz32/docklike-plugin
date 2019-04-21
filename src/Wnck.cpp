@@ -89,13 +89,12 @@ namespace Wnck
 		g_signal_connect(G_OBJECT(mWnckScreen), "window-opened",
 		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* wnckWindow)
 		{
-			mGroupWindows.push(wnck_window_get_xid(wnckWindow), new GroupWindow(wnckWindow));
+			mGroupWindows.pushSecond(wnck_window_get_xid(wnckWindow), new GroupWindow(wnckWindow));
 		}), NULL);
 
 		g_signal_connect(G_OBJECT(mWnckScreen), "window-closed",
 		G_CALLBACK(+[](WnckScreen* screen, WnckWindow* wnckWindow)
 		{
-			std::cout << "DELETE:" << 1 << std::endl;
 			GroupWindow* groupWindow = mGroupWindows.pop(wnck_window_get_xid(wnckWindow));
 			delete groupWindow;
 		}), NULL);

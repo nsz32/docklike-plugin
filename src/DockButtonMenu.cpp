@@ -16,6 +16,7 @@ DockButtonMenu::DockButtonMenu(DockButton* dockButton)
 	mMouseHover = false;
 
 	mBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+	Help::Gtk::cssClassAdd(GTK_WIDGET(mBox), "menu");
 	gtk_container_add(GTK_CONTAINER(mWindow), mBox);
 	gtk_widget_show(mBox);
 

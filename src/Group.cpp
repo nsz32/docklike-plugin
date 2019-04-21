@@ -79,8 +79,6 @@ void Group::updateStyle()
 {
 	int wCount = hasVisibleWindows();
 
-	
-
 	if(mPinned || wCount)
 		gtk_widget_show(mButton);
 	else

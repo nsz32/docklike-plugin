@@ -45,15 +45,19 @@ GroupWindow::~GroupWindow()
 
 void GroupWindow::getInGroup(Group* group)
 {
+	std::cout << "IN:" << 1 << std::endl;
+
 	mGroup = group;
 	group->mWindows.push(this);
 	group->mDockButtonMenu.add(mDockButtonMenuItem);
+
 
 	group->updateStyle();
 }
 
 void GroupWindow::leaveGroup(Group* group)
 {
+	group->setStyle(DockButton::Style::Focus, false);
 	bool wasTopWindow = group->mWindows.getIndex(this) == group->mTopWindowIndex;
 
 	group->mWindows.pop(this);

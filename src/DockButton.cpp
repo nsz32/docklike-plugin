@@ -162,7 +162,7 @@ void DockButton::onMouseLeave()
 
 void DockButton::setMouseLeaveTimeout()
 {
-	mLeaveTimeout.start(350, G_SOURCE_FUNC(+[](DockButton* me){
+	mLeaveTimeout.start(300, G_SOURCE_FUNC(+[](DockButton* me){
 		me->onMouseLeave();
 	}), this);
 }
