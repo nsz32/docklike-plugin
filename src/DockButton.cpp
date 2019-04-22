@@ -96,7 +96,7 @@ void DockButton::onDraw(cairo_t* cr)
 {
 	double aBack = 0.0;
 	
-	if(mSHover) aBack += 0.3;
+	if(mSHover) aBack += 0.5;
 	if(mSFocus) aBack += 0.5;
 
 	int w = gtk_widget_get_allocated_width(GTK_WIDGET(mButton));

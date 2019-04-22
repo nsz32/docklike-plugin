@@ -41,6 +41,8 @@ namespace Dock
 		if(group == NULL)
 		{
 			std::cout << "NEW GROUP:" << appInfo->name << std::endl;
+			std::cout << ">>>>>>>>> " << appInfo->path << std::endl;
+			std::cout << ">>>>>>>>> " << appInfo->icon << std::endl;
 			group = new Group(appInfo, false);
 			mGroups.push(appInfo, group);
 
@@ -112,5 +114,10 @@ namespace Dock
 		#endif
 
 		mGroups.forEach([](std::pair<AppInfo*, Group*> g)->void { g.second->resize(); });
+	}
+
+	void onPanelOrientationChange(GtkOrientation orientation)
+	{
+		gtk_orientable_set_orientation(GTK_ORIENTABLE(mBox), orientation);
 	}
 }

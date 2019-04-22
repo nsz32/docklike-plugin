@@ -36,6 +36,7 @@ namespace Dock
 	void savePinned();
 
 	void onPanelResize(int size);
+	void onPanelOrientationChange(GtkOrientation orientation);
 
 	extern GtkWidget* mBox;
 	extern Store::KeyStore<AppInfo*, Group*> mGroups;

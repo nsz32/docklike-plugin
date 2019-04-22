@@ -33,6 +33,11 @@ namespace Plugin
 			Dock::onPanelResize(size);
 			return true;
 		}), NULL);
+
+		g_signal_connect(G_OBJECT(GTK_WIDGET(mXfPlugin)), "orientation-changed",
+		G_CALLBACK(+[](XfcePanelPlugin *plugin, GtkOrientation orientation){
+			Dock::onPanelOrientationChange(orientation);
+		}), NULL);
 		
 	}
 }
