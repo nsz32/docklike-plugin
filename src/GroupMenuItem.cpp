@@ -1,8 +1,8 @@
-#include "DockButtonMenuItem.hpp"
+#include "GroupMenuItem.hpp"
 
 #include "GroupWindow.hpp"
 
-DockButtonMenuItem::DockButtonMenuItem(GroupWindow* groupWindow)
+GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 {
 	mGroupWindow = groupWindow;
 
@@ -30,14 +30,14 @@ DockButtonMenuItem::DockButtonMenuItem(GroupWindow* groupWindow)
 	gtk_grid_attach(mGrid, GTK_WIDGET(mCloseButton), 2, 0, 1, 1);
 
 	g_signal_connect(G_OBJECT(mItem), "button-press-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, DockButtonMenuItem* me){
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, GroupMenuItem* me){
 		gdk_device_ungrab((event)->device, (event)->time);
 		me->mGroupWindow->activate((event)->time);
 		return true;
 	}), this);
 
 	g_signal_connect(G_OBJECT(mItem), "enter-notify-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, DockButtonMenuItem* me){
+	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, GroupMenuItem* me){
 		Help::Gtk::cssClassAdd(GTK_WIDGET(me->mItem), "hover");
 		if(event->state & GDK_BUTTON1_MASK)
 			me->mGroupWindow->activate(event->time);
@@ -45,23 +45,23 @@ DockButtonMenuItem::DockButtonMenuItem(GroupWindow* groupWindow)
 	}), this);
 
 	g_signal_connect(G_OBJECT(mItem), "leave-notify-event",
-	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, DockButtonMenuItem* me){
+	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenuItem* me){
 		Help::Gtk::cssClassRemove(GTK_WIDGET(me->mItem), "hover");
 		return true;
 	}), this);
 
 	g_signal_connect(G_OBJECT(mCloseButton), "clicked",
-	G_CALLBACK(+[](GtkButton* button, DockButtonMenuItem* me){
+	G_CALLBACK(+[](GtkButton* button, GroupMenuItem* me){
 		Wnck::close(me->mGroupWindow, 0);
 	}), this);
 }
 
-void DockButtonMenuItem::updateLabel()
+void GroupMenuItem::updateLabel()
 {
 	gtk_label_set_text(mLabel, Wnck::getName(mGroupWindow).c_str());
 }
 
-void DockButtonMenuItem::updateIcon()
+void GroupMenuItem::updateIcon()
 {
 	GdkPixbuf* iconPixbuf = Wnck::getMiniIcon(mGroupWindow);
 	if(iconPixbuf != NULL)

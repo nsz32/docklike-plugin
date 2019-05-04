@@ -14,18 +14,17 @@ plugin_LTLIBRARIES = libnmt.la
 # List of source files needed to build the library
 libnmt_la_SOURCES = \
 						Theme.cpp Theme.hpp \
-                      AppInfos.cpp AppInfos.hpp \
-                      Config.cpp Config.hpp \
-                      Group.cpp Group.hpp \
-					  DockButton.cpp DockButton.hpp \
-					  DockButtonMenu.cpp DockButtonMenu.hpp \
-					  DockButtonMenuItem.cpp DockButtonMenuItem.hpp \
-                      GroupWindow.cpp GroupWindow.hpp \
-                      Helpers.cpp Helpers.hpp \
-                      Plugin.cpp Plugin.hpp \
-                      Dock.cpp Dock.hpp \
-                      Wnck.cpp Wnck.hpp \
-                      register.c
+						AppInfos.cpp AppInfos.hpp \
+						Config.cpp Config.hpp \
+						Group.cpp Group.hpp \
+						GroupMenu.cpp GroupMenu.hpp \
+						GroupMenuItem.cpp GroupMenuItem.hpp \
+						GroupWindow.cpp GroupWindow.hpp \
+						Helpers.cpp Helpers.hpp \
+						Plugin.cpp Plugin.hpp \
+						Dock.cpp Dock.hpp \
+						Wnck.cpp Wnck.hpp \
+						register.c
 
 libnmt_la_LDFLAGS = \
                       -avoid-version \

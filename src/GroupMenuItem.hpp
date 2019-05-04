@@ -9,10 +9,10 @@
 
 class GroupWindow;
 
-class DockButtonMenuItem
+class GroupMenuItem
 {
 	public:
-		DockButtonMenuItem(GroupWindow* groupWindow);
+		GroupMenuItem(GroupWindow* groupWindow);
 
 		void updateLabel();
 		void updateIcon();

@@ -52,7 +52,7 @@ namespace Dock
 		return group;
 	}
 
-	void moveButton(DockButton* moving, DockButton* dest)
+	void moveButton(Group* moving, Group* dest)
 	{
 		int startpos = Help::Gtk::getChildPosition(GTK_CONTAINER(mBox), GTK_WIDGET(moving->mButton));
 		int destpos = Help::Gtk::getChildPosition(GTK_CONTAINER(mBox), GTK_WIDGET(dest->mButton));

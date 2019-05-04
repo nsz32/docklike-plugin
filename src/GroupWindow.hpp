@@ -9,12 +9,14 @@
 #include "Helpers.hpp"
 #include "AppInfos.hpp"
 #include "Wnck.hpp"
+#include "Dock.hpp"
 #include "Group.hpp"
-#include "DockButtonMenuItem.hpp"
+#include "GroupMenuItem.hpp"
 
 #include <iostream>
 	
 	class Group;
+
 
 	class GroupWindow
 	{
@@ -37,7 +39,7 @@
 			Group* mGroup;
 
 			WnckWindow* mWnckWindow;
-			DockButtonMenuItem mDockButtonMenuItem;
+			GroupMenuItem mGroupMenuItem;
 
 			void updateState(unsigned short state, unsigned short changeMask = USHRT_MAX);
 			unsigned short mState;

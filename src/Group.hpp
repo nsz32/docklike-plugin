@@ -1,35 +1,41 @@
-// ** opensource.org/licenses/GPL-3.0
-
-#ifndef GROUP_HPP
-#define GROUP_HPP
+#ifndef DOCK_BUTTON_HPP
+#define DOCK_BUTTON_HPP
 
 #include <iostream>
-#include <vector>
 
 #include <gtk/gtk.h>
-#include <cairo/cairo.h>
-#include <libwnck/libwnck.h>
 
-#include "Store.tpp"
-
-#include "DockButton.hpp"
 #include "Helpers.hpp"
 #include "AppInfos.hpp"
-#include "Dock.hpp"
 #include "GroupWindow.hpp"
-
+#include "GroupMenu.hpp"
+#include "State.tpp"
 
 class GroupWindow;
 
-class Group: public DockButton
+class Group
 {
 	public:
+
+		enum Style
+		{
+			Focus,
+			Opened,
+			Many,
+			Hover
+		};
+
 		Group(AppInfo* appInfo, bool pinned);
 
+		void add(GroupWindow* window);
+		void remove(GroupWindow* window);
+
+		void resize();
+		void setStyle(Style style, bool val);
 		void updateStyle();
 		void electNewTopWindow();
 
-		int hasVisibleWindows();
+		void onDraw(cairo_t* cr);
 
 		void onWindowActivate(GroupWindow* groupWindow);
 		void onWindowUnactivate();
@@ -37,22 +43,41 @@ class Group: public DockButton
 		void onButtonPress(GdkEventButton* event);
 		void onButtonRelease(GdkEventButton* event);
 		void onScroll(GdkEventScroll* scroll_event);
-		bool onMouseEnter();
-		
+		void onMouseEnter();
+		void onMouseLeave();
+		void setMouseLeaveTimeout();
 
+		bool onDragMotion(GdkDragContext* context, int x, int y, guint time);
+		void onDragLeave(const GdkDragContext* context, guint time);
+		void onDragDataGet(const GdkDragContext* context, GtkSelectionData* selectionData, guint info, guint time);
+		void onDragDataReceived(const GdkDragContext* context, int x, int y, const GtkSelectionData* selectionData, guint info, guint time);
 		void onDragBegin(GdkDragContext* context);
+
+		bool mHover;
+		bool mPinned;
+		GtkWidget* mButton;
+
+		GroupMenu mGroupMenu;
+		bool mSFocus;
+		bool mSOpened;
+		bool mSMany;
+		bool mSHover;
+
+		LogicalState<uint> mWindowsCount;
 
 		AppInfo* mAppInfo;
 		Store::List<GroupWindow*> mWindows;
 		uint mTopWindowIndex;
 
-
-	private:
 		void setTopWindow(GroupWindow* groupWindow);
 
 		bool mActive;
 		bool mDropHover;
 
+		Help::Gtk::Timeout mLeaveTimeout;
+		Help::Gtk::Timeout mMenuShowTimeout;
+
+
 };
 
-#endif
+#endif 

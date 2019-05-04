@@ -14,7 +14,6 @@
 #include "Theme.hpp"
 #include "Config.hpp"
 #include "AppInfos.hpp"
-#include "Group.hpp"
 
 extern "C"
 {

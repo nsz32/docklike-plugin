@@ -8,6 +8,7 @@
 #include <list>
 
 #include <algorithm>
+#include <functional>
 #include <sstream>
 #include <cstring>
 
@@ -36,13 +37,16 @@ namespace Help
 			public: 
 				Timeout();
 
-				void start(uint time, GSourceFunc function, void* data);
+				void setup(uint ms, std::function<bool()> function);
+
+				void start();
 				void stop();
 
 			private:
+				uint mDuration;
+				std::function<bool()> mFunction;
+
 				uint mTimeoutId;
-				GSourceFunc mFunction;
-				void* mData;
 		};
 	}
 }

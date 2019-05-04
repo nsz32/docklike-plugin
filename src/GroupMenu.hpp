@@ -6,22 +6,21 @@
 #include <gtk/gtk.h>
 
 
+class Group;
+class GroupMenuItem;
 
-class DockButton;
-class DockButtonMenuItem;
-
-class DockButtonMenu
+class GroupMenu
 {
 	public:
-		DockButtonMenu(DockButton* dockButton);
+		GroupMenu(Group* dockButton);
 
-		void add(DockButtonMenuItem& menuItem);
-		void remove(DockButtonMenuItem& menuItem);
+		void add(GroupMenuItem& menuItem);
+		void remove(GroupMenuItem& menuItem);
 
 		void popup();
 		void hide();
 
-		DockButton* mDockButton;
+		Group* mGroup;
 		
 		GtkWidget* mWindow;
 		GtkWidget* mBox;

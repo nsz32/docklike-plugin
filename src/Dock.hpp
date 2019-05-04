@@ -19,11 +19,9 @@ extern "C"
 #include "Plugin.hpp"
 #include "Store.tpp"
 #include "GroupWindow.hpp"
-#include "Group.hpp"
 #include "Wnck.hpp"
 #include "Helpers.hpp"
 
-class DockButton;
 class Group;
 
 namespace Dock
@@ -32,7 +30,7 @@ namespace Dock
 	
 	Group* prepareGroup(AppInfo* appInfo);
 
-	void moveButton(DockButton* moving, DockButton* dest);
+	void moveButton(Group* moving, Group* dest);
 	void savePinned();
 
 	void onPanelResize(int size);

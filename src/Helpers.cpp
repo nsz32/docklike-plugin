@@ -97,20 +97,23 @@ namespace Help
 
 		Timeout::Timeout()
 		{
-			mTimeoutId = NULL;
+			mDuration = mTimeoutId = NULL;
+			//mFunction = NULL;
 		}
 
-		void Timeout::start(uint time, GSourceFunc function, void* data)
+		void Timeout::setup(uint ms, std::function<bool()> function)
 		{
+			mDuration = ms;
 			mFunction = function;
-			mData = data;
+		}
 
-			if(mTimeoutId != NULL) stop();
-
-			mTimeoutId = g_timeout_add(time, G_SOURCE_FUNC(+[](Timeout* me){
-				me->mFunction(me->mData);
-				me->mTimeoutId = NULL;
-				return false;
+		void Timeout::start()
+		{
+			mTimeoutId = g_timeout_add(mDuration, G_SOURCE_FUNC(+[](Timeout* me){
+				bool cont = me->mFunction();
+				
+				if(!cont) me->mTimeoutId = NULL;
+				return cont;
 			}), this);
 		}
 
