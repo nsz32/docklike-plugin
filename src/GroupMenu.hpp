@@ -20,6 +20,8 @@ class GroupMenu
 		void popup();
 		void hide();
 
+		uint getPointerDistance();
+
 		Group* mGroup;
 		
 		GtkWidget* mWindow;

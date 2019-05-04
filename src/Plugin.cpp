@@ -7,13 +7,17 @@ namespace Plugin
 {
 	XfcePanelPlugin* mXfPlugin;
 	Config* mConfig;
-	Help::Gtk::Timeout mTimeout;
+	GdkDevice* mPointer;
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
 		mXfPlugin = xfPlugin;
 
 		mConfig = new Config(xfce_panel_plugin_save_location(mXfPlugin, true));
+
+		GdkDisplay* display = gdk_display_get_default();
+		GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
+		mPointer = gdk_device_manager_get_client_pointer(deviceManager);
 
 		AppInfos::init();
 
@@ -40,24 +44,13 @@ namespace Plugin
 		G_CALLBACK(+[](XfcePanelPlugin *plugin, GtkOrientation orientation){
 			Dock::onPanelOrientationChange(orientation);
 		}), NULL);
-
-		mTimeout.setup(1000000, [](){
-			
-			GdkDisplay *display = gdk_display_get_default ();
-			GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
-			GdkDevice *device = gdk_device_manager_get_client_pointer (device_manager);
-
-			// do whatever with Gdk.Device, i.e:
-			int x, y;
-			gdk_device_get_position (device, NULL, &x, &y);
-			std::cout << "pos:" << x << " " << y << std::endl;
-
-			return true;
-		});
-
-		mTimeout.start();
-		
 	}
+
+	void getPointerPosition(gint* x, gint* y)
+	{
+		gdk_device_get_position(mPointer, NULL, x, y);
+	}
+
 }
 
 

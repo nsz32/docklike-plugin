@@ -22,6 +22,7 @@ GroupMenu::GroupMenu(Group* dockButton)
 	g_signal_connect(G_OBJECT(mWindow), "enter-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenu* me){
 		me->mGroup->setStyle(Group::Style::Hover, true);
+		me->mGroup->mLeaveTimeout.stop();
 		me->mMouseHover = true;
 		return true;
 	}), this);
@@ -71,4 +72,28 @@ void GroupMenu::popup()
 void GroupMenu::hide()
 {
 	gtk_widget_hide(mWindow);
+}
+
+uint GroupMenu::getPointerDistance()
+{
+	gint wx, wy, ww, wh, px, py;
+
+	gtk_window_get_position(GTK_WINDOW(mWindow), &wx, &wy);
+	gtk_window_get_size(GTK_WINDOW(mWindow), &ww, &wh);
+
+	Plugin::getPointerPosition(&px, &py);
+
+	uint dx, dy; dx = dy = 0;
+
+	if(px < wx)
+		dx = wx - px;
+	else if(px > wx + ww)
+		dx = px - (wx + ww);
+
+	if(py < wy)
+		dy = wy - py;
+	else if(py > wy + wh)
+		dy = py - (wy + wh);
+
+	return std::max(dx, dy);
 }

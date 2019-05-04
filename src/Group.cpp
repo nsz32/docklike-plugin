@@ -39,9 +39,21 @@ Group::Group(AppInfo* appInfo, bool pinned):
 		}
 	);
 
-	mLeaveTimeout.setup(300, [this](){
-		onMouseLeave();
-		return false;
+	mLeaveTimeout.setup(70, [this](){
+		uint distance = mGroupMenu.getPointerDistance();
+
+		if(distance >= mTolerablePointerDistance)
+		{
+			onMouseLeave();
+			return false;
+		}
+
+		if(mTolerablePointerDistance > 15)
+			mTolerablePointerDistance -= 20;
+		else
+			mTolerablePointerDistance -= 1;
+
+		return true;
 	});
 
 	mMenuShowTimeout.setup(80, [this](){
@@ -104,6 +116,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 	g_signal_connect(G_OBJECT(mButton), "enter-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, Group* me){
 		me->setStyle(Style::Hover, true);
+		me->mLeaveTimeout.stop();
 		me->mMenuShowTimeout.start();
 		return false;
 	}), this);
@@ -284,7 +297,7 @@ void Group::onMouseEnter()
 
 	mGroupMenu.popup();
 
-	setStyle(Style::Hover, true);
+	this->setStyle(Style::Hover, true);
 }
 
 void Group::onMouseLeave()
@@ -298,6 +311,7 @@ void Group::onMouseLeave()
 
 void Group::setMouseLeaveTimeout()
 {
+	mTolerablePointerDistance = 215;
 	mLeaveTimeout.start();
 }
 
@@ -371,7 +385,45 @@ void Group::onButtonPress(GdkEventButton* event)
 {
 	std::cout << "PRESS MENU HERE:" << 1 << std::endl;
 	
-	if(mWindowsCount == 0 || event->button != 3) return;
+	if(event->button != 3) return;
+
+	if(mWindowsCount == 0)
+	{
+		GtkWidget* menu = gtk_menu_new();
+
+		GtkWidget* launchAnother = gtk_menu_item_new_with_label("Launch");
+		GtkWidget* separator = gtk_separator_menu_item_new();
+		GtkWidget* pinToggle = mPinned ? 
+			gtk_menu_item_new_with_label("Unpin") :
+			gtk_menu_item_new_with_label("Pin this app");
+
+		gtk_widget_show(separator);
+		gtk_widget_show(launchAnother);
+		gtk_widget_show(pinToggle);
+
+		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(launchAnother), 0, 1, 0, 1);
+		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(separator), 1, 2, 0, 2);
+		gtk_menu_attach(GTK_MENU (menu), GTK_WIDGET(pinToggle), 1, 2, 0, 2);
+
+		g_signal_connect(G_OBJECT(launchAnother), "activate",
+		G_CALLBACK(+[](GtkMenuItem *menuitem, Group* me)
+		{
+			AppInfos::launch(me->mAppInfo);
+		}), this);
+
+		g_signal_connect(G_OBJECT(pinToggle), "activate",
+		G_CALLBACK(+[](GtkMenuItem *menuitem, Group* me)
+		{
+			me->mPinned = !me->mPinned;
+			if(!me->mPinned)
+				me->updateStyle();
+			Dock::savePinned();
+			
+		}), this);
+
+		gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET(mButton), NULL);
+		gtk_menu_popup_at_widget (GTK_MENU (menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *) event);
+	}
 	else
 	{
 		GtkWidget* menu = Wnck::getActionMenu(mWindows.get(mTopWindowIndex));

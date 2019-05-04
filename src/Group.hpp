@@ -62,6 +62,7 @@ class Group
 		bool mSOpened;
 		bool mSMany;
 		bool mSHover;
+		uint mTolerablePointerDistance;
 
 		LogicalState<uint> mWindowsCount;
 

@@ -109,6 +109,7 @@ namespace Help
 
 		void Timeout::start()
 		{
+			stop();
 			mTimeoutId = g_timeout_add(mDuration, G_SOURCE_FUNC(+[](Timeout* me){
 				bool cont = me->mFunction();
 				
