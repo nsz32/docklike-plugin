@@ -204,6 +204,8 @@ void Group::remove(GroupWindow* window)
 	mWindowsCount.updateState();
 	
 	electNewTopWindow(); //TODEL
+
+	setStyle(Style::Focus, false);
 }
 
 
@@ -372,8 +374,8 @@ void Group::onWindowActivate(GroupWindow* groupWindow)
 
 void Group::onWindowUnactivate()
 {
-	mActive = false;
 	setStyle(Style::Focus, false);
+	mActive = false;
 }
 
 void Group::setTopWindow(GroupWindow* groupWindow)
