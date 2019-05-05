@@ -39,7 +39,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 		}
 	);
 
-	mLeaveTimeout.setup(100, [this](){
+	mLeaveTimeout.setup(50, [this](){
 		uint distance = mGroupMenu.getPointerDistance();
 
 		if(distance >= mTolerablePointerDistance)
@@ -68,7 +68,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 	g_signal_connect(G_OBJECT(mButton), "button-release-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me){
 		if(event->button != 1) return false;
-		me->onButtonRelease(event);
+		//me->onButtonRelease(event);
 		return true;
 	}), this);
 
@@ -108,7 +108,16 @@ Group::Group(AppInfo* appInfo, bool pinned):
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, Group* me){
 		me->setStyle(Style::Hover, true);
 		me->mLeaveTimeout.stop();
-		me->mMenuShowTimeout.start();
+		if((event->state & GDK_BUTTON1_MASK) == GDK_BUTTON1_MASK)
+		{
+			GroupWindow* groupWindow = me->mWindows.get(me->mTopWindowIndex);
+			groupWindow->activate(event->time);
+			me->onMouseEnter();
+		}
+		else
+		{
+			me->mMenuShowTimeout.start();
+		}
 		return false;
 	}), this);
 
@@ -304,7 +313,7 @@ void Group::onMouseLeave()
 
 void Group::setMouseLeaveTimeout()
 {
-	mTolerablePointerDistance = 160;
+	mTolerablePointerDistance = 200;
 	mLeaveTimeout.start();
 }
 

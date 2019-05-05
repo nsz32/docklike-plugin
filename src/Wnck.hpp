@@ -32,6 +32,8 @@ namespace Wnck
 		void activate(GroupWindow* groupWindow, guint32 timestamp);
 		void minimize(GroupWindow* groupWindow);
 
+		void setActiveWindow();
+
 		extern WnckScreen* mWnckScreen;
 		extern Store::KeyStore<gulong, GroupWindow*> mGroupWindows;
 }
