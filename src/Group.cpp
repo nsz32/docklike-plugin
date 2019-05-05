@@ -110,9 +110,8 @@ Group::Group(AppInfo* appInfo, bool pinned):
 		me->mLeaveTimeout.stop();
 		if((event->state & GDK_BUTTON1_MASK) == GDK_BUTTON1_MASK)
 		{
-			GroupWindow* groupWindow = me->mWindows.get(me->mTopWindowIndex);
-			groupWindow->activate(event->time);
 			me->onMouseEnter();
+			me->onButtonRelease((GdkEventButton*)event);
 		}
 		else
 		{
