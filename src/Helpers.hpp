@@ -42,7 +42,6 @@ namespace Help
 				void start();
 				void stop();
 
-			private:
 				uint mDuration;
 				std::function<bool()> mFunction;
 

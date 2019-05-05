@@ -48,7 +48,7 @@ namespace Theme
 		".menu_item button:hover { background-color:alpha(#888, 0.5); }"
 
 		"box { margin:0; padding:0; border:0; border-radius:0; }"
-		".menu { background-color:@dl_menu_bgcolor; box-shadow:inset 0 0 0 1px alpha(black, 0.2); }"
+		".menu { padding:1px; background-color:@dl_menu_bgcolor; box-shadow:inset 0 0 0 1px alpha(black, 0.2); }"
 		".drop { border-left:5px solid slateblue; }";
 
 		/*"button { border:none; border-radius:0; background:none; text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; }"

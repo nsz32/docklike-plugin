@@ -39,7 +39,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 		}
 	);
 
-	mLeaveTimeout.setup(70, [this](){
+	mLeaveTimeout.setup(100, [this](){
 		uint distance = mGroupMenu.getPointerDistance();
 
 		if(distance >= mTolerablePointerDistance)
@@ -48,23 +48,15 @@ Group::Group(AppInfo* appInfo, bool pinned):
 			return false;
 		}
 
-		if(mTolerablePointerDistance > 15)
-			mTolerablePointerDistance -= 20;
-		else
-			mTolerablePointerDistance -= 1;
+		mTolerablePointerDistance -= 20;
 
 		return true;
 	});
 
-	mMenuShowTimeout.setup(80, [this](){
+	mMenuShowTimeout.setup(90, [this](){
 		onMouseEnter();
 		return false;
 	});
-
-
-
-
-
 
 	g_signal_connect(G_OBJECT(mButton), "button-press-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me){
@@ -94,8 +86,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 
 	g_signal_connect(G_OBJECT(mButton), "drag-motion",
 	G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time, Group* me){
-		me->onDragMotion(context, x, y, time);
-		return true;
+		return me->onDragMotion(context, x, y, time);
 	}), this);
 
 	g_signal_connect(G_OBJECT(mButton), "drag-leave",
@@ -270,14 +261,14 @@ void Group::onDraw(cairo_t* cr)
 
 	if(mSMany && (mSOpened || mSHover))
 	{
-		int x1 = (int) w*0.85;
+		int x1 = (int) w*0.88;
 		cairo_pattern_t *pat = cairo_pattern_create_linear(x1, 0, w, 0);
 
 		cairo_pattern_add_color_stop_rgba(pat, 0.0, 0, 0, 0, 0.45);
 		cairo_pattern_add_color_stop_rgba(pat, 0.1, 0, 0, 0, 0.35);
 		cairo_pattern_add_color_stop_rgba(pat, 0.3, 0, 0, 0, 0.15);
 
-		if(false && aBack > 0)
+		if(aBack > 0)
 			cairo_rectangle(cr, x1, 0, w, h);
 		else
 			cairo_rectangle(cr, x1, h*0.9231, w, h);
@@ -313,7 +304,7 @@ void Group::onMouseLeave()
 
 void Group::setMouseLeaveTimeout()
 {
-	mTolerablePointerDistance = 215;
+	mTolerablePointerDistance = 160;
 	mLeaveTimeout.start();
 }
 
@@ -533,6 +524,27 @@ void Group::onScroll(GdkEventScroll* event)
 
 bool Group::onDragMotion(GdkDragContext* context, int x, int y, guint time)
 {
+	GList* tmp_list = gdk_drag_context_list_targets(context);
+	if(tmp_list != NULL)
+	{
+		char* name = gdk_atom_name(GDK_POINTER_TO_ATOM (tmp_list->data));
+		std::string target = name;
+		g_free (name);
+
+		if(target != "application/docklike_group")
+		{
+			GroupWindow* groupWindow = mWindows.get(mTopWindowIndex);
+
+			groupWindow->activate(time);
+
+			if(!mGroupMenu.mVisible)
+				onMouseEnter();
+
+			gdk_drag_status(context, GDK_ACTION_DEFAULT, time);
+			return true;
+		}
+	}
+
 	gtk_style_context_add_class(gtk_widget_get_style_context(mButton), "drop");
 
 	gdk_drag_status(context, GDK_ACTION_MOVE, time);

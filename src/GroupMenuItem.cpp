@@ -2,6 +2,8 @@
 
 #include "GroupWindow.hpp"
 
+static GtkTargetEntry entries[1] = { { "any", 0 ,0 } };
+
 GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 {
 	mGroupWindow = groupWindow;
@@ -29,6 +31,11 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 	gtk_widget_show(GTK_WIDGET(mCloseButton));
 	gtk_grid_attach(mGrid, GTK_WIDGET(mCloseButton), 2, 0, 1, 1);
 
+	mDragSwitchTimeout.setup(250, [this](){
+		mGroupWindow->activate(0);
+		return false;
+	});
+
 	g_signal_connect(G_OBJECT(mItem), "button-press-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, GroupMenuItem* me){
 		gdk_device_ungrab((event)->device, (event)->time);
@@ -38,6 +45,7 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 
 	g_signal_connect(G_OBJECT(mItem), "enter-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, GroupMenuItem* me){
+		std::cout << "ENTER:" << 1 << std::endl;
 		Help::Gtk::cssClassAdd(GTK_WIDGET(me->mItem), "hover");
 		if(event->state & GDK_BUTTON1_MASK)
 			me->mGroupWindow->activate(event->time);
@@ -46,7 +54,24 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 
 	g_signal_connect(G_OBJECT(mItem), "leave-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenuItem* me){
+		std::cout << "LEAVE:" << 1 << std::endl;
 		Help::Gtk::cssClassRemove(GTK_WIDGET(me->mItem), "hover");
+		return true;
+	}), this);
+
+	g_signal_connect(G_OBJECT(mItem), "drag-leave",
+	G_CALLBACK(+[](GtkWidget* widget, GdkDragContext *context, guint time, GroupMenuItem* me){
+		me->mGroupWindow->mGroup->setMouseLeaveTimeout();
+		me->mDragSwitchTimeout.stop();
+	}), this);
+
+	g_signal_connect(G_OBJECT(mItem), "drag-motion",
+	G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time, GroupMenuItem* me){
+		if(me->mDragSwitchTimeout.mTimeoutId == NULL)
+			me->mDragSwitchTimeout.start();
+
+		me->mGroupWindow->mGroup->mLeaveTimeout.stop();
+		gdk_drag_status(context, GDK_ACTION_DEFAULT, time);
 		return true;
 	}), this);
 
@@ -54,6 +79,8 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 	G_CALLBACK(+[](GtkButton* button, GroupMenuItem* me){
 		Wnck::close(me->mGroupWindow, 0);
 	}), this);
+
+	gtk_drag_dest_set(GTK_WIDGET(mItem), GTK_DEST_DEFAULT_DROP, entries, 1, GDK_ACTION_MOVE);
 }
 
 void GroupMenuItem::updateLabel()

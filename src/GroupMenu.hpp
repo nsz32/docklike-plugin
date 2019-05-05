@@ -27,6 +27,7 @@ class GroupMenu
 		GtkWidget* mWindow;
 		GtkWidget* mBox;
 
+		bool mVisible;
 		bool mMouseHover;
 };
 

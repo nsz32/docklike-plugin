@@ -12,7 +12,7 @@ GroupMenu::GroupMenu(Group* dockButton)
 	gtk_window_set_default_size(GTK_WINDOW(mWindow), 1, 1);
 	mGroup = dockButton;
 
-	mMouseHover = false;
+	mVisible = mMouseHover = false;
 
 	mBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 	Help::Gtk::cssClassAdd(GTK_WIDGET(mBox), "menu");
@@ -29,6 +29,10 @@ GroupMenu::GroupMenu(Group* dockButton)
 
 	g_signal_connect(G_OBJECT(mWindow), "leave-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenu* me){
+		int w; int h; gtk_window_get_size(GTK_WINDOW(me->mWindow), &w, &h);
+		int mx = ((GdkEventCrossing*)event)->x; int my = ((GdkEventCrossing*)event)->y;
+		if(mx >= 0 && mx < w && my >= 0 && my < h) return true;
+
 		me->mGroup->setMouseLeaveTimeout();
 		me->mMouseHover = false;
 		return true;
@@ -67,11 +71,15 @@ void GroupMenu::popup()
 		gtk_widget_show(mWindow);
 
 	gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);
+
+	mVisible = true;
 }
 
 void GroupMenu::hide()
 {
 	gtk_widget_hide(mWindow);
+
+	mVisible = false;
 }
 
 uint GroupMenu::getPointerDistance()

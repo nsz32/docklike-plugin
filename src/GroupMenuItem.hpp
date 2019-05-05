@@ -5,7 +5,7 @@
 
 #include <gtk/gtk.h>
 
-
+#include "Helpers.hpp"
 
 class GroupWindow;
 
@@ -24,6 +24,8 @@ class GroupMenuItem
 		GtkImage* mIcon;
 		GtkLabel* mLabel;
 		GtkButton* mCloseButton;
+
+		Help::Gtk::Timeout mDragSwitchTimeout;
 };
 
 #endif 
