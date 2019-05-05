@@ -105,8 +105,6 @@ namespace Theme
 		rgba = (GdkRGBA*)g_value_get_boxed(&gv);
 		std::string itemBgHover = gdk_rgba_to_string(rgba);
 
-		std::cout << "ITENBGHOVER:" << itemBgHover << std::endl;
-
 		gtk_widget_destroy(item);
 		gtk_widget_destroy(menu);
 

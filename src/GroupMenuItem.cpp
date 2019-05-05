@@ -45,7 +45,6 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 
 	g_signal_connect(G_OBJECT(mItem), "enter-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, GroupMenuItem* me){
-		std::cout << "ENTER:" << 1 << std::endl;
 		Help::Gtk::cssClassAdd(GTK_WIDGET(me->mItem), "hover");
 		if(event->state & GDK_BUTTON1_MASK)
 			me->mGroupWindow->activate(event->time);
@@ -54,7 +53,6 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 
 	g_signal_connect(G_OBJECT(mItem), "leave-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenuItem* me){
-		std::cout << "LEAVE:" << 1 << std::endl;
 		Help::Gtk::cssClassRemove(GTK_WIDGET(me->mItem), "hover");
 		return true;
 	}), this);
