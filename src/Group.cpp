@@ -68,7 +68,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 	g_signal_connect(G_OBJECT(mButton), "button-release-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me){
 		if(event->button != 1) return false;
-		//me->onButtonRelease(event);
+		me->onButtonRelease(event);
 		return true;
 	}), this);
 
@@ -108,15 +108,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 	G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, Group* me){
 		me->setStyle(Style::Hover, true);
 		me->mLeaveTimeout.stop();
-		if((event->state & GDK_BUTTON1_MASK) == GDK_BUTTON1_MASK)
-		{
-			me->onMouseEnter();
-			me->onButtonRelease((GdkEventButton*)event);
-		}
-		else
-		{
-			me->mMenuShowTimeout.start();
-		}
+		me->mMenuShowTimeout.start();
 		return false;
 	}), this);
 
