@@ -9,10 +9,10 @@
 
 # Defining libraries to be built and their installation destination
 plugindir = $(libdir)/xfce4/panel/plugins
-plugin_LTLIBRARIES = libnmt.la
+plugin_LTLIBRARIES = libdocklike.la
 
 # List of source files needed to build the library
-libnmt_la_SOURCES = \
+libdocklike_la_SOURCES = \
 						Theme.cpp Theme.hpp \
 						AppInfos.cpp AppInfos.hpp \
 						Config.cpp Config.hpp \
@@ -26,18 +26,18 @@ libnmt_la_SOURCES = \
 						Wnck.cpp Wnck.hpp \
 						register.c
 
-libnmt_la_LDFLAGS = \
+libdocklike_la_LDFLAGS = \
                       -avoid-version \
                       -module \
                       -no-undefined \
     -export-symbols-regex '^xfce_panel_module_(preinit|init|construct)'
 
 
-libnmt_la_CPPFLAGS = \
+libdocklike_la_CPPFLAGS = \
                         @LIBXFCE4PANEL_CFLAGS@ \
                         @LIBXFCE4UI_CFLAGS@
 
-libnmt_la_LIBADD = \
+libdocklike_la_LIBADD = \
                         @LIBXFCE4PANEL_LIBS@ \
                         @LIBXFCE4UI_LIBS@ \
                         $(GTK_LIBS) \

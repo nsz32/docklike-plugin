@@ -1,9 +1,9 @@
-NMT New Minimalist Dock for XFCE
+Docklike Taskbar for XFCE
 -----------------------------------
 
-![nmt-plugin](https://i.imgur.com/9wrvuM4.png)
-![nmt-plugin](https://i.imgur.com/1oooQUS.png)
-![nmt-plugin](https://i.imgur.com/y6GTq79.png)
+![docklike-plugin](https://i.imgur.com/9wrvuM4.png)
+![docklike-plugin](https://i.imgur.com/1oooQUS.png)
+![docklike-plugin](https://i.imgur.com/y6GTq79.png)
 
 A WIP modern taskbar for XFCE
 

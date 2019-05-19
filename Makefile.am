@@ -19,7 +19,7 @@ SUBDIRS = src
 # Desktop file
 #
 desktopdir = $(datadir)/xfce4/panel/plugins
-desktop_in_files = nmt.desktop
+desktop_in_files = docklike.desktop
 desktop_DATA = $(desktop_in_files)
 
 EXTRA_DIST = $(desktop_in_files)

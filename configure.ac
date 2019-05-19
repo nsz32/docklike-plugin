@@ -1,4 +1,4 @@
-AC_INIT([nmt-plugin], [0.0.1])
+AC_INIT([docklike-plugin], [0.0.1])
 AM_INIT_AUTOMAKE([1.15.0 -Wall -Werror])
 
 AM_CONFIG_HEADER(config.h)

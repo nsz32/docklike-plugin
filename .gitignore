@@ -1,6 +1,6 @@
 .vscode/**
 obj/**
-libnmt.so
+libdocklike.so
 Makefile
 COPYING
 INSTALL
