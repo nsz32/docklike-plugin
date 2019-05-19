@@ -533,12 +533,15 @@ bool Group::onDragMotion(GdkDragContext* context, int x, int y, guint time)
 
 		if(target != "application/docklike_group")
 		{
-			GroupWindow* groupWindow = mWindows.get(mTopWindowIndex);
+			if(mWindowsCount > 0)
+			{
+				GroupWindow* groupWindow = mWindows.get(mTopWindowIndex);
 
-			groupWindow->activate(time);
+				groupWindow->activate(time);
 
-			if(!mGroupMenu.mVisible)
-				onMouseEnter();
+				if(!mGroupMenu.mVisible)
+					onMouseEnter();
+			}
 
 			gdk_drag_status(context, GDK_ACTION_DEFAULT, time);
 			return true;
