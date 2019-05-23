@@ -39,7 +39,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 		}
 	);
 
-	mLeaveTimeout.setup(50, [this](){
+	mLeaveTimeout.setup(40, [this](){
 		uint distance = mGroupMenu.getPointerDistance();
 
 		if(distance >= mTolerablePointerDistance)
@@ -48,7 +48,7 @@ Group::Group(AppInfo* appInfo, bool pinned):
 			return false;
 		}
 
-		mTolerablePointerDistance -= 20;
+		mTolerablePointerDistance -= 10;
 
 		return true;
 	});

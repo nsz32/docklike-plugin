@@ -50,7 +50,10 @@ void GroupMenu::add(GroupMenuItem& menuItem)
 	gtk_box_pack_end(GTK_BOX(mBox), GTK_WIDGET(menuItem.mItem), false, true, 0);
 
 	if(mGroup->mSHover)
+	{
+		popup();
 		gtk_widget_show(mWindow);
+	}
 }
 
 void GroupMenu::remove(GroupMenuItem& menuItem)
@@ -65,6 +68,7 @@ void GroupMenu::remove(GroupMenuItem& menuItem)
 void GroupMenu::popup()
 {
 	gint wx, wy;
+
 	xfce_panel_plugin_position_widget(Plugin::mXfPlugin, mWindow, mGroup->mButton, &wx, &wy);
 	gtk_window_move(GTK_WINDOW(mWindow), wx, wy);
 	if(mGroup->mWindowsCount > 0)
