@@ -21,9 +21,11 @@ GroupMenu::GroupMenu(Group* dockButton)
 
 	g_signal_connect(G_OBJECT(mWindow), "enter-notify-event",
 	G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenu* me){
-		me->mGroup->setStyle(Group::Style::Hover, true);
-		me->mGroup->mLeaveTimeout.stop();
-		me->mMouseHover = true;
+		if(me->mGroup->mWindowsCount > 1){
+			me->mGroup->setStyle(Group::Style::Hover, true);
+			me->mGroup->mLeaveTimeout.stop();
+			me->mMouseHover = true;
+		}
 		return true;
 	}), this);
 
