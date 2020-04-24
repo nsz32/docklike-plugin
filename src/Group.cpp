@@ -436,21 +436,22 @@ void Group::onButtonPress(GdkEventButton *event)
 {
 	if (event->button == 3)
 	{
-		if (mWindowsCount == 0)
-		{
-			GtkWidget *menu = gtk_menu_new();
 
-			GtkWidget *launchAnother = gtk_menu_item_new_with_label("Launch");
+		GtkWidget *menu = (mWindowsCount > 0) ? Wnck::getActionMenu(mWindows.get(mTopWindowIndex)) : gtk_menu_new();
+
+		if (!mAppInfo->path.empty())
+		{
+			GtkWidget *launchAnother = gtk_menu_item_new_with_label((mWindowsCount > 0) ? "Launch another" : "Launch");
 			GtkWidget *separator = gtk_separator_menu_item_new();
-			GtkWidget *pinToggle = mPinned ? gtk_menu_item_new_with_label("Unpin") : gtk_menu_item_new_with_label("Pin this app");
+			GtkWidget *pinToggle = mPinned ? gtk_menu_item_new_with_label("Unpin") : gtk_menu_item_new_with_label("Pin");
 
 			gtk_widget_show(separator);
 			gtk_widget_show(launchAnother);
 			gtk_widget_show(pinToggle);
 
 			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(launchAnother), 0, 1, 0, 1);
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 1, 2, 0, 2);
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 1, 2, 0, 2);
+			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 1, 2, 0, 1);
+			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 1, 2, 0, 1);
 
 			g_signal_connect(G_OBJECT(launchAnother), "activate",
 							 G_CALLBACK(+[](GtkMenuItem *menuitem, Group *me) {
@@ -466,61 +467,10 @@ void Group::onButtonPress(GdkEventButton *event)
 								 Dock::savePinned();
 							 }),
 							 this);
-
-			gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(mButton), NULL);
-			gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *)event);
 		}
-		else
-		{
-			GtkWidget *menu = Wnck::getActionMenu(mWindows.get(mTopWindowIndex));
 
-			GtkWidget *launchAnother = gtk_menu_item_new_with_label("Launch another");
-			GtkWidget *separator = gtk_separator_menu_item_new();
-			GtkWidget *pinToggle = mPinned ? gtk_menu_item_new_with_label("Unpin") : gtk_menu_item_new_with_label("Pin this app");
-
-			gtk_widget_show(separator);
-			gtk_widget_show(launchAnother);
-			gtk_widget_show(pinToggle);
-
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(launchAnother), 0, 1, 0, 1);
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 1, 2, 0, 2);
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 1, 2, 0, 2);
-
-			g_signal_connect(G_OBJECT(launchAnother), "activate",
-							 G_CALLBACK(+[](GtkMenuItem *menuitem, Group *me) {
-								 AppInfos::launch(me->mAppInfo);
-							 }),
-							 this);
-
-			g_signal_connect(G_OBJECT(pinToggle), "activate",
-							 G_CALLBACK(+[](GtkMenuItem *menuitem, Group *me) {
-								 me->mPinned = !me->mPinned;
-								 if (!me->mPinned)
-									 me->updateStyle();
-								 Dock::savePinned();
-							 }),
-							 this);
-
-			gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(mButton), NULL);
-
-			gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *)event);
-
-			//then destroy TODO
-			/* g_signal_connect (G_OBJECT (menu), "selection-done",
-          G_CALLBACK (xfce_tasklist_button_menu_destroy), child);
-
-					static void
-			xfce_tasklist_button_menu_destroy (GtkWidget         *menu,
-											XfceTasklistChild *child)
-			{
-			panel_return_if_fail (XFCE_IS_TASKLIST (child->tasklist));
-			panel_return_if_fail (GTK_IS_TOGGLE_BUTTON (child->button));
-			panel_return_if_fail (GTK_IS_WIDGET (menu));
-
-			gtk_widget_destroy (menu);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (child->button), FALSE);
-			}*/
-		}
+		gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(mButton), NULL);
+		gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent *)event);
 	}
 }
 
