@@ -110,7 +110,7 @@ void *watchXDGDirectory(void *dirPath)
 	std::cout << "watch XDG dir: " << *(std::string *)dirPath << std::endl;
 
 	int fd = inotify_init();
-	int wd = inotify_add_watch(fd, ((std::string *)dirPath)->c_str(), IN_CLOSE_WRITE | IN_MOVED_TO);
+	int wd = inotify_add_watch(fd, ((std::string *)dirPath)->c_str(), IN_CLOSE_WRITE | IN_MOVED_TO | IN_CREATE);
 
 	int i = 0, len = 0;
 	char buf[1024];
