@@ -89,9 +89,6 @@ namespace Dock
 	{
 		mPanelSize = size;
 
-#if LIBXFCE4PANEL_CHECK_VERSION(4, 13, 0)
-		mIconSize = xfce_panel_plugin_get_icon_size(XFCE_PANEL_PLUGIN(Plugin::mXfPlugin));
-#else
 		GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(mGroups.first()->mButton));
 		GtkBorder padding, border;
 		gtk_style_context_get_padding(context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &padding);
@@ -101,15 +98,20 @@ namespace Dock
 
 		int width = Dock::mPanelSize - MAX(xthickness, ythickness);
 
-		if (width <= 21)
+		if (width <= 12)
+			mIconSize = width + 2;
+		else if (width <= 18)
 			mIconSize = 16;
-		else if (width >= 22 && width <= 29)
+		else if (width <= 26)
 			mIconSize = 24;
-		else if (width >= 30 && width <= 40)
+		else if (width <= 30)
 			mIconSize = 32;
 		else
-			mIconSize = width;
-#endif
+			mIconSize = width * 1.1;
+
+		std::cout << "NEW ICON SIZE:" << mIconSize << std::endl;
+		std::cout << "FROM WIDTH:" << width << std::endl;
+		std::cout << std::endl;
 
 		mGroups.forEach([](std::pair<AppInfo*, Group*> g) -> void { g.second->resize(); });
 	}
