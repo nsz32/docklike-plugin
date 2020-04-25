@@ -1,0 +1,15 @@
+BasedOnStyle: LLVM
+
+ColumnLimit: 0
+IndentWidth: 4
+TabWidth: 4
+UseTab: Always
+AlignAfterOpenBracket: DontAlign
+AlignOperands: false
+NamespaceIndentation: All
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false

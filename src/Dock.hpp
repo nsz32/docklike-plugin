@@ -5,29 +5,28 @@
 
 extern "C"
 {
-	#include <libxfce4panel/libxfce4panel.h>
-	#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4panel/libxfce4panel.h>
+#include <libxfce4ui/libxfce4ui.h>
 }
-
-#include <iostream>
-
-#include <string>
 
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
 
+#include <iostream>
+#include <string>
+
+#include "GroupWindow.hpp"
+#include "Helpers.hpp"
 #include "Plugin.hpp"
 #include "Store.tpp"
-#include "GroupWindow.hpp"
 #include "Wnck.hpp"
-#include "Helpers.hpp"
 
 class Group;
 
 namespace Dock
 {
 	void init();
-	
+
 	Group* prepareGroup(AppInfo* appInfo);
 
 	void moveButton(Group* moving, Group* dest);
@@ -41,6 +40,6 @@ namespace Dock
 
 	extern int mPanelSize;
 	extern int mIconSize;
-}
+} // namespace Dock
 
 #endif

@@ -3,16 +3,15 @@
 #ifndef HELPERS_HPP
 #define HELPERS_HPP
 
-#include <iostream>
-#include <string>
-#include <list>
+#include <gtk/gtk.h>
 
 #include <algorithm>
-#include <functional>
-#include <sstream>
 #include <cstring>
-
-#include <gtk/gtk.h>
+#include <functional>
+#include <iostream>
+#include <list>
+#include <sstream>
+#include <string>
 
 namespace Help
 {
@@ -23,7 +22,7 @@ namespace Help
 		std::string getWord(std::string str, int index, char separator = ' ');
 		std::string pathBasename(const std::string str);
 		std::string trim(const std::string str);
-	}
+	} // namespace String
 
 	namespace Gtk
 	{
@@ -34,20 +33,20 @@ namespace Help
 
 		class Timeout
 		{
-			public: 
-				Timeout();
+		  public:
+			Timeout();
 
-				void setup(uint ms, std::function<bool()> function);
+			void setup(uint ms, std::function<bool()> function);
 
-				void start();
-				void stop();
+			void start();
+			void stop();
 
-				uint mDuration;
-				std::function<bool()> mFunction;
+			uint mDuration;
+			std::function<bool()> mFunction;
 
-				uint mTimeoutId;
+			uint mTimeoutId;
 		};
-	}
-}
+	} // namespace Gtk
+} // namespace Help
 
 #endif

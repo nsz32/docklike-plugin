@@ -2,10 +2,9 @@
 
 #include "Group.hpp"
 #include "GroupMenuItem.hpp"
-
 #include "Plugin.hpp"
 
-GroupMenu::GroupMenu(Group *dockButton)
+GroupMenu::GroupMenu(Group* dockButton)
 {
 	mWindow = gtk_window_new(GtkWindowType::GTK_WINDOW_POPUP);
 	gtk_widget_add_events(mWindow, GDK_SCROLL_MASK);
@@ -20,39 +19,39 @@ GroupMenu::GroupMenu(Group *dockButton)
 	gtk_widget_show(mBox);
 
 	g_signal_connect(G_OBJECT(mWindow), "enter-notify-event",
-					 G_CALLBACK(+[](GtkWidget *widget, GdkEvent *event, GroupMenu *me) {
-						 me->mGroup->setStyle(Group::Style::Hover, true);
-						 me->mGroup->mLeaveTimeout.stop();
-						 me->mMouseHover = true;
-						 return true;
-					 }),
-					 this);
+		G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenu* me) {
+			me->mGroup->setStyle(Group::Style::Hover, true);
+			me->mGroup->mLeaveTimeout.stop();
+			me->mMouseHover = true;
+			return true;
+		}),
+		this);
 
 	g_signal_connect(G_OBJECT(mWindow), "leave-notify-event",
-					 G_CALLBACK(+[](GtkWidget *widget, GdkEvent *event, GroupMenu *me) {
-						 int w;
-						 int h;
-						 gtk_window_get_size(GTK_WINDOW(me->mWindow), &w, &h);
-						 int mx = ((GdkEventCrossing *)event)->x;
-						 int my = ((GdkEventCrossing *)event)->y;
-						 if (mx >= 0 && mx < w && my >= 0 && my < h)
-							 return true;
+		G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenu* me) {
+			int w;
+			int h;
+			gtk_window_get_size(GTK_WINDOW(me->mWindow), &w, &h);
+			int mx = ((GdkEventCrossing*)event)->x;
+			int my = ((GdkEventCrossing*)event)->y;
+			if (mx >= 0 && mx < w && my >= 0 && my < h)
+				return true;
 
-						 me->mGroup->setMouseLeaveTimeout();
-						 me->mMouseHover = false;
-						 return true;
-					 }),
-					 this);
+			me->mGroup->setMouseLeaveTimeout();
+			me->mMouseHover = false;
+			return true;
+		}),
+		this);
 
 	g_signal_connect(G_OBJECT(mWindow), "scroll-event",
-					 G_CALLBACK(+[](GtkWidget *widget, GdkEventScroll *event, GroupMenu *me) {
-						 ((Group *)me->mGroup)->onScroll(event); //TODO BRAH
-						 return true;
-					 }),
-					 this);
+		G_CALLBACK(+[](GtkWidget* widget, GdkEventScroll* event, GroupMenu* me) {
+			((Group*)me->mGroup)->onScroll(event); // TODO BRAH
+			return true;
+		}),
+		this);
 }
 
-void GroupMenu::add(GroupMenuItem &menuItem)
+void GroupMenu::add(GroupMenuItem& menuItem)
 {
 	gtk_box_pack_end(GTK_BOX(mBox), GTK_WIDGET(menuItem.mItem), false, true, 0);
 
@@ -63,7 +62,7 @@ void GroupMenu::add(GroupMenuItem &menuItem)
 	}
 }
 
-void GroupMenu::remove(GroupMenuItem &menuItem)
+void GroupMenu::remove(GroupMenuItem& menuItem)
 {
 	gtk_container_remove(GTK_CONTAINER(mBox), GTK_WIDGET(menuItem.mItem));
 	gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);

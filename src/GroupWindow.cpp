@@ -2,46 +2,53 @@
 
 #include "GroupWindow.hpp"
 
-GroupWindow::GroupWindow(WnckWindow* wnckWindow):
-	mGroupMenuItem(this)
-{ 
+GroupWindow::GroupWindow(WnckWindow* wnckWindow) : mGroupMenuItem(this)
+{
 	mWnckWindow = wnckWindow;
 
-	std::string groupName = Wnck::getGroupName(this); //check here for exotic group association (like libreoffice)
+	std::string groupName = Wnck::getGroupName(this); // check here for exotic group association (like libreoffice)
 	AppInfo* appInfo = AppInfos::search(groupName);
+
+	std::cout << "SEARCHING GROUPNAME:" << groupName << std::endl;
+	if (appInfo == NULL)
+		std::cout << "NO MATCH:" << 0 << std::endl;
+	else
+	{
+		std::cout << "> APPINFO NAME:" << appInfo->name << std::endl;
+		std::cout << "> APPINFO PATH:" << appInfo->path << std::endl;
+		std::cout << "> APPINFO ICON:" << appInfo->icon << std::endl;
+	}
 
 	getInGroup(Dock::prepareGroup(appInfo));
 
-	//signal connection
+	// signal connection
 	g_signal_connect(G_OBJECT(mWnckWindow), "name-changed",
-	G_CALLBACK(+[](WnckWindow* window, GroupWindow* me)
-	{ 
-		me->mGroupMenuItem.updateLabel();
-	}), this);
+		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
+			me->mGroupMenuItem.updateLabel();
+		}),
+		this);
 
 	g_signal_connect(G_OBJECT(mWnckWindow), "icon-changed",
-	G_CALLBACK(+[](WnckWindow* window, GroupWindow* me)
-	{ 
-		me->mGroupMenuItem.updateIcon();
-	}), this);
+		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
+			me->mGroupMenuItem.updateIcon();
+		}),
+		this);
 
 	g_signal_connect(G_OBJECT(mWnckWindow), "state-changed",
-	G_CALLBACK(+[](WnckWindow* window, WnckWindowState changed_mask, WnckWindowState new_state, GroupWindow* me)
-	{ 
-		me->updateState(new_state, changed_mask);
-	}), this);
+		G_CALLBACK(+[](WnckWindow* window, WnckWindowState changed_mask,
+						WnckWindowState new_state, GroupWindow* me) {
+			me->updateState(new_state, changed_mask);
+		}),
+		this);
 
-	//initial state
+	// initial state
 	updateState(Wnck::getState(this));
 
 	mGroupMenuItem.updateIcon();
 	mGroupMenuItem.updateLabel();
 }
 
-GroupWindow::~GroupWindow()
-{
-	leaveGroup(mGroup);
-}
+GroupWindow::~GroupWindow() { leaveGroup(mGroup); }
 
 void GroupWindow::getInGroup(Group* group)
 {
@@ -49,10 +56,7 @@ void GroupWindow::getInGroup(Group* group)
 	mGroup->add(this);
 }
 
-void GroupWindow::leaveGroup(Group* group)
-{
-	group->remove(this);
-}
+void GroupWindow::leaveGroup(Group* group) { group->remove(this); }
 
 void GroupWindow::onActivate()
 {
@@ -85,20 +89,17 @@ void GroupWindow::minimize()
 	Wnck::minimize(this);
 }
 
-void GroupWindow::showMenu()
-{
-	
-}
+void GroupWindow::showMenu() {}
 
 void GroupWindow::updateState(ushort state, ushort changeMask)
 {
 	mState = state;
 
-	if(changeMask & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
+	if (changeMask & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
 	{
 		mGroup->mWindowsCount.updateState();
-		
-		if(state & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
+
+		if (state & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
 			gtk_widget_hide(GTK_WIDGET(mGroupMenuItem.mItem));
 		else
 			gtk_widget_show(GTK_WIDGET(mGroupMenuItem.mItem));

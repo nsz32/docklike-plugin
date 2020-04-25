@@ -3,160 +3,135 @@
 #ifndef STORE_HPP
 #define STORE_HPP
 
+#include <algorithm>
+#include <functional>
 #include <list>
 #include <map>
 #include <utility>
-#include <functional>
-#include <algorithm>
-
 
 namespace Store
 {
 	template <typename K, typename V>
 	class KeyStore
 	{
-		public:
-			void push(K k, V v)
+	  public:
+		void push(K k, V v) { mList.push_front(std::make_pair(k, v)); }
+
+		void pushSecond(K k, V v)
+		{
+			mList.insert(std::next(mList.begin()), std::make_pair(k, v));
+		}
+
+		V pop(K k)
+		{
+			typename std::list<std::pair<const K, V>>::iterator it = std::find_if(
+				mList.begin(), mList.end(), [&k](std::pair<const K, V> o) -> bool { return (o.first == k); });
+
+			if (it != mList.end())
 			{
-				mList.push_front(std::make_pair(k, v));
-			}
-
-			void pushSecond(K k, V v)
-			{
-				mList.insert(std::next(mList.begin()), std::make_pair(k, v));
-			}
-
-			V pop(K k)
-			{
-				typename std::list<std::pair<const K, V>>::iterator it = std::find_if(mList.begin(), mList.end(),
-				[&k](std::pair<const K, V> o)->bool { return (o.first == k); });
-
-				if(it != mList.end())
-				{
-					V v = it->second;
-					mList.erase(it);
-					return v;
-				}
-
-				return NULL;
-			}
-
-			V get(K k)
-			{
-				typename std::list<std::pair<const K, V>>::iterator it = std::find_if(mList.begin(), mList.end(),
-				[&k](std::pair<const K, V> o)->bool { return (o.first == k); });
-				
-				if(it != mList.end())
-					return it->second;
-
-				return NULL;
-			}
-
-			V moveToStart(K k)
-			{
-				V v = pop(k);
-				mList.push_front(std::make_pair(k, v));
-
+				V v = it->second;
+				mList.erase(it);
 				return v;
 			}
 
-			V findIf(std::function<bool(std::pair<const K, V>)> pred)
-			{
-				typename std::list<std::pair<const K, V>>::iterator it = std::find_if(mList.begin(), mList.end(), pred);
-				if(it != mList.end())
-					return it->second;
+			return NULL;
+		}
 
-				return NULL;
-			}
+		V get(K k)
+		{
+			typename std::list<std::pair<const K, V>>::iterator it = std::find_if(
+				mList.begin(), mList.end(), [&k](std::pair<const K, V> o) -> bool { return (o.first == k); });
 
-			void forEach(std::function<void(std::pair<const K, V>)> funct)
-			{
-				std::for_each(mList.begin(), mList.end(), funct);
-			}
+			if (it != mList.end())
+				return it->second;
 
-			uint size()
-			{
-				return mList.size();
-			}
+			return NULL;
+		}
 
-			V first()
-			{
-				return mList.front().second;
-			}
+		V moveToStart(K k)
+		{
+			V v = pop(k);
+			mList.push_front(std::make_pair(k, v));
 
-		private:
-			std::list<std::pair<const K, V>> mList;
+			return v;
+		}
+
+		V findIf(std::function<bool(std::pair<const K, V>)> pred)
+		{
+			typename std::list<std::pair<const K, V>>::iterator it = std::find_if(mList.begin(), mList.end(), pred);
+			if (it != mList.end())
+				return it->second;
+
+			return NULL;
+		}
+
+		void forEach(std::function<void(std::pair<const K, V>)> funct)
+		{
+			std::for_each(mList.begin(), mList.end(), funct);
+		}
+
+		uint size() { return mList.size(); }
+
+		V first() { return mList.front().second; }
+
+	  private:
+		std::list<std::pair<const K, V>> mList;
 	};
 
 	template <typename K, typename V>
 	class Map
 	{
-		public:
-			void set (K k, V v)
-			{
-				mMap[k] = v;
-			}
-			
-			V get(K k)
-			{
-				typename std::map<const K, V>::iterator it = mMap.find(k);
-				if(it != mMap.end())
-					return it->second;
+	  public:
+		void set(K k, V v) { mMap[k] = v; }
 
-				return NULL;
-			}
+		V get(K k)
+		{
+			typename std::map<const K, V>::iterator it = mMap.find(k);
+			if (it != mMap.end())
+				return it->second;
 
-		private:
-			std::map<const K, V> mMap;
+			return NULL;
+		}
+
+	  private:
+		std::map<const K, V> mMap;
 	};
 
 	template <typename V>
 	class List
 	{
-		public:
-			void push(V v)
-			{
-				mList.push_back(v);
-			}
+	  public:
+		void push(V v) { mList.push_back(v); }
 
-			void pop(V v)
-			{
-				mList.remove(v);
-			}
+		void pop(V v) { mList.remove(v); }
 
-			V get(uint index)
-			{
-				return *std::next(mList.begin(), index);
-			}
+		V get(uint index) { return *std::next(mList.begin(), index); }
 
-			uint getIndex(V v)
-			{
-				typename std::list<V>::iterator it = std::find(mList.begin(), mList.end(), v);
-				return std::distance(mList.begin(), it);
-			}
+		uint getIndex(V v)
+		{
+			typename std::list<V>::iterator it = std::find(mList.begin(), mList.end(), v);
+			return std::distance(mList.begin(), it);
+		}
 
-			void forEach(std::function<void(V)> funct)
-			{
-				std::for_each(mList.begin(), mList.end(), funct);
-			}
+		void forEach(std::function<void(V)> funct)
+		{
+			std::for_each(mList.begin(), mList.end(), funct);
+		}
 
-			V findIf(std::function<bool(V)> pred)
-			{
-				typename std::list<V>::iterator it = std::find_if(mList.begin(), mList.end(), pred);
-				if(it != mList.end())
-					return *it;
+		V findIf(std::function<bool(V)> pred)
+		{
+			typename std::list<V>::iterator it = std::find_if(mList.begin(), mList.end(), pred);
+			if (it != mList.end())
+				return *it;
 
-				return NULL;
-			}
+			return NULL;
+		}
 
-			uint size()
-			{
-				return mList.size();
-			}
+		uint size() { return mList.size(); }
 
-		private:
-			std::list<V> mList;
+	  private:
+		std::list<V> mList;
 	};
-}
+} // namespace Store
 
 #endif

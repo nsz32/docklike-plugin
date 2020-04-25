@@ -3,22 +3,21 @@
 #ifndef PLUGIN_HPP
 #define PLUGIN_HPP
 
-#include <iostream>
-
-#include <string>
-#include <vector>
-
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
 
-#include "Theme.hpp"
-#include "Config.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "AppInfos.hpp"
+#include "Config.hpp"
+#include "Theme.hpp"
 
 extern "C"
 {
-	#include <libxfce4panel/libxfce4panel.h>
-	#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4panel/libxfce4panel.h>
+#include <libxfce4ui/libxfce4ui.h>
 }
 
 #include "Dock.hpp"
@@ -30,6 +29,6 @@ namespace Plugin
 	extern GdkDevice* mPointer;
 
 	void getPointerPosition(gint* x, gint* y);
-}
+} // namespace Plugin
 
 #endif
