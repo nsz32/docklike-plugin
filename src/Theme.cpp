@@ -32,7 +32,7 @@ namespace Theme
 		std::string cssStyle =
 			setupColors() +
 			"button { border:none; border-radius:0; background:none; "
-			"text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; }"
+			"text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; padding:0px;}"
 			//"grid { min-height:1.3em; background-color:red; }"
 
 			".menu_item image { margin-left:0.4em;  }"

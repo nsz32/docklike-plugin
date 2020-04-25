@@ -238,6 +238,8 @@ void Group::resize()
 
 	GtkWidget* img = gtk_button_get_image(GTK_BUTTON(mButton));
 	gtk_image_set_pixel_size(GTK_IMAGE(img), Dock::mIconSize);
+
+	gtk_widget_set_valign(img, GTK_ALIGN_CENTER);
 }
 
 void Group::setStyle(Style style, bool val)

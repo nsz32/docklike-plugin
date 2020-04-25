@@ -89,28 +89,19 @@ namespace Dock
 	{
 		mPanelSize = size;
 
-		GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(mGroups.first()->mButton));
-		GtkBorder padding, border;
-		gtk_style_context_get_padding(context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &padding);
-		gtk_style_context_get_border(context, gtk_widget_get_state_flags(GTK_WIDGET(mBox)), &border);
-		int xthickness = padding.left + padding.right + border.left + border.right;
-		int ythickness = padding.top + padding.bottom + border.top + border.bottom;
-
-		int width = Dock::mPanelSize - MAX(xthickness, ythickness);
-
-		if (width <= 12)
-			mIconSize = width + 2;
-		else if (width <= 18)
+		if (mPanelSize <= 20)
+			mIconSize = mPanelSize - 6;
+		else if (mPanelSize <= 28)
 			mIconSize = 16;
-		else if (width <= 26)
+		else if (mPanelSize <= 38)
 			mIconSize = 24;
-		else if (width <= 30)
+		else if (mPanelSize <= 41)
 			mIconSize = 32;
 		else
-			mIconSize = width * 1.1;
+			mIconSize = mPanelSize * 0.8;
 
 		std::cout << "NEW ICON SIZE:" << mIconSize << std::endl;
-		std::cout << "FROM WIDTH:" << width << std::endl;
+		std::cout << "FROM HEIGHT:" << mPanelSize << std::endl;
 		std::cout << std::endl;
 
 		mGroups.forEach([](std::pair<AppInfo*, Group*> g) -> void { g.second->resize(); });
