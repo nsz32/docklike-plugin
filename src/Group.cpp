@@ -92,39 +92,37 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 		}),
 		this);
 
-	g_signal_connect(
-		G_OBJECT(mButton), "drag-begin",
-		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, Group* me) { me->onDragBegin(context); }),
+	g_signal_connect(G_OBJECT(mButton), "drag-begin",
+		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, Group* me) {
+			me->onDragBegin(context);
+		}),
 		this);
 
-	g_signal_connect(
-		G_OBJECT(mButton), "drag-motion",
+	g_signal_connect(G_OBJECT(mButton), "drag-motion",
 		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time, Group* me) {
 			return me->onDragMotion(widget, context, x, y, time);
 		}),
 		this);
 
-	g_signal_connect(
-		G_OBJECT(mButton), "drag-leave",
+	g_signal_connect(G_OBJECT(mButton), "drag-leave",
 		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, guint time, Group* me) {
 			me->onDragLeave(context, time);
 		}),
 		this);
 
-	g_signal_connect(
-		G_OBJECT(mButton), "drag-data-get",
-		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, GtkSelectionData* data, guint info,
-						guint time, Group* me) { me->onDragDataGet(context, data, info, time); }),
+	g_signal_connect(G_OBJECT(mButton), "drag-data-get",
+		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, GtkSelectionData* data, guint info, guint time, Group* me) {
+			me->onDragDataGet(context, data, info, time);
+		}),
 		this);
 
-	g_signal_connect(
-		G_OBJECT(mButton), "drag-data-received",
-		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, gint x, gint y, GtkSelectionData* data, guint info,
-						guint time, Group* me) { me->onDragDataReceived(context, x, y, data, info, time); }),
+	g_signal_connect(G_OBJECT(mButton), "drag-data-received",
+		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, gint x, gint y, GtkSelectionData* data, guint info, guint time, Group* me) {
+			me->onDragDataReceived(context, x, y, data, info, time);
+		}),
 		this);
 
-	g_signal_connect(
-		G_OBJECT(mButton), "enter-notify-event",
+	g_signal_connect(G_OBJECT(mButton), "enter-notify-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, Group* me) {
 			if (event->state & GDK_BUTTON1_MASK)
 			{
@@ -433,7 +431,7 @@ void Group::onButtonPress(GdkEventButton* event)
 		{
 			GtkWidget* launchAnother = gtk_menu_item_new_with_label((mWindowsCount > 0) ? "Launch another" : "Launch");
 			GtkWidget* separator = gtk_separator_menu_item_new();
-			GtkWidget* pinToggle = mPinned ? gtk_menu_item_new_with_label("Unpin") : gtk_menu_item_new_with_label("Pin");
+			GtkWidget* pinToggle = gtk_menu_item_new_with_label(mPinned ? "Unpin" : "Pin");
 
 			gtk_widget_show(separator);
 			gtk_widget_show(launchAnother);
@@ -444,15 +442,35 @@ void Group::onButtonPress(GdkEventButton* event)
 			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 1, 2, 0, 1);
 
 			g_signal_connect(G_OBJECT(launchAnother), "activate",
-				G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) { AppInfos::launch(me->mAppInfo); }), this);
-
-			g_signal_connect(G_OBJECT(pinToggle), "activate", G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) {
-				me->mPinned = !me->mPinned;
-				if (!me->mPinned)
-					me->updateStyle();
-				Dock::savePinned();
-			}),
+				G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) {
+					AppInfos::launch(me->mAppInfo);
+				}),
 				this);
+
+			g_signal_connect(G_OBJECT(pinToggle), "activate",
+				G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) {
+					me->mPinned = !me->mPinned;
+					if (!me->mPinned)
+						me->updateStyle();
+					Dock::savePinned();
+				}),
+				this);
+
+			if (mWindowsCount > 1)
+			{
+				std::cout << "closeall:" << 1 << std::endl;
+				GtkWidget* closeAll = gtk_menu_item_new_with_label("Close All");
+				gtk_widget_show(closeAll);
+				gtk_menu_shell_append(GTK_MENU_SHELL(menu), closeAll);
+
+				g_signal_connect(G_OBJECT(closeAll), "activate",
+					G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) {
+						me->mWindows.forEach([](GroupWindow* w) -> void {
+							Wnck::close(w, 0);
+						});
+					}),
+					this);
+			}
 		}
 
 		gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(mButton), NULL);
