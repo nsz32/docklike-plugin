@@ -20,8 +20,6 @@ namespace Plugin
 		GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
 		mPointer = gdk_device_manager_get_client_pointer(deviceManager);
 
-		// xfce_panel_plugin_menu_show_configure(xfPlugin);
-
 		AppInfos::init();
 
 		Theme::init(gtk_widget_get_parent(GTK_WIDGET(mXfPlugin)));
@@ -31,7 +29,9 @@ namespace Plugin
 
 		//--------------------------------------------------
 
-		gtk_container_add(GTK_CONTAINER(xfPlugin), GTK_WIDGET(Dock::mBox));
+		gtk_container_add(GTK_CONTAINER(mXfPlugin), GTK_WIDGET(Dock::mBox));
+
+		xfce_panel_plugin_menu_show_configure(mXfPlugin);
 
 		//--------------------------------------------------
 
@@ -45,6 +45,12 @@ namespace Plugin
 		g_signal_connect(G_OBJECT(GTK_WIDGET(mXfPlugin)), "orientation-changed",
 			G_CALLBACK(+[](XfcePanelPlugin* plugin, GtkOrientation orientation) {
 				Dock::onPanelOrientationChange(orientation);
+			}),
+			NULL);
+
+		g_signal_connect(G_OBJECT(mXfPlugin), "configure-plugin",
+			G_CALLBACK(+[](XfcePanelPlugin* plugin) {
+				Settings::popup();
 			}),
 			NULL);
 	}

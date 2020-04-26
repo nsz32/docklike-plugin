@@ -8,6 +8,7 @@
 
 #include <map>
 
+#include "Group.hpp"
 #include "GroupWindow.hpp"
 #include "Helpers.hpp"
 #include "Store.tpp"
@@ -25,7 +26,7 @@ namespace Wnck
 	gushort getState(GroupWindow* groupWindow);
 	GdkPixbuf* getMiniIcon(GroupWindow* groupWindow);
 
-	GtkWidget* getActionMenu(GroupWindow* groupWindow);
+	GtkWidget* buildActionMenu(GroupWindow* groupWindow, Group* group);
 
 	void close(GroupWindow* groupWindow, guint32 timestamp);
 	void activate(GroupWindow* groupWindow, guint32 timestamp);
@@ -37,4 +38,4 @@ namespace Wnck
 	extern Store::KeyStore<gulong, GroupWindow*> mGroupWindows;
 } // namespace Wnck
 
-#endif
+#endif //WNCK_HPP

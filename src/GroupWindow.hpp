@@ -15,6 +15,7 @@
 #include "Helpers.hpp"
 #include "Wnck.hpp"
 
+class GroupMenuItem;
 class Group;
 
 class GroupWindow
@@ -38,7 +39,7 @@ class GroupWindow
 	Group* mGroup;
 
 	WnckWindow* mWnckWindow;
-	GroupMenuItem mGroupMenuItem;
+	GroupMenuItem* mGroupMenuItem;
 
 	void updateState(unsigned short state, unsigned short changeMask = USHRT_MAX);
 	unsigned short mState;

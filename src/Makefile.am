@@ -24,6 +24,7 @@ libdocklike_la_SOURCES = \
 						Plugin.cpp Plugin.hpp \
 						Dock.cpp Dock.hpp \
 						Wnck.cpp Wnck.hpp \
+						Settings.cpp Settings.hpp \
 						register.c
 
 libdocklike_la_LDFLAGS = \

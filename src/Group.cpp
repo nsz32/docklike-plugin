@@ -126,7 +126,7 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 
 	g_signal_connect(G_OBJECT(mButton), "enter-notify-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, Group* me) {
-			if (event->state & GDK_BUTTON1_MASK)
+			if (event->state & (GDK_BUTTON1_MASK | GDK_BUTTON3_MASK))
 			{
 				me->activate(event->time);
 				me->mActiveBeforePressed = me->mActive;
@@ -231,18 +231,20 @@ void Group::activate(guint32 timestamp)
 
 void Group::resize()
 {
-	gtk_widget_set_size_request(mButton, (((Dock::mPanelSize * 1.2) / 2) * 2) - 1, Dock::mPanelSize);
+	gtk_widget_set_size_request(mButton, (((Dock::mPanelSize * 1.2) / 2) * 2), Dock::mPanelSize);
 
-	GtkWidget* img = gtk_button_get_image(GTK_BUTTON(mButton));
+	GtkWidget* img;
 
 	if (mIconPixbuf != NULL)
 	{
 		GdkPixbuf* pixbuf = gdk_pixbuf_scale_simple(mIconPixbuf, Dock::mIconSize, Dock::mIconSize, GDK_INTERP_HYPER);
 		GtkWidget* icon = gtk_image_new_from_pixbuf(pixbuf);
 		gtk_button_set_image(GTK_BUTTON(mButton), icon);
+		img = gtk_button_get_image(GTK_BUTTON(mButton));
 	}
 	else
 	{
+		img = gtk_button_get_image(GTK_BUTTON(mButton));
 		gtk_image_set_pixel_size(GTK_IMAGE(img), Dock::mIconSize);
 	}
 
@@ -434,57 +436,10 @@ void Group::onButtonPress(GdkEventButton* event)
 {
 	if (event->button == 3)
 	{
-		GtkWidget* menu = (mWindowsCount > 0) ? Wnck::getActionMenu(mWindows.get(mTopWindowIndex)) : gtk_menu_new();
-
-		if (!mAppInfo->path.empty())
-		{
-			GtkWidget* launchAnother = gtk_menu_item_new_with_label((mWindowsCount > 0) ? "Launch another" : "Launch");
-			GtkWidget* separator = gtk_separator_menu_item_new();
-			GtkWidget* pinToggle = gtk_menu_item_new_with_label(mPinned ? "Unpin" : "Pin");
-
-			gtk_widget_show(separator);
-			gtk_widget_show(launchAnother);
-			gtk_widget_show(pinToggle);
-
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(launchAnother), 0, 1, 0, 1);
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 1, 2, 0, 1);
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 1, 2, 0, 1);
-
-			g_signal_connect(G_OBJECT(launchAnother), "activate",
-				G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) {
-					AppInfos::launch(me->mAppInfo);
-				}),
-				this);
-
-			g_signal_connect(G_OBJECT(pinToggle), "activate",
-				G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) {
-					me->mPinned = !me->mPinned;
-					if (!me->mPinned)
-						me->updateStyle();
-					Dock::savePinned();
-				}),
-				this);
-
-			if (mWindowsCount > 1)
-			{
-				std::cout << "closeall:" << 1 << std::endl;
-				GtkWidget* closeAll = gtk_menu_item_new_with_label("Close All");
-				gtk_widget_show(closeAll);
-				gtk_menu_shell_append(GTK_MENU_SHELL(menu), closeAll);
-
-				g_signal_connect(G_OBJECT(closeAll), "activate",
-					G_CALLBACK(+[](GtkMenuItem* menuitem, Group* me) {
-						me->mWindows.forEach([](GroupWindow* w) -> void {
-							Wnck::close(w, 0);
-						});
-					}),
-					this);
-			}
-		}
+		GtkWidget* menu = Wnck::buildActionMenu(mWindows.get(mTopWindowIndex), this);
 
 		gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(mButton), NULL);
-		gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST,
-			(GdkEvent*)event);
+		gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent*)event);
 	}
 }
 

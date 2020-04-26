@@ -5,7 +5,9 @@
 
 #include <iostream>
 
+#include "GroupWindow.hpp"
 #include "Helpers.hpp"
+#include "Wnck.hpp"
 
 class GroupWindow;
 
@@ -13,6 +15,7 @@ class GroupMenuItem
 {
   public:
 	GroupMenuItem(GroupWindow* groupWindow);
+	~GroupMenuItem();
 
 	void updateLabel();
 	void updateIcon();

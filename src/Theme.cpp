@@ -14,7 +14,8 @@ namespace Theme
 		mCssProvider = gtk_css_provider_new();
 		mStyleContext = gtk_widget_get_style_context(panel);
 
-		g_signal_connect(G_OBJECT(mStyleContext), "changed", G_CALLBACK(+[](GtkStyleContext* stylecontext) { load(); }), NULL);
+		g_signal_connect(G_OBJECT(mStyleContext), "changed",
+			G_CALLBACK(+[](GtkStyleContext* stylecontext) { load(); }), NULL);
 
 		load();
 	}

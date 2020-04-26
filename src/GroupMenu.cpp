@@ -51,9 +51,9 @@ GroupMenu::GroupMenu(Group* dockButton)
 		this);
 }
 
-void GroupMenu::add(GroupMenuItem& menuItem)
+void GroupMenu::add(GroupMenuItem* menuItem)
 {
-	gtk_box_pack_end(GTK_BOX(mBox), GTK_WIDGET(menuItem.mItem), false, true, 0);
+	gtk_box_pack_end(GTK_BOX(mBox), GTK_WIDGET(menuItem->mItem), false, true, 0);
 
 	if (mGroup->mSHover)
 	{
@@ -62,9 +62,9 @@ void GroupMenu::add(GroupMenuItem& menuItem)
 	}
 }
 
-void GroupMenu::remove(GroupMenuItem& menuItem)
+void GroupMenu::remove(GroupMenuItem* menuItem)
 {
-	gtk_container_remove(GTK_CONTAINER(mBox), GTK_WIDGET(menuItem.mItem));
+	gtk_container_remove(GTK_CONTAINER(mBox), GTK_WIDGET(menuItem->mItem));
 	gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);
 
 	if (mGroup->mWindowsCount == 0)

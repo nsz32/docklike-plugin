@@ -12,6 +12,7 @@
 
 #include "AppInfos.hpp"
 #include "Config.hpp"
+#include "Settings.hpp"
 #include "Theme.hpp"
 
 extern "C"

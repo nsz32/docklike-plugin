@@ -13,8 +13,8 @@ class GroupMenu
   public:
 	GroupMenu(Group* dockButton);
 
-	void add(GroupMenuItem& menuItem);
-	void remove(GroupMenuItem& menuItem);
+	void add(GroupMenuItem* menuItem);
+	void remove(GroupMenuItem* menuItem);
 
 	void popup();
 	void hide();
