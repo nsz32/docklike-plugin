@@ -12,6 +12,8 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 	gtk_style_context_add_class(gtk_widget_get_style_context(mButton), "group");
 	gtk_style_context_add_class(gtk_widget_get_style_context(mButton), "flat");
 
+	mIconPixbuf = NULL;
+
 	mAppInfo = appInfo;
 	mPinned = pinned;
 	mActive = false;
@@ -176,11 +178,12 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 		GtkWidget* icon;
 
 		if (mAppInfo->icon[0] == '/')
-			icon = gtk_image_new_from_file(mAppInfo->icon.c_str());
+			mIconPixbuf = gdk_pixbuf_new_from_file(mAppInfo->icon.c_str(), NULL);
 		else
+		{
 			icon = gtk_image_new_from_icon_name(mAppInfo->icon.c_str(), GTK_ICON_SIZE_BUTTON);
-
-		gtk_button_set_image(GTK_BUTTON(mButton), icon);
+			gtk_button_set_image(GTK_BUTTON(mButton), icon);
+		}
 	}
 	else
 	{
@@ -231,7 +234,17 @@ void Group::resize()
 	gtk_widget_set_size_request(mButton, (((Dock::mPanelSize * 1.2) / 2) * 2) - 1, Dock::mPanelSize);
 
 	GtkWidget* img = gtk_button_get_image(GTK_BUTTON(mButton));
-	gtk_image_set_pixel_size(GTK_IMAGE(img), Dock::mIconSize);
+
+	if (mIconPixbuf != NULL)
+	{
+		GdkPixbuf* pixbuf = gdk_pixbuf_scale_simple(mIconPixbuf, Dock::mIconSize, Dock::mIconSize, GDK_INTERP_HYPER);
+		GtkWidget* icon = gtk_image_new_from_pixbuf(pixbuf);
+		gtk_button_set_image(GTK_BUTTON(mButton), icon);
+	}
+	else
+	{
+		gtk_image_set_pixel_size(GTK_IMAGE(img), Dock::mIconSize);
+	}
 
 	gtk_widget_set_valign(img, GTK_ALIGN_CENTER);
 }

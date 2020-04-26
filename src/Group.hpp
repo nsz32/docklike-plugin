@@ -57,6 +57,7 @@ class Group
 	bool mHover;
 	bool mPinned;
 	GtkWidget* mButton;
+	GdkPixbuf* mIconPixbuf;
 
 	GroupMenu mGroupMenu;
 	bool mSFocus;
