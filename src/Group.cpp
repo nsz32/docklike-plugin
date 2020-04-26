@@ -173,20 +173,14 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 
 	if (mAppInfo != NULL && !mAppInfo->icon.empty())
 	{
+		GtkWidget* icon;
+
 		if (mAppInfo->icon[0] == '/')
-		{
-			// set_image_from_icon_name(mAppInfo->icon);
-
-			/* TODO RESIZE : Gtk::Image* z = new Gtk::Image(ai->icon);
-				z->set_pixel_size(16);
-
-				set_image(*z);*/
-		}
+			icon = gtk_image_new_from_file(mAppInfo->icon.c_str());
 		else
-		{
-			GtkWidget* icon = gtk_image_new_from_icon_name(mAppInfo->icon.c_str(), GTK_ICON_SIZE_BUTTON);
-			gtk_button_set_image(GTK_BUTTON(mButton), icon);
-		}
+			icon = gtk_image_new_from_icon_name(mAppInfo->icon.c_str(), GTK_ICON_SIZE_BUTTON);
+
+		gtk_button_set_image(GTK_BUTTON(mButton), icon);
 	}
 	else
 	{
