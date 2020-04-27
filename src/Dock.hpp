@@ -31,6 +31,7 @@ namespace Dock
 
 	void moveButton(Group* moving, Group* dest);
 	void savePinned();
+	void redraw();
 
 	void onPanelResize(int size = -1);
 	void onPanelOrientationChange(GtkOrientation orientation);

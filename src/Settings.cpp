@@ -8,6 +8,7 @@ namespace Settings
 	State<bool> forceIconSize;
 	State<int> iconSize;
 	State<bool> noWindowsListIfSingle;
+	State<int> indicatorStyle;
 	State<std::list<std::string>> pinnedAppList;
 
 	void init()
@@ -31,6 +32,14 @@ namespace Settings
 				saveFile();
 
 				Dock::onPanelResize();
+			});
+
+		indicatorStyle.setup(g_key_file_get_integer(mFile, "user", "indicatorStyle", NULL),
+			[](int indicatorStyle) -> void {
+				g_key_file_set_integer(mFile, "user", "indicatorStyle", indicatorStyle);
+				saveFile();
+
+				Dock::redraw();
 			});
 
 		noWindowsListIfSingle.setup(g_key_file_get_boolean(mFile, "user", "noWindowsListIfSingle", NULL),

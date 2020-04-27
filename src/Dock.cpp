@@ -85,6 +85,11 @@ namespace Dock
 		Settings::pinnedAppList.set(pinnedList);
 	}
 
+	void redraw()
+	{
+		gtk_widget_queue_draw(mBox);
+	}
+
 	void onPanelResize(int size)
 	{
 		if (size != -1)

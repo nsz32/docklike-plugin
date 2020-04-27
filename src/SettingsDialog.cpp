@@ -21,11 +21,43 @@ namespace SettingsDialog
 
 		gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialogWindow))), GTK_WIDGET(grid));
 
+		// No windows list if single
+
+		GtkWidget* noWindowsListIfSingle = gtk_check_button_new_with_label("Don't display list for a single window");
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(noWindowsListIfSingle), Settings::noWindowsListIfSingle);
+		gtk_grid_attach(grid, noWindowsListIfSingle, 0, 0, 1, 1);
+
+		g_signal_connect(
+			G_OBJECT(noWindowsListIfSingle), "toggled",
+			G_CALLBACK(+[](GtkToggleButton* noWindowsListIfSingle) {
+				Settings::noWindowsListIfSingle.set(gtk_toggle_button_get_active(noWindowsListIfSingle));
+			}),
+			NULL);
+
+		// Indicator style
+
+		GtkWidget* label = gtk_label_new("Indicator style : ");
+		gtk_grid_attach(grid, label, 0, 1, 1, 1);
+
+		GtkWidget* indicatorStyle = gtk_combo_box_text_new();
+		for (const char* choice : {"Bar", "Dots"})
+			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(indicatorStyle), choice);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(indicatorStyle), Settings::indicatorStyle);
+
+		g_signal_connect(
+			G_OBJECT(indicatorStyle), "changed",
+			G_CALLBACK(+[](GtkComboBox* indicatorStyle) {
+				Settings::indicatorStyle.set(gtk_combo_box_get_active(GTK_COMBO_BOX(indicatorStyle)));
+			}),
+			NULL);
+
+		gtk_grid_attach(grid, indicatorStyle, 2, 1, 1, 1);
+
 		// Force icon size
 
 		GtkWidget* iconSizeToggle = gtk_check_button_new_with_label("Force icon size : ");
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(iconSizeToggle), Settings::forceIconSize);
-		gtk_grid_attach(grid, iconSizeToggle, 0, 0, 1, 1);
+		gtk_grid_attach(grid, iconSizeToggle, 0, 2, 1, 1);
 
 		g_signal_connect(
 			G_OBJECT(iconSizeToggle), "toggled",
@@ -53,20 +85,7 @@ namespace SettingsDialog
 			}),
 			NULL);
 
-		gtk_grid_attach(grid, iconSizeValue, 2, 0, 1, 1);
-
-		// No windows list if single
-
-		GtkWidget* noWindowsListIfSingle = gtk_check_button_new_with_label("Don't display list for a single window");
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(noWindowsListIfSingle), Settings::noWindowsListIfSingle);
-		gtk_grid_attach(grid, noWindowsListIfSingle, 0, 1, 1, 1);
-
-		g_signal_connect(
-			G_OBJECT(noWindowsListIfSingle), "toggled",
-			G_CALLBACK(+[](GtkToggleButton* noWindowsListIfSingle) {
-				Settings::noWindowsListIfSingle.set(gtk_toggle_button_get_active(noWindowsListIfSingle));
-			}),
-			NULL);
+		gtk_grid_attach(grid, iconSizeValue, 2, 2, 1, 1);
 
 		// ------------------
 
