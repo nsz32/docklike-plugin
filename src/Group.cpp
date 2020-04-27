@@ -159,8 +159,6 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 		}),
 		this);
 
-	// gtk_drag_source_set(mButton, GDK_BUTTON1_MASK, entries, 1,
-	// GDK_ACTION_MOVE);
 	gtk_drag_dest_set(mButton, GTK_DEST_DEFAULT_DROP, entries, 1, GDK_ACTION_MOVE);
 
 	if (mPinned)
@@ -200,6 +198,12 @@ void Group::add(GroupWindow* window)
 	mGroupMenu.add(window->mGroupMenuItem);
 
 	mWindowsCount.updateState();
+
+	if (mWindowsCount == 1 && !mPinned)
+	{
+		std::cout << "REORDER OK:" << 0 << std::endl;
+		gtk_box_reorder_child(GTK_BOX(Dock::mBox), GTK_WIDGET(mButton), -1);
+	}
 }
 
 void Group::remove(GroupWindow* window)

@@ -50,8 +50,7 @@ namespace Plugin
 
 		g_signal_connect(G_OBJECT(mXfPlugin), "configure-plugin",
 			G_CALLBACK(+[](XfcePanelPlugin* plugin) {
-				GtkWidget* dialog = Settings::popup();
-				//Theme::applyDefault(dialog);
+				Settings::popup();
 			}),
 			NULL);
 	}
