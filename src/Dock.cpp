@@ -21,9 +21,9 @@ namespace Dock
 		gtk_widget_show(mBox);
 
 		// pinned groups
-		std::list<std::string> pinned = Config::getPinned();
-		std::list<std::string>::iterator it = pinned.begin();
-		while (it != pinned.end())
+		std::list<std::string> pinnedApps = Settings::pinnedAppList;
+		std::list<std::string>::iterator it = pinnedApps.begin();
+		while (it != pinnedApps.end())
 		{
 			AppInfo* appInfo = AppInfos::search(*it);
 
@@ -67,7 +67,7 @@ namespace Dock
 
 	void savePinned()
 	{
-		std::list<std::string> list;
+		std::list<std::string> pinnedList;
 
 		GList* children = gtk_container_get_children(GTK_CONTAINER(mBox));
 		GList* child;
@@ -78,32 +78,38 @@ namespace Dock
 
 			if (group->mPinned)
 			{
-				list.push_back(group->mAppInfo->path);
+				pinnedList.push_back(group->mAppInfo->path);
 			}
 		}
 
-		Config::setPinned(list);
-		Config::saveFile();
+		Settings::pinnedAppList.set(pinnedList);
 	}
 
 	void onPanelResize(int size)
 	{
-		mPanelSize = size;
+		if (size != -1)
+			mPanelSize = size;
 
-		if (mPanelSize <= 20)
-			mIconSize = mPanelSize - 6;
-		else if (mPanelSize <= 28)
-			mIconSize = 16;
-		else if (mPanelSize <= 38)
-			mIconSize = 24;
-		else if (mPanelSize <= 41)
-			mIconSize = 32;
+		if (Settings::forceIconSize)
+		{
+			mIconSize = Settings::iconSize;
+		}
 		else
-			mIconSize = mPanelSize * 0.8;
+		{
+			if (mPanelSize <= 20)
+				mIconSize = mPanelSize - 6;
+			else if (mPanelSize <= 28)
+				mIconSize = 16;
+			else if (mPanelSize <= 38)
+				mIconSize = 24;
+			else if (mPanelSize <= 41)
+				mIconSize = 32;
+			else
+				mIconSize = mPanelSize * 0.8;
+		}
 
-		std::cout << "NEW ICON SIZE:" << mIconSize << std::endl;
-		std::cout << "FROM HEIGHT:" << mPanelSize << std::endl;
-		std::cout << std::endl;
+		std::cout << "mPanelSize:" << mPanelSize << std::endl;
+		std::cout << "mIconSize:" << mIconSize << std::endl;
 
 		mGroups.forEach([](std::pair<AppInfo*, Group*> g) -> void { g.second->resize(); });
 	}

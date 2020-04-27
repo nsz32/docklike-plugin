@@ -101,6 +101,27 @@ namespace Help
 
 	namespace Gtk
 	{
+		std::list<std::string> bufferToStdStringList(gchar** stringList)
+		{
+			std::list<std::string> ret;
+
+			if (stringList != NULL)
+				for (int i = 0; stringList[i] != NULL; ++i)
+					ret.push_back(stringList[i]);
+
+			return ret;
+		}
+
+		std::vector<char*> stdToBufferStringList(std::list<std::string>& stringList)
+		{
+			std::vector<char*> buf;
+
+			for (std::string& s : stringList)
+				buf.push_back(&s[0]);
+
+			return buf;
+		}
+
 		int getChildPosition(GtkContainer* container, GtkWidget* child)
 		{
 			GValue gv = G_VALUE_INIT;

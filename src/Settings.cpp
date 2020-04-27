@@ -2,30 +2,48 @@
 
 namespace Settings
 {
-	GtkWidget* popup()
+	std::string mPath;
+	GKeyFile* mFile;
+
+	State<bool> forceIconSize;
+	State<int> iconSize;
+	State<std::list<std::string>> pinnedAppList;
+
+	void init()
 	{
+		mPath = xfce_panel_plugin_save_location(Plugin::mXfPlugin, true);
 
-		GtkWidget* dialogWindow = xfce_titled_dialog_new_with_buttons(
-			"Docklike Taskbar",
-			GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(Plugin::mXfPlugin))),
-			GTK_DIALOG_DESTROY_WITH_PARENT,
-			"gtk-close", GTK_RESPONSE_OK, NULL);
+		mFile = g_key_file_new();
+		g_key_file_load_from_file(mFile, mPath.c_str(), G_KEY_FILE_NONE, NULL);
 
-		gtk_window_set_icon_name(GTK_WINDOW(dialogWindow), "preferences-system-windows");
+		forceIconSize.setup(g_key_file_get_boolean(mFile, "user", "forceIconSize", NULL),
+			[](bool forceIconSize) -> void {
+				g_key_file_set_boolean(mFile, "user", "forceIconSize", forceIconSize);
+				saveFile();
 
-		g_signal_connect(
-			G_OBJECT(dialogWindow), "response",
-			G_CALLBACK(+[](GtkDialog* dialog, gint responseId, GtkWidget* dialogWindow) {
-				gtk_widget_hide(dialogWindow);
-			}),
-			dialogWindow);
+				Dock::onPanelResize();
+			});
 
-		g_object_set_data(G_OBJECT(Plugin::mXfPlugin), "dialog", dialogWindow);
+		iconSize.setup(g_key_file_get_integer(mFile, "user", "iconSize", NULL),
+			[](int iconSize) -> void {
+				g_key_file_set_integer(mFile, "user", "iconSize", iconSize);
+				saveFile();
 
-		
-		gtk_window_set_position(GTK_WINDOW(dialogWindow), GTK_WIN_POS_CENTER);
-		gtk_widget_show(dialogWindow);
+				Dock::onPanelResize();
+			});
 
-		return dialogWindow;
+		gchar** pinnedList = g_key_file_get_string_list(mFile, "user", "pinned", NULL, NULL);
+		pinnedAppList.setup(Help::Gtk::bufferToStdStringList(pinnedList),
+			[](std::list<std::string> list) -> void {
+				std::vector<char*> buf = Help::Gtk::stdToBufferStringList(list);
+				g_key_file_set_string_list(mFile, "user", "pinned", buf.data(), buf.size());
+				saveFile();
+			});
+		g_strfreev(pinnedList);
+	}
+
+	void saveFile()
+	{
+		g_key_file_save_to_file(mFile, mPath.c_str(), NULL);
 	}
 } // namespace Settings

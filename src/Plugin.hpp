@@ -11,8 +11,8 @@
 #include <vector>
 
 #include "AppInfos.hpp"
-#include "Config.hpp"
 #include "Settings.hpp"
+#include "SettingsDialog.hpp"
 #include "Theme.hpp"
 
 extern "C"

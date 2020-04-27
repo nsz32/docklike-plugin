@@ -17,7 +17,7 @@ namespace Plugin
 		GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
 		mPointer = gdk_device_manager_get_client_pointer(deviceManager);
 
-		Config::init();
+		Settings::init();
 		AppInfos::init();
 		Dock::init();
 		Wnck::init();
@@ -46,7 +46,7 @@ namespace Plugin
 
 		g_signal_connect(G_OBJECT(mXfPlugin), "configure-plugin",
 			G_CALLBACK(+[](XfcePanelPlugin* plugin) {
-				Settings::popup();
+				SettingsDialog::popup();
 			}),
 			NULL);
 	}

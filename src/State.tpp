@@ -1,3 +1,6 @@
+#ifndef STATE_TPP
+#define STATE_TPP
+
 #include <functional>
 
 template <typename V>
@@ -10,13 +13,18 @@ class State
 		f = feedback;
 	}
 
-	void setState(V value)
+	void set(V value)
 	{
 		bool change = (v != value);
 		v = value;
 
 		if (change)
 			f(v);
+	}
+
+	V get()
+	{
+		return v;
 	}
 
 	operator V() const { return v; }
@@ -55,3 +63,5 @@ class LogicalState
 	std::function<V()> e;
 	std::function<void(V)> f;
 };
+
+#endif

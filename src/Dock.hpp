@@ -15,10 +15,10 @@ extern "C"
 #include <iostream>
 #include <string>
 
-#include "Config.hpp"
 #include "GroupWindow.hpp"
 #include "Helpers.hpp"
 #include "Plugin.hpp"
+#include "Settings.hpp"
 #include "Store.tpp"
 #include "Wnck.hpp"
 class Group;
@@ -32,7 +32,7 @@ namespace Dock
 	void moveButton(Group* moving, Group* dest);
 	void savePinned();
 
-	void onPanelResize(int size);
+	void onPanelResize(int size = -1);
 	void onPanelOrientationChange(GtkOrientation orientation);
 
 	extern GtkWidget* mBox;

@@ -15,7 +15,7 @@ plugin_LTLIBRARIES = libdocklike.la
 libdocklike_la_SOURCES = \
 						Theme.cpp Theme.hpp \
 						AppInfos.cpp AppInfos.hpp \
-						Config.cpp Config.hpp \
+						Settings.cpp Settings.hpp \
 						Group.cpp Group.hpp \
 						GroupMenu.cpp GroupMenu.hpp \
 						GroupMenuItem.cpp GroupMenuItem.hpp \
@@ -24,7 +24,7 @@ libdocklike_la_SOURCES = \
 						Plugin.cpp Plugin.hpp \
 						Dock.cpp Dock.hpp \
 						Wnck.cpp Wnck.hpp \
-						Settings.cpp Settings.hpp \
+						SettingsDialog.cpp SettingsDialog.hpp \
 						register.c
 
 libdocklike_la_LDFLAGS = \
