@@ -7,6 +7,7 @@ namespace Settings
 
 	State<bool> forceIconSize;
 	State<int> iconSize;
+	State<bool> noWindowsListIfSingle;
 	State<std::list<std::string>> pinnedAppList;
 
 	void init()
@@ -32,14 +33,20 @@ namespace Settings
 				Dock::onPanelResize();
 			});
 
-		gchar** pinnedList = g_key_file_get_string_list(mFile, "user", "pinned", NULL, NULL);
-		pinnedAppList.setup(Help::Gtk::bufferToStdStringList(pinnedList),
+		noWindowsListIfSingle.setup(g_key_file_get_boolean(mFile, "user", "noWindowsListIfSingle", NULL),
+			[](bool noWindowsListIfSingle) -> void {
+				g_key_file_set_boolean(mFile, "user", "noWindowsListIfSingle", noWindowsListIfSingle);
+				saveFile();
+			});
+
+		gchar** pinnedListBuffer = g_key_file_get_string_list(mFile, "user", "pinned", NULL, NULL);
+		pinnedAppList.setup(Help::Gtk::bufferToStdStringList(pinnedListBuffer),
 			[](std::list<std::string> list) -> void {
 				std::vector<char*> buf = Help::Gtk::stdToBufferStringList(list);
 				g_key_file_set_string_list(mFile, "user", "pinned", buf.data(), buf.size());
 				saveFile();
 			});
-		g_strfreev(pinnedList);
+		g_strfreev(pinnedListBuffer);
 	}
 
 	void saveFile()

@@ -195,9 +195,9 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 void Group::add(GroupWindow* window)
 {
 	mWindows.push(window);
-	mGroupMenu.add(window->mGroupMenuItem);
-
 	mWindowsCount.updateState();
+
+	mGroupMenu.add(window->mGroupMenuItem);
 
 	if (mWindowsCount == 1 && !mPinned)
 	{
@@ -209,9 +209,9 @@ void Group::add(GroupWindow* window)
 void Group::remove(GroupWindow* window)
 {
 	mWindows.pop(window);
-	mGroupMenu.remove(window->mGroupMenuItem);
-
 	mWindowsCount.updateState();
+
+	mGroupMenu.remove(window->mGroupMenuItem);
 
 	electNewTopWindow(); // TODEL
 

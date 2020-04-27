@@ -19,10 +19,12 @@ namespace SettingsDialog
 		gtk_grid_set_column_homogeneous(grid, false);
 		gtk_grid_set_column_spacing(grid, 10);
 
+		gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialogWindow))), GTK_WIDGET(grid));
+
 		// Force icon size
 
 		GtkWidget* iconSizeToggle = gtk_check_button_new_with_label("Force icon size : ");
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(iconSizeToggle), Settings::forceIconSize.get());
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(iconSizeToggle), Settings::forceIconSize);
 		gtk_grid_attach(grid, iconSizeToggle, 0, 0, 1, 1);
 
 		g_signal_connect(
@@ -36,8 +38,8 @@ namespace SettingsDialog
 		gtk_combo_box_set_entry_text_column(GTK_COMBO_BOX(iconSizeValue), 5);
 		gtk_entry_set_width_chars(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(iconSizeValue))), 3);
 		gtk_entry_set_max_length(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(iconSizeValue))), 3);
-		gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(iconSizeValue))), std::to_string(Settings::iconSize.get()).c_str());
-		for (const char* choice : {"16", "22", "24", "32", "48", "64", "96", "256"})
+		gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(iconSizeValue))), std::to_string(Settings::iconSize).c_str());
+		for (const char* choice : {"16", "24", "32", "48", "64", "96", "256"})
 			gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(iconSizeValue), choice);
 
 		g_signal_connect(
@@ -53,7 +55,20 @@ namespace SettingsDialog
 
 		gtk_grid_attach(grid, iconSizeValue, 2, 0, 1, 1);
 
-		gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dialogWindow))), GTK_WIDGET(grid));
+		// No windows list if single
+
+		GtkWidget* noWindowsListIfSingle = gtk_check_button_new_with_label("Don't display list for a single window");
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(noWindowsListIfSingle), Settings::noWindowsListIfSingle);
+		gtk_grid_attach(grid, noWindowsListIfSingle, 0, 1, 1, 1);
+
+		g_signal_connect(
+			G_OBJECT(noWindowsListIfSingle), "toggled",
+			G_CALLBACK(+[](GtkToggleButton* noWindowsListIfSingle) {
+				Settings::noWindowsListIfSingle.set(gtk_toggle_button_get_active(noWindowsListIfSingle));
+			}),
+			NULL);
+
+		// ------------------
 
 		xfce_panel_plugin_block_menu(Plugin::mXfPlugin);
 
@@ -68,4 +83,4 @@ namespace SettingsDialog
 			}),
 			dialogWindow);
 	}
-} // namespace Settings
+} // namespace SettingsDialog

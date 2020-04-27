@@ -59,7 +59,6 @@ void GroupMenu::add(GroupMenuItem* menuItem)
 	if (mGroup->mSHover)
 	{
 		popup();
-		gtk_widget_show(mWindow);
 	}
 }
 
@@ -68,22 +67,25 @@ void GroupMenu::remove(GroupMenuItem* menuItem)
 	gtk_container_remove(GTK_CONTAINER(mBox), GTK_WIDGET(menuItem->mItem));
 	gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);
 
-	if (mGroup->mWindowsCount == 0)
+	if (mGroup->mWindowsCount < (Settings::noWindowsListIfSingle ? 2 : 1))
 		gtk_widget_hide(mWindow);
 }
 
 void GroupMenu::popup()
 {
-	gint wx, wy;
+	if (mGroup->mWindowsCount >= (Settings::noWindowsListIfSingle ? 2 : 1))
+	{
+		gint wx, wy;
 
-	xfce_panel_plugin_position_widget(Plugin::mXfPlugin, mWindow, mGroup->mButton, &wx, &wy);
-	gtk_window_move(GTK_WINDOW(mWindow), wx, wy);
-	if (mGroup->mWindowsCount > 0)
-		gtk_widget_show(mWindow);
+		xfce_panel_plugin_position_widget(Plugin::mXfPlugin, mWindow, mGroup->mButton, &wx, &wy);
+		gtk_window_move(GTK_WINDOW(mWindow), wx, wy);
+		if (mGroup->mWindowsCount > 0)
+			gtk_widget_show(mWindow);
 
-	gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);
+		gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);
 
-	mVisible = true;
+		mVisible = true;
+	}
 }
 
 void GroupMenu::hide()
