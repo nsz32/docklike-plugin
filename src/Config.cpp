@@ -1,35 +1,42 @@
 #include "Config.hpp"
 
-Config::Config(std::string path)
+namespace Config
 {
-	mPath = path;
+	std::string mPath;
+	GKeyFile* mFile;
 
-	std::cout << "SAVEPATH:" << path << std::endl;
+	void init()
+	{
+		mPath = xfce_panel_plugin_save_location(Plugin::mXfPlugin, true);
 
-	mFile = g_key_file_new();
-	g_key_file_load_from_file(mFile, mPath.c_str(), G_KEY_FILE_NONE, NULL);
-}
+		std::cout << "SAVEPATH:" << mPath << std::endl
+				  << std::flush;
 
-void Config::save() { g_key_file_save_to_file(mFile, mPath.c_str(), NULL); }
+		mFile = g_key_file_new();
+		g_key_file_load_from_file(mFile, mPath.c_str(), G_KEY_FILE_NONE, NULL);
+	}
 
-void Config::setPinned(std::list<std::string> pinnedApps)
-{
-	std::vector<char*> buf;
-	for (std::string& s : pinnedApps)
-		buf.push_back(&s[0]);
+	void saveFile() { g_key_file_save_to_file(mFile, mPath.c_str(), NULL); }
 
-	g_key_file_set_string_list(mFile, "user", "pinned", buf.data(), buf.size());
-}
+	void setPinned(std::list<std::string> pinnedApps)
+	{
+		std::vector<char*> buf;
+		for (std::string& s : pinnedApps)
+			buf.push_back(&s[0]);
 
-std::list<std::string> Config::getPinned()
-{
-	std::list<std::string> ret;
-	gchar** clist = g_key_file_get_string_list(mFile, "user", "pinned", NULL, NULL);
+		g_key_file_set_string_list(mFile, "user", "pinned", buf.data(), buf.size());
+	}
 
-	if (clist != NULL)
-		for (int i = 0; clist[i] != NULL; ++i)
-			ret.push_back(clist[i]);
+	std::list<std::string> getPinned()
+	{
+		std::list<std::string> ret;
+		gchar** clist = g_key_file_get_string_list(mFile, "user", "pinned", NULL, NULL);
 
-	g_strfreev(clist);
-	return ret;
-}
+		if (clist != NULL)
+			for (int i = 0; clist[i] != NULL; ++i)
+				ret.push_back(clist[i]);
+
+		g_strfreev(clist);
+		return ret;
+	}
+} // namespace Config

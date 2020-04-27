@@ -21,7 +21,7 @@ namespace Dock
 		gtk_widget_show(mBox);
 
 		// pinned groups
-		std::list<std::string> pinned = Plugin::mConfig->getPinned();
+		std::list<std::string> pinned = Config::getPinned();
 		std::list<std::string>::iterator it = pinned.begin();
 		while (it != pinned.end())
 		{
@@ -82,8 +82,8 @@ namespace Dock
 			}
 		}
 
-		Plugin::mConfig->setPinned(list);
-		Plugin::mConfig->save();
+		Config::setPinned(list);
+		Config::saveFile();
 	}
 
 	void onPanelResize(int size)

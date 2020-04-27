@@ -6,9 +6,11 @@
 #include <iostream>
 #include <string>
 
+#include "Dock.hpp"
+
 namespace Theme
 {
-	void init(GtkWidget* panel);
+	void init();
 	void load();
 
 	void applyDefault(GtkWidget* widget);

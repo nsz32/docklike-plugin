@@ -8,11 +8,11 @@ namespace Theme
 
 	std::string setupColors();
 
-	void init(GtkWidget* panel)
+	void init()
 	{
 		mScreen = gdk_screen_get_default();
 		mCssProvider = gtk_css_provider_new();
-		mStyleContext = gtk_widget_get_style_context(panel);
+		mStyleContext = gtk_widget_get_style_context(Dock::mBox);
 
 		g_signal_connect(G_OBJECT(mStyleContext), "changed",
 			G_CALLBACK(+[](GtkStyleContext* stylecontext) { load(); }), NULL);

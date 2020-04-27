@@ -26,7 +26,6 @@ extern "C"
 namespace Plugin
 {
 	extern XfcePanelPlugin* mXfPlugin;
-	extern Config* mConfig;
 	extern GdkDevice* mPointer;
 
 	void getPointerPosition(gint* x, gint* y);

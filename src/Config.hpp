@@ -8,18 +8,18 @@
 #include <string>
 #include <vector>
 
-class Config
+#include "Plugin.hpp"
+
+namespace Config
 {
-  public:
-	Config(std::string path);
-	void save();
+
+	void init();
+
+	void saveFile();
 
 	void setPinned(std::list<std::string> pinnedApps);
 	std::list<std::string> getPinned();
 
-  private:
-	GKeyFile* mFile;
-	std::string mPath;
-};
+}; // namespace Config
 
 #endif

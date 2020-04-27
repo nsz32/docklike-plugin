@@ -7,25 +7,21 @@
 namespace Plugin
 {
 	XfcePanelPlugin* mXfPlugin;
-	Config* mConfig;
 	GdkDevice* mPointer;
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
 		mXfPlugin = xfPlugin;
 
-		mConfig = new Config(xfce_panel_plugin_save_location(mXfPlugin, true));
-
 		GdkDisplay* display = gdk_display_get_default();
 		GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
 		mPointer = gdk_device_manager_get_client_pointer(deviceManager);
 
+		Config::init();
 		AppInfos::init();
-
 		Dock::init();
 		Wnck::init();
-
-		Theme::init(GTK_WIDGET(Dock::mBox));
+		Theme::init();
 
 		//--------------------------------------------------
 

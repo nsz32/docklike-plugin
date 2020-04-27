@@ -25,6 +25,15 @@ namespace Help
 			return str;
 		}
 
+		std::string numericOnly(std::string str)
+		{
+			str.erase(
+				std::remove_if(str.begin(), str.end(), [](char chr) { return chr < 48 || chr > 57; }),
+				str.end());
+
+			return str;
+		}
+
 		std::string getWord(std::string str, int index, char separator)
 		{
 			if (index == std::string::npos)

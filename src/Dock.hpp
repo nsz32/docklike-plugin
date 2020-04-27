@@ -15,12 +15,12 @@ extern "C"
 #include <iostream>
 #include <string>
 
+#include "Config.hpp"
 #include "GroupWindow.hpp"
 #include "Helpers.hpp"
 #include "Plugin.hpp"
 #include "Store.tpp"
 #include "Wnck.hpp"
-
 class Group;
 
 namespace Dock
