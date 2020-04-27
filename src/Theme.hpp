@@ -10,6 +10,8 @@ namespace Theme
 {
 	void init(GtkWidget* panel);
 	void load();
+
+	void applyDefault(GtkWidget* widget);
 } // namespace Theme
 
 #endif

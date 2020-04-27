@@ -2,28 +2,30 @@
 
 namespace Settings
 {
-	GtkWidget* mDialogWindow;
-
-	void init()
+	GtkWidget* popup()
 	{
-	}
 
-	void popup()
-	{
-		GtkWidget* dialog = xfce_titled_dialog_new_with_buttons(
+		GtkWidget* dialogWindow = xfce_titled_dialog_new_with_buttons(
 			"Docklike Taskbar",
 			GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(Plugin::mXfPlugin))),
 			GTK_DIALOG_DESTROY_WITH_PARENT,
 			"gtk-close", GTK_RESPONSE_OK, NULL);
 
-		gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+		gtk_window_set_icon_name(GTK_WINDOW(dialogWindow), "preferences-system-windows");
 
-		gtk_window_set_icon_name(GTK_WINDOW(dialog), "xfce4-settings");
+		g_signal_connect(
+			G_OBJECT(dialogWindow), "response",
+			G_CALLBACK(+[](GtkDialog* dialog, gint responseId, GtkWidget* dialogWindow) {
+				gtk_widget_hide(dialogWindow);
+			}),
+			dialogWindow);
 
-		g_object_set_data(G_OBJECT(Plugin::mXfPlugin), "dialog", dialog);
+		g_object_set_data(G_OBJECT(Plugin::mXfPlugin), "dialog", dialogWindow);
 
-		//g_signal_connect(G_OBJECT(dialog), "response", G_CALLBACK(handler), context);
+		
+		gtk_window_set_position(GTK_WINDOW(dialogWindow), GTK_WIN_POS_CENTER);
+		gtk_widget_show(dialogWindow);
 
-		gtk_widget_show(dialog);
+		return dialogWindow;
 	}
 } // namespace Settings

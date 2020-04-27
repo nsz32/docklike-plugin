@@ -22,10 +22,10 @@ namespace Plugin
 
 		AppInfos::init();
 
-		Theme::init(gtk_widget_get_parent(GTK_WIDGET(mXfPlugin)));
-
 		Dock::init();
 		Wnck::init();
+
+		Theme::init(GTK_WIDGET(Dock::mBox));
 
 		//--------------------------------------------------
 
@@ -50,7 +50,8 @@ namespace Plugin
 
 		g_signal_connect(G_OBJECT(mXfPlugin), "configure-plugin",
 			G_CALLBACK(+[](XfcePanelPlugin* plugin) {
-				Settings::popup();
+				GtkWidget* dialog = Settings::popup();
+				//Theme::applyDefault(dialog);
 			}),
 			NULL);
 	}

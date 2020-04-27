@@ -9,6 +9,7 @@ GroupMenu::GroupMenu(Group* dockButton)
 	mWindow = gtk_window_new(GtkWindowType::GTK_WINDOW_POPUP);
 	gtk_widget_add_events(mWindow, GDK_SCROLL_MASK);
 	gtk_window_set_default_size(GTK_WINDOW(mWindow), 1, 1);
+	gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(mWindow)), "stld");
 	mGroup = dockButton;
 
 	mVisible = mMouseHover = false;

@@ -32,7 +32,7 @@ namespace Theme
 
 		std::string cssStyle =
 			setupColors() +
-			"button { border:none; border-radius:0; background:none; "
+			".stld button { border:none; border-radius:0; background:none; "
 			"text-shadow:none; -gtk-icon-shadow:none; box-shadow:none; padding:0px;}"
 			//"grid { min-height:1.3em; background-color:red; }"
 
@@ -53,7 +53,7 @@ namespace Theme
 			".menu_item.active button { color:@dl_menu_item_color_hover; }"
 			".menu_item button:hover { background-color:alpha(#888, 0.5); }"
 
-			"box { margin:0; padding:0; border:0; border-radius:0; }"
+			".stld box { margin:0; padding:0; border:0; border-radius:0; }"
 			".menu { background-color:@dl_menu_bgcolor; box-shadow:inset 0 0 0 1px "
 			"alpha(black, 0.2); }"
 			".drop { border-left:5px solid slateblue; }";
@@ -71,7 +71,7 @@ namespace Theme
 		}
 		else
 		{
-			gtk_style_context_add_provider_for_screen(mScreen, GTK_STYLE_PROVIDER(mCssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+			gtk_style_context_add_provider_for_screen(mScreen, GTK_STYLE_PROVIDER(mCssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 		}
 
 		/*return	"@define-color dl_menu_bgcolor " + menuBg + ";"
@@ -80,6 +80,11 @@ namespace Theme
        ";"
                     "@define-color dl_menu_item_bgcolor_hover " + itemBgHover +
        ";";*/
+	}
+
+	void applyDefault(GtkWidget* widget)
+	{
+		gtk_style_context_remove_provider(gtk_widget_get_style_context(widget), GTK_STYLE_PROVIDER(mCssProvider));
 	}
 
 	std::string setupColors()

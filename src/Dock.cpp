@@ -17,6 +17,7 @@ namespace Dock
 	void init()
 	{
 		mBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+		gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(mBox)), "stld");
 		gtk_widget_show(mBox);
 
 		// pinned groups

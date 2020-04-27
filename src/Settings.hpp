@@ -13,10 +13,7 @@ extern "C"
 
 namespace Settings
 {
-
-	void init();
-	void popup();
-
+	GtkWidget* popup();
 } // namespace Settings
 
 #endif // SETTINGS_HPP
