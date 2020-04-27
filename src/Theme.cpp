@@ -37,7 +37,7 @@ namespace Theme
 			//"grid { min-height:1.3em; background-color:red; }"
 
 			".menu_item image { margin-left:0.4em;  }"
-			".menu_item label { margin:0.6em 0.5em 0.5em 0.5em; }"
+			".menu_item label { margin:0.5em 0.5em 0.4em 0.5em; }"
 			".menu_item button { margin:0; padding:0; color:@dl_menu_item_color; }"
 			".menu_item button label { margin:0.1em 0.7em 0 0.7em; padding:0; "
 			"font-weight:bold; }"
