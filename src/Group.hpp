@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #include <iostream>
+#include <math.h>
 
 #include "AppInfos.hpp"
 #include "GroupMenu.hpp"

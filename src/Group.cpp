@@ -324,7 +324,7 @@ void Group::onDraw(cairo_t* cr)
 		else
 			cairo_set_source_rgba(cr, 0.7, 0.7, 0.7, 1);
 
-		cairo_rectangle(cr, 0, h * 0.9231, w, h);
+		cairo_rectangle(cr, 0, round(h * 0.9231), w, h);
 		cairo_fill(cr);
 	}
 
@@ -340,7 +340,7 @@ void Group::onDraw(cairo_t* cr)
 		if (aBack > 0)
 			cairo_rectangle(cr, x1, 0, w, h);
 		else
-			cairo_rectangle(cr, x1, h * 0.9231, w, h);
+			cairo_rectangle(cr, x1, round(h * 0.9231), w, h);
 
 		cairo_set_source(cr, pat);
 		cairo_fill(cr);
