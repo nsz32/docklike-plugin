@@ -377,8 +377,8 @@ void Group::onDraw(cairo_t* cr)
 				double cx = (w / 2.) - dotRadius * 1;
 
 				cairo_pattern_t* pat = cairo_pattern_create_radial(cx, ypos, 0, cx, ypos, dotRadius);
-				cairo_pattern_add_color_stop_rgba(pat, 0.1, rgb[0], rgb[1], rgb[2], 1);
-				cairo_pattern_add_color_stop_rgba(pat, 1, rgb[0], rgb[1], rgb[2], 0);
+				cairo_pattern_add_color_stop_rgba(pat, 0.3, rgb[0], rgb[1], rgb[2], 1);
+				cairo_pattern_add_color_stop_rgba(pat, 1, rgb[0], rgb[1], rgb[2], 0.15);
 				cairo_set_source(cr, pat);
 
 				cairo_arc(cr, cx, ypos, dotRadius, 0.0, 2.0 * M_PI);
@@ -389,8 +389,8 @@ void Group::onDraw(cairo_t* cr)
 				cx = (w / 2.) + dotRadius * 1;
 
 				pat = cairo_pattern_create_radial(cx, ypos, 0, cx, ypos, dotRadius);
-				cairo_pattern_add_color_stop_rgba(pat, 0.1, rgb[0], rgb[1], rgb[2], 1);
-				cairo_pattern_add_color_stop_rgba(pat, 1, rgb[0], rgb[1], rgb[2], 0);
+				cairo_pattern_add_color_stop_rgba(pat, 0.3, rgb[0], rgb[1], rgb[2], 1);
+				cairo_pattern_add_color_stop_rgba(pat, 1, rgb[0], rgb[1], rgb[2], 0.15);
 				cairo_set_source(cr, pat);
 
 				cairo_arc(cr, cx, ypos, dotRadius, 0.0, 2.0 * M_PI);
@@ -403,8 +403,8 @@ void Group::onDraw(cairo_t* cr)
 				double cx = w / 2.;
 
 				cairo_pattern_t* pat = cairo_pattern_create_radial(cx, ypos, 0, cx, ypos, dotRadius);
-				cairo_pattern_add_color_stop_rgba(pat, 0.1, rgb[0], rgb[1], rgb[2], 1);
-				cairo_pattern_add_color_stop_rgba(pat, 1, rgb[0], rgb[1], rgb[2], 0);
+				cairo_pattern_add_color_stop_rgba(pat, 0.3, rgb[0], rgb[1], rgb[2], 1);
+				cairo_pattern_add_color_stop_rgba(pat, 1, rgb[0], rgb[1], rgb[2], 0.15);
 				cairo_set_source(cr, pat);
 
 				cairo_arc(cr, cx, ypos, dotRadius, 0.0, 2.0 * M_PI);
