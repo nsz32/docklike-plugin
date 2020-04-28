@@ -18,7 +18,6 @@
 				<property name="can_focus">False</property>
 				<property name="orientation">vertical</property>
 				<property name="spacing">2</property>
-				<property name="margin_right">18</property>
 				<child internal-child="action_area">
 					<object class="GtkButtonBox">
 						<property name="visible">True</property>
@@ -54,6 +53,7 @@
 						<property name="border_width">6</property>
 						<property name="orientation">vertical</property>
 						<property name="spacing">6</property>
+						<property name="margin_right">18</property>
 						<child>
 							<object class="GtkFrame">
 								<property name="visible">True</property>
@@ -96,15 +96,6 @@
 								</child>
 							</object>
 						</child>
-					</object>
-				</child>
-				<child>
-					<object class="GtkBox">
-						<property name="visible">True</property>
-						<property name="can_focus">False</property>
-						<property name="border_width">6</property>
-						<property name="orientation">vertical</property>
-						<property name="spacing">6</property>
 						<child>
 							<object class="GtkFrame">
 								<property name="visible">True</property>

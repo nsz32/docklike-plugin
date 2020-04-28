@@ -4,10 +4,11 @@ namespace SettingsDialog
 {
 	void popup()
 	{
+		xfce_panel_plugin_block_menu(Plugin::mXfPlugin);
+
 		/* Hook to make sure GtkBuilder knows are the XfceTitledDialog object */
 		if (xfce_titled_dialog_get_type() == 0)
 			return;
-
 		GtkBuilder* builder = gtk_builder_new_from_resource("/_dialogs.xml");
 		GtkWidget* dialog = (GtkWidget*)gtk_builder_get_object(builder, "dialog");
 		gtk_window_set_wmclass(GTK_WINDOW(dialog), "xfce4-panel", "xfce4-panel");
