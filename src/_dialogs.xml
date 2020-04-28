@@ -1,0 +1,206 @@
+<interface>
+	<requires lib="gtk+" version="3.0" />
+	<requires lib="libxfce4ui-2" version="4.20" />
+	<object class="GtkImage" id="i_close">
+		<property name="visible">True</property>
+		<property name="can_focus">False</property>
+		<property name="icon_name">window-close</property>
+	</object>
+	<object class="XfceTitledDialog" id="dialog">
+		<property name="can_focus">False</property>
+		<property name="title">Docklike Taskbar</property>
+		<property name="icon_name">preferences-system-windows</property>
+		<property name="type_hint">normal</property>
+		<property name="subtitle">‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾</property>
+		<child internal-child="vbox">
+			<object class="GtkBox">
+				<property name="visible">True</property>
+				<property name="can_focus">False</property>
+				<property name="orientation">vertical</property>
+				<property name="spacing">2</property>
+				<property name="margin_right">18</property>
+				<child internal-child="action_area">
+					<object class="GtkButtonBox">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<property name="layout_style">end</property>
+						<child>
+							<object class="GtkButton" id="b_close">
+								<property name="label" translatable="yes">_Close</property>
+								<property name="image">i_close</property>
+								<property name="visible">True</property>
+								<property name="can_focus">True</property>
+								<property name="receives_default">True</property>
+								<property name="use_underline">True</property>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">False</property>
+								<property name="position">0</property>
+							</packing>
+						</child>
+					</object>
+					<packing>
+						<property name="expand">False</property>
+						<property name="fill">True</property>
+						<property name="pack_type">end</property>
+						<property name="position">0</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkBox">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<property name="border_width">6</property>
+						<property name="orientation">vertical</property>
+						<property name="spacing">6</property>
+						<child>
+							<object class="GtkFrame">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="margin_bottom">6</property>
+								<property name="label_xalign">0</property>
+								<property name="shadow_type">none</property>
+								<child type="label">
+									<object class="GtkLabel">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="margin_bottom">6</property>
+										<property name="label" translatable="yes">Behavior</property>
+										<attributes>
+											<attribute name="weight" value="bold" />
+										</attributes>
+									</object>
+								</child>
+								<child>
+									<object class="GtkGrid">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="margin_left">18</property>
+										<property name="row_spacing">6</property>
+										<property name="column_spacing">12</property>
+										<child>
+											<object class="GtkCheckButton" id="c_noListForSingleWindow">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="label" translatable="yes">Don't show list for a single window</property>
+												<property name="use_underline">True</property>
+												<property name="xalign">0</property>
+											</object>
+											<packing>
+												<property name="left_attach">0</property>
+												<property name="top_attach">0</property>
+											</packing>
+										</child>
+									</object>
+								</child>
+							</object>
+						</child>
+					</object>
+				</child>
+				<child>
+					<object class="GtkBox">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<property name="border_width">6</property>
+						<property name="orientation">vertical</property>
+						<property name="spacing">6</property>
+						<child>
+							<object class="GtkFrame">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="margin_bottom">6</property>
+								<property name="label_xalign">0</property>
+								<property name="shadow_type">none</property>
+								<child type="label">
+									<object class="GtkLabel">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="margin_bottom">6</property>
+										<property name="label" translatable="yes">Appearence</property>
+										<attributes>
+											<attribute name="weight" value="bold" />
+										</attributes>
+									</object>
+								</child>
+								<child>
+									<object class="GtkGrid">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="margin_left">18</property>
+										<property name="row_spacing">6</property>
+										<property name="column_spacing">12</property>
+										<child>
+											<object class="GtkLabel">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="halign">start</property>
+												<property name="label" translatable="yes">Indicator style :</property>
+											</object>
+											<packing>
+												<property name="left_attach">0</property>
+												<property name="top_attach">0</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkComboBoxText" id="co_indicatorStyle">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<items>
+													<item translatable="yes">Bars</item>
+													<item translatable="yes">Dots</item>
+												</items>
+											</object>
+											<packing>
+												<property name="left_attach">1</property>
+												<property name="top_attach">0</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkCheckButton" id="c_forceIconSize">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="label" translatable="yes">Force icons size :</property>
+												<property name="use_underline">True</property>
+												<property name="xalign">0</property>
+											</object>
+											<packing>
+												<property name="left_attach">0</property>
+												<property name="top_attach">1</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkComboBoxText" id="e_iconSize">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="has_entry">True</property>
+												<items>
+													<item translatable="no">16</item>
+													<item translatable="no">24</item>
+													<item translatable="no">32</item>
+													<item translatable="no">48</item>
+													<item translatable="no">64</item>
+													<item translatable="no">96</item>
+													<item translatable="no">256</item>
+												</items>
+												<child internal-child="entry">
+													<object class="GtkEntry">
+														<property name="can_focus">True</property>
+													</object>
+												</child>
+											</object>
+											<packing>
+												<property name="left_attach">1</property>
+												<property name="top_attach">1</property>
+											</packing>
+										</child>
+									</object>
+								</child>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+	</object>
+</interface>

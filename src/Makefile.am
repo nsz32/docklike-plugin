@@ -13,6 +13,7 @@ plugin_LTLIBRARIES = libdocklike.la
 
 # List of source files needed to build the library
 libdocklike_la_SOURCES = \
+						_gresources.c \
 						Theme.cpp Theme.hpp \
 						AppInfos.cpp AppInfos.hpp \
 						Settings.cpp Settings.hpp \
@@ -44,6 +45,9 @@ libdocklike_la_LIBADD = \
                         $(GTK_LIBS) \
 						$(CAIRO_LIBS) \
 						$(WNCK_LIBS)
+
+_gresources.c: _gresources.xml _dialogs.xml
+	glib-compile-resources --generate-source --target _gresources.c _gresources.xml
 
 
 # Recently (>=2017) dependent libraries seem to require building with
