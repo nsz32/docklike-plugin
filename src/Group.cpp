@@ -354,8 +354,8 @@ void Group::onDraw(cairo_t* cr)
 	{
 		if (mSOpened)
 		{
-			double dotRadius = std::max(h * (0.09), 2.);
-			double ypos = h;
+			double dotRadius = std::max(h * (0.093), 2.);
+			double ypos = h * 0.99;
 
 			double rgb[3] = {0, 1, 2};
 

@@ -10,6 +10,7 @@ namespace SettingsDialog
 
 		GtkBuilder* builder = gtk_builder_new_from_resource("/_dialogs.xml");
 		GtkWidget* dialog = (GtkWidget*)gtk_builder_get_object(builder, "dialog");
+		gtk_window_set_wmclass(GTK_WINDOW(dialog), "xfce4-panel", "xfce4-panel");
 		gtk_widget_show_all(dialog);
 
 		g_signal_connect(
