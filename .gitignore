@@ -25,4 +25,4 @@ src/.libs/
 *.in
 *.lo
 *.la
-src/_resources.c
+src/_gresources.c
