@@ -29,20 +29,22 @@ libdocklike_la_SOURCES = \
 						register.c
 
 libdocklike_la_LDFLAGS = \
-                      -avoid-version \
-                      -module \
-                      -no-undefined \
-    -export-symbols-regex '^xfce_panel_module_(preinit|init|construct)'
+						-avoid-version \
+						-module \
+						-no-undefined \
+						-export-symbols-regex '^xfce_panel_module_(preinit|init|construct)'
 
 
 libdocklike_la_CPPFLAGS = \
-                        @LIBXFCE4PANEL_CFLAGS@ \
-                        @LIBXFCE4UI_CFLAGS@
+						@LIBXFCE4PANEL_CFLAGS@ \
+						@LIBXFCE4UI_CFLAGS@ \
+						$(KEYBINDER_CFLAGS)
 
 libdocklike_la_LIBADD = \
-                        @LIBXFCE4PANEL_LIBS@ \
-                        @LIBXFCE4UI_LIBS@ \
-                        $(GTK_LIBS) \
+						@LIBXFCE4PANEL_LIBS@ \
+						@LIBXFCE4UI_LIBS@ \
+						$(KEYBINDER_LIBS) \
+						$(GTK_LIBS) \
 						$(CAIRO_LIBS) \
 						$(WNCK_LIBS)
 
