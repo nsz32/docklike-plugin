@@ -1,4 +1,8 @@
-// ** opensource.org/licenses/GPL-3.0
+/*
+ * Docklike Taskbar - A modern, minimalist taskbar for XFCE
+ * Copyright (c) 2019-2020 Nicolas Szabo <nszabo@vivaldi.net>
+ * gnu.org/licenses/gpl-3.0
+ */
 
 #ifndef PLUGIN_HPP
 #define PLUGIN_HPP
@@ -11,7 +15,7 @@
 #include <vector>
 
 #include "AppInfos.hpp"
-#include "Keyboard.hpp"
+#include "Hotkeys.hpp"
 #include "Settings.hpp"
 #include "SettingsDialog.hpp"
 #include "Theme.hpp"

@@ -1,4 +1,8 @@
-// ** opensource.org/licenses/GPL-3.0
+/*
+ * Docklike Taskbar - A modern, minimalist taskbar for XFCE
+ * Copyright (c) 2019-2020 Nicolas Szabo <nszabo@vivaldi.net>
+ * gnu.org/licenses/gpl-3.0
+ */
 
 #ifndef DOCK_BUTTON_MENU_ITEM_HPP
 #define DOCK_BUTTON_MENU_ITEM_HPP
