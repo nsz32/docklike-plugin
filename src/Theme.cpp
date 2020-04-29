@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #include "Theme.hpp"
 
 namespace Theme

@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 

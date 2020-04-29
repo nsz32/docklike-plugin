@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #ifndef DOCK_BUTTON_MENU_HPP
 #define DOCK_BUTTON_MENU_HPP
 

@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #include "GroupMenuItem.hpp"
 
 static GtkTargetEntry entries[1] = {{"any", 0, 0}};

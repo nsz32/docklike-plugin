@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #include "Group.hpp"
 
 #include "Dock.hpp"

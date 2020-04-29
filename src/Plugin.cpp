@@ -22,12 +22,14 @@ namespace Plugin
 		Dock::init();
 		Wnck::init();
 		Theme::init();
+		Keyboard::init();
 
 		//--------------------------------------------------
 
 		gtk_container_add(GTK_CONTAINER(mXfPlugin), GTK_WIDGET(Dock::mBox));
 
 		xfce_panel_plugin_menu_show_configure(mXfPlugin);
+		xfce_panel_plugin_menu_show_about(mXfPlugin);
 
 		//--------------------------------------------------
 
@@ -49,11 +51,50 @@ namespace Plugin
 				SettingsDialog::popup();
 			}),
 			NULL);
+
+		g_signal_connect(G_OBJECT(mXfPlugin), "about",
+			G_CALLBACK(+[](XfcePanelPlugin* plugin) {
+				Plugin::aboutDialog();
+			}),
+			NULL);
 	}
 
 	void getPointerPosition(gint* x, gint* y)
 	{
 		gdk_device_get_position(mPointer, NULL, x, y);
+	}
+
+	void aboutDialog()
+	{
+		const gchar* authors[] = {
+			"© 2019-2020 Nicolas Szabo (original author)",
+			"<nszabo@vivaldi.net>",
+			//"",
+			//_("Contributors:"),
+			//"(c) 2020 ",
+			NULL};
+
+		gtk_show_about_dialog(NULL,
+			"program-name", "Docklike Taskbar",
+			"logo-icon-name", "preferences-system-windows",
+			"comments", _("A modern, minimalist taskbar for XFCE."),
+			//"version", PACKAGE_VERSION,
+			"license", "This program is free software : you can redistribute it and / or modify it under\n"
+					   "the terms of the GNU General Public License as published by the Free Software\n"
+					   "Foundation, either version 3 of the License, or (at your option) any later version.\n\n"
+
+					   "This program is distributed in the hope that it will be useful, but WITHOUT ANY\n"
+					   "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS\n"
+					   "FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\n"
+
+					   "You should have received a copy of the GNU General Public License\n"
+					   "along with this program.  If not, see <https://www.gnu.org/licenses/>.",
+			"website", "https://github.com/nsz32/docklike-plugin/",
+			"website-label", "nsz32/docklike-plugin",
+			"authors", authors,
+			//"documenters", documenters,
+			//"translator-credits", translator-credits,
+			NULL);
 	}
 
 } // namespace Plugin

@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #ifndef THEME_HPP
 #define THEME_HPP
 

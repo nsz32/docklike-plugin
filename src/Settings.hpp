@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
 

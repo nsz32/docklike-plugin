@@ -1,3 +1,5 @@
+// ** opensource.org/licenses/GPL-3.0
+
 #ifndef STATE_TPP
 #define STATE_TPP
 

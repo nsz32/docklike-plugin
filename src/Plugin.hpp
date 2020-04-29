@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "AppInfos.hpp"
+#include "Keyboard.hpp"
 #include "Settings.hpp"
 #include "SettingsDialog.hpp"
 #include "Theme.hpp"
@@ -29,6 +30,7 @@ namespace Plugin
 	extern GdkDevice* mPointer;
 
 	void getPointerPosition(gint* x, gint* y);
+	void aboutDialog();
 } // namespace Plugin
 
 #endif
