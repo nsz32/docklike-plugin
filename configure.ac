@@ -22,7 +22,7 @@ XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [4.12.0])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.12.0])
 
 dnl Checks for libraries
-PKG_CHECK_MODULES([KEYBINDER], [keybinder-3.0 >= 0.3])
+PKG_CHECK_MODULES([X11], [x11 >= 1.6])
 PKG_CHECK_MODULES([WNCK], [libwnck-3.0 >= 3.30.0])
 PKG_CHECK_MODULES([CAIRO], [cairo >= 1.16.0])
 PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= 3.24.0])

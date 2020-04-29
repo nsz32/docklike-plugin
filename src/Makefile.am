@@ -38,12 +38,12 @@ libdocklike_la_LDFLAGS = \
 libdocklike_la_CPPFLAGS = \
 						@LIBXFCE4PANEL_CFLAGS@ \
 						@LIBXFCE4UI_CFLAGS@ \
-						$(KEYBINDER_CFLAGS)
+						$(X11_CFLAGS)
 
 libdocklike_la_LIBADD = \
 						@LIBXFCE4PANEL_LIBS@ \
 						@LIBXFCE4UI_LIBS@ \
-						$(KEYBINDER_LIBS) \
+						$(X11_LIBS) \
 						$(GTK_LIBS) \
 						$(CAIRO_LIBS) \
 						$(WNCK_LIBS)
