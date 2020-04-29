@@ -22,7 +22,7 @@ namespace Plugin
 		Dock::init();
 		Wnck::init();
 		Theme::init();
-		Keyboard::init();
+		//Keyboard::init();
 
 		//--------------------------------------------------
 
@@ -79,6 +79,7 @@ namespace Plugin
 			"logo-icon-name", "preferences-system-windows",
 			"comments", _("A modern, minimalist taskbar for XFCE."),
 			//"version", PACKAGE_VERSION,
+			"copyright", "Copyright © 2019-2020",
 			"license", "This program is free software : you can redistribute it and / or modify it under\n"
 					   "the terms of the GNU General Public License as published by the Free Software\n"
 					   "Foundation, either version 3 of the License, or (at your option) any later version.\n\n"
