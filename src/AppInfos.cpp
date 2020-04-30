@@ -109,7 +109,7 @@ namespace AppInfos
 		pthread_mutex_unlock(&AppInfosLock);
 	}
 
-	void* watchXDGDirectory(void* dirPath)
+	void* threadedXDGDirectoryWatcher(void* dirPath)
 	{
 		std::cout << "watch XDG dir: " << *(std::string*)dirPath << std::endl;
 
@@ -142,7 +142,7 @@ namespace AppInfos
 		pthread_t thread_store;
 		std::string* arg = new std::string(xdgDir);
 
-		pthread_create(&thread_store, NULL, watchXDGDirectory, arg);
+		pthread_create(&thread_store, NULL, threadedXDGDirectoryWatcher, arg);
 	}
 
 	void loadXDGDirectories()
