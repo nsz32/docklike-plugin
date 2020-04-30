@@ -26,7 +26,7 @@ namespace Plugin
 		Dock::init();
 		Wnck::init();
 		Theme::init();
-		//Hotkeys::init();
+		Hotkeys::init();
 
 		//--------------------------------------------------
 
@@ -72,14 +72,14 @@ namespace Plugin
 	{
 		const gchar* authors[] = {
 			"© 2019-2020 Nicolas Szabo (original author)",
-			"<nszabo@vivaldi.net>",
+			"<nszabo@vivaldi.net>   |   github.com/nsz32",
 			//"",
 			//_("Contributors:"),
 			//"(c) 2020 ",
 			NULL};
 
 		gtk_show_about_dialog(NULL,
-			"program-name", "Docklike Taskbar",
+			"program-name", _("Docklike Taskbar"),
 			"logo-icon-name", "preferences-system-windows",
 			"comments", _("A modern, minimalist taskbar for XFCE."),
 			//"version", PACKAGE_VERSION,
@@ -95,7 +95,7 @@ namespace Plugin
 					   "You should have received a copy of the GNU General Public License\n"
 					   "along with this program.  If not, see <https://www.gnu.org/licenses/>.",
 			"website", "https://github.com/nsz32/docklike-plugin/",
-			"website-label", "nsz32/docklike-plugin",
+			"website-label", "docklike-plugin",
 			"authors", authors,
 			//"documenters", documenters,
 			//"translator-credits", translator-credits,

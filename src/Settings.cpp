@@ -13,12 +13,19 @@ namespace Settings
 
 	State<bool> forceIconSize;
 	State<int> iconSize;
+
 	State<bool> noWindowsListIfSingle;
+
 	State<int> indicatorStyle;
+
+	State<bool> keyComboActive;
+	State<bool> keyAloneActive;
+
 	State<std::list<std::string>> pinnedAppList;
 
 	void init()
 	{
+
 		mPath = xfce_panel_plugin_save_location(Plugin::mXfPlugin, true);
 
 		mFile = g_key_file_new();
@@ -53,6 +60,16 @@ namespace Settings
 				g_key_file_set_boolean(mFile, "user", "noWindowsListIfSingle", noWindowsListIfSingle);
 				saveFile();
 			});
+
+		keyAloneActive.setup(g_key_file_get_boolean(mFile, "user", "keyAloneActive", NULL),
+			[](bool keyAloneActive) -> void {
+				g_key_file_set_boolean(mFile, "user", "keyAloneActive", keyAloneActive);
+				saveFile();
+
+				Hotkeys::updateSettings();
+			});
+
+		keyComboActive.setup(false, NULL);
 
 		gchar** pinnedListBuffer = g_key_file_get_string_list(mFile, "user", "pinned", NULL, NULL);
 		pinnedAppList.setup(Help::Gtk::bufferToStdStringList(pinnedListBuffer),

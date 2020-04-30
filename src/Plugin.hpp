@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "AppInfos.hpp"
-//#include "Hotkeys.hpp"
+#include "Hotkeys.hpp"
 #include "Settings.hpp"
 #include "SettingsDialog.hpp"
 #include "Theme.hpp"

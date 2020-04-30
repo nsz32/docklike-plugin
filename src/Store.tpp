@@ -78,7 +78,6 @@ namespace Store
 
 		V first() { return mList.front().second; }
 
-	  private:
 		std::list<std::pair<const K, V>> mList;
 	};
 

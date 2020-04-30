@@ -13,7 +13,7 @@ plugin_LTLIBRARIES = libdocklike.la
 
 # List of source files needed to build the library
 libdocklike_la_SOURCES = \
-						_gresources.c \
+						Hotkeys.cpp Hotkeys.hpp \
 						Theme.cpp Theme.hpp \
 						AppInfos.cpp AppInfos.hpp \
 						Settings.cpp Settings.hpp \
@@ -26,7 +26,8 @@ libdocklike_la_SOURCES = \
 						Dock.cpp Dock.hpp \
 						Wnck.cpp Wnck.hpp \
 						SettingsDialog.cpp SettingsDialog.hpp \
-						register.c
+						register.c \
+						_gresources.c
 
 libdocklike_la_LDFLAGS = \
 						-avoid-version \

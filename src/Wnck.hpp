@@ -36,6 +36,8 @@ namespace Wnck
 	void activate(GroupWindow* groupWindow, guint32 timestamp);
 	void minimize(GroupWindow* groupWindow);
 
+	void switchToLastWindow(guint32 timestamp);
+
 	void setActiveWindow();
 
 	extern WnckScreen* mWnckScreen;
