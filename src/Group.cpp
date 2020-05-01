@@ -95,7 +95,7 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 	g_signal_connect(
 		G_OBJECT(mButton), "scroll-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventScroll* event, Group* me) {
-			me->onScroll((GdkEventScroll*)event);
+			me->scrollWindows(event->time, event->direction);
 			return true;
 		}),
 		this);
@@ -237,6 +237,28 @@ void Group::activate(guint32 timestamp)
 	});
 
 	groupWindow->activate(timestamp);
+}
+
+void Group::scrollWindows(guint32 timestamp, GdkScrollDirection direction)
+{
+	if (mPinned && mWindowsCount == 0)
+		return;
+
+	if (!mActive)
+	{
+		mWindows.get(mTopWindowIndex)->activate(timestamp);
+	}
+	else
+	{
+		if (direction == GDK_SCROLL_UP)
+			mTopWindowIndex = ++mTopWindowIndex % mWindows.size();
+		else if (direction == GDK_SCROLL_DOWN)
+		{
+			int size = mWindows.size();
+			mTopWindowIndex = (--mTopWindowIndex + size) % size;
+		}
+		mWindows.get(mTopWindowIndex)->activate(timestamp);
+	}
 }
 
 void Group::resize()
@@ -542,28 +564,6 @@ void Group::onButtonRelease(GdkEventButton* event)
 	else if (mActive && mActiveBeforePressed)
 	{
 		mWindows.get(mTopWindowIndex)->minimize();
-	}
-}
-
-void Group::onScroll(GdkEventScroll* event)
-{
-	if (mPinned && mWindowsCount == 0)
-		return;
-
-	if (!mActive)
-	{
-		mWindows.get(mTopWindowIndex)->activate(event->time);
-	}
-	else
-	{
-		if (event->direction == GDK_SCROLL_UP)
-			mTopWindowIndex = ++mTopWindowIndex % mWindows.size();
-		else if (event->direction == GDK_SCROLL_DOWN)
-		{
-			int size = mWindows.size();
-			mTopWindowIndex = (--mTopWindowIndex + size) % size;
-		}
-		mWindows.get(mTopWindowIndex)->activate(event->time);
 	}
 }
 

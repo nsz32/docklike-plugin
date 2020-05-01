@@ -52,7 +52,7 @@ GroupMenu::GroupMenu(Group* dockButton)
 
 	g_signal_connect(G_OBJECT(mWindow), "scroll-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventScroll* event, GroupMenu* me) {
-			((Group*)me->mGroup)->onScroll(event); // TODO BRAH
+			((Group*)me->mGroup)->scrollWindows(event->time, event->direction);
 			return true;
 		}),
 		this);

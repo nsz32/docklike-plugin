@@ -110,7 +110,7 @@ namespace Dock
 		}
 	}
 
-	void activateGroup(int nb, gulong timestamp)
+	void activateGroup(int nb, guint32 timestamp)
 	{
 		int i = 0;
 		GList* children = gtk_container_get_children(GTK_CONTAINER(mBox));
@@ -121,7 +121,12 @@ namespace Dock
 				if (i == nb)
 				{
 					Group* group = (Group*)g_object_get_data(G_OBJECT(widget), "group");
-					group->activate(timestamp);
+					if (group->mSFocus)
+						group->scrollWindows(timestamp, GDK_SCROLL_DOWN);
+					else if (group->mWindowsCount > 0)
+						group->activate(timestamp);
+					else
+						AppInfos::launch(group->mAppInfo);
 					return;
 				}
 				else

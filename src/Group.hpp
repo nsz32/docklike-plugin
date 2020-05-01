@@ -39,6 +39,7 @@ class Group
 	void remove(GroupWindow* window);
 
 	void activate(guint32 timestamp);
+	void scrollWindows(guint32 timestamp, GdkScrollDirection direction);
 
 	void resize();
 	void setStyle(Style style, bool val);
@@ -52,7 +53,6 @@ class Group
 
 	void onButtonPress(GdkEventButton* event);
 	void onButtonRelease(GdkEventButton* event);
-	void onScroll(GdkEventScroll* scroll_event);
 	void onMouseEnter();
 	void onMouseLeave();
 	void setMouseLeaveTimeout();
