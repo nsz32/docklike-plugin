@@ -17,7 +17,7 @@ namespace Hotkeys
 	int mXIOpcode;
 	pthread_t mThread;
 
-	int mSuperKeycode, m1Keycode;
+	int mSuperLKeycode, mSuperRKeycode, m1Keycode;
 
 	// =========================================================================
 
@@ -145,7 +145,7 @@ namespace Hotkeys
 				int keycode = ((XIRawEvent*)cookie->data)->detail;
 				if (cookie->evtype == XI_RawKeyRelease)
 				{
-					if (keycode == mSuperKeycode)
+					if (keycode == mSuperLKeycode || keycode == mSuperRKeycode)
 					{
 						if (toTrigger)
 						{
@@ -155,7 +155,7 @@ namespace Hotkeys
 				}
 				else if (cookie->evtype == XI_RawKeyPress)
 				{
-					if (keycode == mSuperKeycode)
+					if (keycode == mSuperLKeycode || keycode == mSuperRKeycode)
 						toTrigger = true;
 					else
 						toTrigger = false;
@@ -220,7 +220,8 @@ namespace Hotkeys
 
 		checkXIExtension(display);
 
-		mSuperKeycode = XKeysymToKeycode(display, XK_Super_L);
+		mSuperLKeycode = XKeysymToKeycode(display, XK_Super_L);
+		mSuperRKeycode = XKeysymToKeycode(display, XK_Super_R);
 		m1Keycode = XKeysymToKeycode(display, XK_1);
 
 		XCloseDisplay(display);
