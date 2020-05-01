@@ -11,7 +11,7 @@
 #include <string>
 
 #include <X11/XKBlib.h>
-#include <X11/Xlib.h>
+#include <X11/extensions/XInput2.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
@@ -22,6 +22,11 @@ namespace Hotkeys
 {
 	void init();
 	void updateSettings();
+
+	extern bool mXIExtAvailable;
+	extern int mGrabbedKeys;
+
+	const int NbHotkeys = 10;
 } // namespace Hotkeys
 
 #endif

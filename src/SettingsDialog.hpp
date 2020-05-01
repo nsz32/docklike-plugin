@@ -25,8 +25,6 @@ extern "C"
 namespace SettingsDialog
 {
 	void popup();
-
-	void close();
 } // namespace SettingsDialog
 
 #endif // SETTINGS_HPP

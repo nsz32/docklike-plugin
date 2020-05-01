@@ -26,7 +26,7 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 
 	mTopWindowIndex = 0;
 
-	mSFocus = mSOpened = mSMany = mSHover = false;
+	mSFocus = mSOpened = mSMany = mSHover = mSSuper = false;
 
 	mWindowsCount.setup(
 		0, [this]() -> uint {
@@ -301,6 +301,15 @@ void Group::setStyle(Style style, bool val)
 		}
 		break;
 	}
+	case Style::Super:
+	{
+		if (mSSuper != val)
+		{
+			mSSuper = val;
+			gtk_widget_queue_draw(mButton);
+		}
+		break;
+	}
 	}
 }
 
@@ -311,10 +320,12 @@ void Group::onDraw(cairo_t* cr)
 
 	double aBack = 0;
 
+	if (mSSuper)
+		aBack += 0.25;
 	if (mSHover && mSFocus)
 		aBack = 0.8;
 	else if (mSHover || mSFocus)
-		aBack = 0.5;
+		aBack += 0.5;
 
 	if (aBack > 0)
 	{

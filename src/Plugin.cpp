@@ -72,7 +72,7 @@ namespace Plugin
 	{
 		const gchar* authors[] = {
 			"© 2019-2020 Nicolas Szabo (original author)",
-			"<nszabo@vivaldi.net>   |   github.com/nsz32",
+			"<nszabo@vivaldi.net>  |  github.com/nsz32",
 			//"",
 			//_("Contributors:"),
 			//"(c) 2020 ",

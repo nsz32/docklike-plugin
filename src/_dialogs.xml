@@ -218,13 +218,25 @@
 											<object class="GtkCheckButton" id="c_keyComboActive">
 												<property name="visible">True</property>
 												<property name="can_focus">False</property>
-												<property name="sensitive">False</property>
-												<property name="label" translatable="yes">Switch between applications with &lt;SUPER&gt;+[1, 2, 3, ...]</property>
+												<property name="label" translatable="yes">Switch between applications with &lt;SUPER&gt;+[1, 2, ...]</property>
 												<property name="use_underline">True</property>
 												<property name="xalign">0</property>
 											</object>
 											<packing>
 												<property name="left_attach">0</property>
+												<property name="top_attach">0</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkImage" id="c_keyComboActiveWarning">
+												<property name="visible">False</property>
+												<property name="can_focus">False</property>
+												<property name="halign">start</property>
+												<property name="valign">start</property>
+												<property name="stock">gtk-dialog-warning</property>
+											</object>
+											<packing>
+												<property name="left_attach">1</property>
 												<property name="top_attach">0</property>
 											</packing>
 										</child>
@@ -238,6 +250,21 @@
 											</object>
 											<packing>
 												<property name="left_attach">0</property>
+												<property name="top_attach">1</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkImage" id="c_keyAloneActiveWarning">
+												<property name="visible">False</property>
+												<property name="can_focus">False</property>
+												<property name="tooltip_markup" translatable="yes">&lt;b&gt;This feature is disabled.&lt;/b&gt;
+It requires X11 XInput2.0 extension which is is not provided by your system.</property>
+												<property name="halign">start</property>
+												<property name="valign">start</property>
+												<property name="stock">gtk-dialog-error</property>
+											</object>
+											<packing>
+												<property name="left_attach">1</property>
 												<property name="top_attach">1</property>
 											</packing>
 										</child>

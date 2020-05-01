@@ -29,7 +29,8 @@ class Group
 		Focus,
 		Opened,
 		Many,
-		Hover
+		Hover,
+		Super
 	};
 
 	Group(AppInfo* appInfo, bool pinned);
@@ -72,6 +73,7 @@ class Group
 	bool mSOpened;
 	bool mSMany;
 	bool mSHover;
+	bool mSSuper;
 	uint mTolerablePointerDistance;
 
 	LogicalState<uint> mWindowsCount;

@@ -61,6 +61,14 @@ namespace Settings
 				saveFile();
 			});
 
+		keyComboActive.setup(g_key_file_get_boolean(mFile, "user", "keyComboActive", NULL),
+			[](bool keyComboActive) -> void {
+				g_key_file_set_boolean(mFile, "user", "keyComboActive", keyComboActive);
+				saveFile();
+
+				Hotkeys::updateSettings();
+			});
+
 		keyAloneActive.setup(g_key_file_get_boolean(mFile, "user", "keyAloneActive", NULL),
 			[](bool keyAloneActive) -> void {
 				g_key_file_set_boolean(mFile, "user", "keyAloneActive", keyAloneActive);
@@ -68,8 +76,6 @@ namespace Settings
 
 				Hotkeys::updateSettings();
 			});
-
-		keyComboActive.setup(false, NULL);
 
 		gchar** pinnedListBuffer = g_key_file_get_string_list(mFile, "user", "pinned", NULL, NULL);
 		pinnedAppList.setup(Help::Gtk::bufferToStdStringList(pinnedListBuffer),

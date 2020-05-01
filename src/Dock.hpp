@@ -37,6 +37,9 @@ namespace Dock
 	void savePinned();
 	void redraw();
 
+	void hoverSupered(bool on);
+	void activateGroup(int nb, gulong timestamp);
+
 	void onPanelResize(int size = -1);
 	void onPanelOrientationChange(GtkOrientation orientation);
 

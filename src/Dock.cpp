@@ -94,6 +94,41 @@ namespace Dock
 		gtk_widget_queue_draw(mBox);
 	}
 
+	void hoverSupered(bool on)
+	{
+		int grabbedKeys = Hotkeys::mGrabbedKeys;
+		GList* children = gtk_container_get_children(GTK_CONTAINER(mBox));
+		for (GList* child = children; child && grabbedKeys; child = child->next)
+		{
+			GtkWidget* widget = (GtkWidget*)child->data;
+			if (!gtk_widget_get_visible(widget))
+				continue;
+
+			Group* group = (Group*)g_object_get_data(G_OBJECT(widget), "group");
+			group->setStyle(Group::Style::Super, on);
+			--grabbedKeys;
+		}
+	}
+
+	void activateGroup(int nb, gulong timestamp)
+	{
+		int i = 0;
+		GList* children = gtk_container_get_children(GTK_CONTAINER(mBox));
+		for (GList* child = children; child; child = child->next)
+		{
+			GtkWidget* widget = (GtkWidget*)child->data;
+			if (gtk_widget_get_visible(widget))
+				if (i == nb)
+				{
+					Group* group = (Group*)g_object_get_data(G_OBJECT(widget), "group");
+					group->activate(timestamp);
+					return;
+				}
+				else
+					++i;
+		}
+	}
+
 	void onPanelResize(int size)
 	{
 		if (size != -1)
