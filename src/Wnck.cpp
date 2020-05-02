@@ -195,7 +195,7 @@ namespace Wnck
 
 			gtk_widget_show(launchAnother);
 
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(launchAnother), 0, 1, 0, 1);
+			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(launchAnother), 0, 2, 0, 1);
 
 			g_signal_connect(G_OBJECT(launchAnother), "activate",
 				G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
@@ -211,8 +211,8 @@ namespace Wnck
 				gtk_widget_show(separator);
 				gtk_widget_show(pinToggle);
 
-				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 1, 2, 0, 1);
-				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 1, 2, 0, 1);
+				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 2, 3, 0, 1);
+				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 2, 3, 0, 1);
 
 				g_signal_connect(G_OBJECT(pinToggle), "activate",
 					G_CALLBACK(+[](GtkMenuItem* menuitem, Group* group) {
