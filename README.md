@@ -1,9 +1,7 @@
 Docklike Taskbar for XFCE
 -----------------------------------
 
-![docklike-plugin](https://i.imgur.com/9wrvuM4.png)
-![docklike-plugin](https://i.imgur.com/1oooQUS.png)
-![docklike-plugin](https://i.imgur.com/y6GTq79.png)
+![docklike-plugin](https://i.imgur.com/WuQGvGw.jpg)
 
 A WIP modern taskbar for XFCE
 C++ - GTK3 - CSS - DOCK-LIKE - MINIMALISM
@@ -27,3 +25,9 @@ libxfce4ui-2
 gtk-3.0
 cairo-1.16
 libwnck-3.0
+
+![docklike-plugin](https://i.imgur.com/b4qDHCB.jpg)
+![docklike-plugin](https://i.imgur.com/9nWqkCG.jpg)
+![docklike-plugin](https://i.imgur.com/bpR1E6j.jpg)
+![docklike-plugin](https://i.imgur.com/CUFp6QP.jpg)
+![docklike-plugin](https://i.imgur.com/DroPCpp.jpg)
