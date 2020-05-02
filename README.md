@@ -2,7 +2,7 @@ Docklike Taskbar for XFCE
 -----------------------------------
 A modern, docklike, minimalist taskbar for XFCE
 
-![docklike-plugin](https://i.imgur.com/WuQGvGw.jpg)
+![docklike-plugin](https://i.imgur.com/O0nvthj.jpg)
 
 Build & Install
 -----------------------------------
