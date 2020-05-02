@@ -1,19 +1,20 @@
 Docklike Taskbar for XFCE
 -----------------------------------
+A modern, docklike, minimalist taskbar for XFCE
 
 ![docklike-plugin](https://i.imgur.com/WuQGvGw.jpg)
 
-A WIP modern taskbar for XFCE
-C++ - GTK3 - CSS - DOCK-LIKE - MINIMALISM
+Features
+-----------------------------------
 
-Docklike is now published in the ArchLinux User Repository (AUR) !
 
-Installation instructions :
+Build & Install
+-----------------------------------
+
+Docklike is published in the ArchLinux User Repository (AUR) : `yay xfce4-docklike-plugin-git`
+
+On other distros:
 ```
-# For ArchLinux users :
-yaourt -S xfce4-docklike-plugin-git
-
-# On any other distro :
 ./autogen.sh
 make
 sudo make install
