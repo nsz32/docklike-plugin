@@ -132,10 +132,14 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 
 	g_signal_connect(G_OBJECT(mButton), "enter-notify-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventCrossing* event, Group* me) {
-			if (event->state & (GDK_BUTTON1_MASK))
+			if (!me->mActive && event->state & (GDK_BUTTON1_MASK))
 			{
+				me->mActiveBeforePressed = false;
 				me->activate(event->time);
-				me->mActiveBeforePressed = me->mActive;
+			}
+			else if (me->mActive)
+			{
+				me->mActiveBeforePressed = true;
 			}
 
 			me->setStyle(Style::Hover, true);
