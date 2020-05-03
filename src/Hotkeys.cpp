@@ -40,7 +40,6 @@ namespace Hotkeys
 		case KeyPress:
 			if (xevent->xkey.keycode >= m1Keycode && xevent->xkey.keycode <= m1Keycode + NbHotkeys)
 			{
-				std::cout << "TRIGGER COMBO:" << (xevent->xkey.keycode - m1Keycode) << std::endl;
 				Dock::activateGroup(xevent->xkey.keycode - m1Keycode, xevent->xkey.time);
 			}
 			break;
