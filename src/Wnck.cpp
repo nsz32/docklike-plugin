@@ -226,8 +226,13 @@ namespace Wnck
 
 			if (group != NULL && group->mWindowsCount > 1)
 			{
+				GtkWidget* separator = gtk_separator_menu_item_new();
+				gtk_widget_show(separator);
+
 				GtkWidget* closeAll = gtk_menu_item_new_with_label("Close All");
 				gtk_widget_show(closeAll);
+
+				gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
 				gtk_menu_shell_append(GTK_MENU_SHELL(menu), closeAll);
 
 				g_signal_connect(G_OBJECT(closeAll), "activate",
