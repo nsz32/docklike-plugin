@@ -39,6 +39,8 @@ namespace AppInfos
 
 		mXdgDataDirs.sort();
 		mXdgDataDirs.unique();
+
+		mXdgDataDirs.push_back(std::string(getenv("HOME")) + "/.local/share/applications/");
 	}
 
 	void loadDesktopEntry(const std::string& xdgDir, std::string filename)
