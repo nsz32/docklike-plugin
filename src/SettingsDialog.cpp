@@ -52,6 +52,18 @@ namespace SettingsDialog
 			}),
 			dialog);
 
+		g_signal_connect(dialog, "close",
+			G_CALLBACK(+[](GtkDialog* dialog) {
+				xfce_panel_plugin_unblock_menu(Plugin::mXfPlugin);
+			}),
+			NULL);
+
+		g_signal_connect(dialog, "response",
+			G_CALLBACK(+[](GtkDialog* dialog, gint response) {
+				xfce_panel_plugin_unblock_menu(Plugin::mXfPlugin);
+			}),
+			NULL);
+
 		// =====================================================================
 
 		GObject* noListForSingleWindow = gtk_builder_get_object(builder, "c_noListForSingleWindow");
