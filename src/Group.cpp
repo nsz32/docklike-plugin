@@ -68,7 +68,6 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 			gdk_device_ungrab((event)->device, (event)->time);
 			if (event->button != 3 && event->state & GDK_CONTROL_MASK)
 			{
-				std::cout << "STARTDRAG:state:" << event->state << std::endl;
 				gtk_drag_begin_with_coordinates(widget, targetList, GDK_ACTION_MOVE, event->button, (GdkEvent*)event, -1, -1);
 			}
 			if (event->state & GDK_CONTROL_MASK)
@@ -135,7 +134,6 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 			if (!me->mActive && event->state & (GDK_BUTTON1_MASK))
 			{
 				me->mActiveBeforePressed = false;
-				me->activate(event->time);
 			}
 			else if (me->mActive)
 			{
@@ -568,6 +566,10 @@ void Group::onButtonRelease(GdkEventButton* event)
 	else if (mActive && mActiveBeforePressed)
 	{
 		mWindows.get(mTopWindowIndex)->minimize();
+	}
+	else if (!mActive)
+	{
+		activate(event->time);
 	}
 }
 
