@@ -85,7 +85,6 @@ class Group
 	void setTopWindow(GroupWindow* groupWindow);
 
 	bool mActive;
-	bool mActiveBeforePressed;
 
 	Help::Gtk::Timeout mLeaveTimeout;
 	Help::Gtk::Timeout mMenuShowTimeout;
