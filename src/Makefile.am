@@ -8,7 +8,7 @@
 
 
 # Defining libraries to be built and their installation destination
-plugindir = $(libdir)/xfce4/panel/plugins
+plugindir = /usr/lib/xfce4/panel/plugins
 plugin_LTLIBRARIES = libdocklike.la
 
 # List of source files needed to build the library

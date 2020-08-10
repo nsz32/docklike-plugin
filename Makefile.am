@@ -18,7 +18,7 @@ SUBDIRS = src
 #
 # Desktop file
 #
-desktopdir = $(datadir)/xfce4/panel/plugins
+desktopdir = /usr/share/xfce4/panel/plugins
 desktop_in_files = docklike.desktop
 desktop_DATA = $(desktop_in_files)
 
