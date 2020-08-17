@@ -84,7 +84,7 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 	g_signal_connect(
 		G_OBJECT(mButton), "button-release-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me) {
-			if (event->button != 1)
+			if (event->button != 1 && event->button != 2)
 				return false;
 			me->onButtonRelease(event);
 			return true;
@@ -252,6 +252,13 @@ void Group::scrollWindows(guint32 timestamp, GdkScrollDirection direction)
 		}
 		mWindows.get(mTopWindowIndex)->activate(timestamp);
 	}
+}
+
+void Group::closeAll()
+{
+	mWindows.forEach([](GroupWindow* w) -> void {
+		Wnck::close(w, 0);
+	});
 }
 
 void Group::resize()
@@ -550,7 +557,11 @@ void Group::onButtonPress(GdkEventButton* event)
 
 void Group::onButtonRelease(GdkEventButton* event)
 {
-	if (event->state & GDK_SHIFT_MASK || (mPinned && mWindowsCount == 0))
+	if (event->button == 2)
+	{
+		closeAll();
+	}
+	else if (event->state & GDK_SHIFT_MASK || (mPinned && mWindowsCount == 0))
 	{
 		AppInfos::launch(mAppInfo);
 	}

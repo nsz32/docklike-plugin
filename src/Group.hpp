@@ -40,6 +40,7 @@ class Group
 
 	void activate(guint32 timestamp);
 	void scrollWindows(guint32 timestamp, GdkScrollDirection direction);
+	void closeAll();
 
 	void resize();
 	void setStyle(Style style, bool val);

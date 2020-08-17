@@ -237,9 +237,7 @@ namespace Wnck
 
 				g_signal_connect(G_OBJECT(closeAll), "activate",
 					G_CALLBACK(+[](GtkMenuItem* menuitem, Group* group) {
-						group->mWindows.forEach([](GroupWindow* w) -> void {
-							Wnck::close(w, 0);
-						});
+						group->closeAll();
 					}),
 					group);
 			}
