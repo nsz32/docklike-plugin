@@ -65,7 +65,11 @@ void GroupWindow::getInGroup(Group* group)
 	mGroup->add(this);
 }
 
-void GroupWindow::leaveGroup(Group* group) { group->remove(this); }
+void GroupWindow::leaveGroup(Group* group)
+{
+	group->remove(this);
+	group->onWindowUnactivate();
+}
 
 void GroupWindow::onActivate()
 {
