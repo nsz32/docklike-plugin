@@ -530,10 +530,13 @@ void Group::electNewTopWindow()
 
 void Group::onWindowActivate(GroupWindow* groupWindow)
 {
-	mActive = true;
-	setStyle(Style::Focus, true);
+	if (!groupWindow->getState(WNCK_WINDOW_STATE_SKIP_TASKLIST))
+	{
+		mActive = true;
+		setStyle(Style::Focus, true);
 
-	setTopWindow(groupWindow);
+		setTopWindow(groupWindow);
+	}
 }
 
 void Group::onWindowUnactivate()

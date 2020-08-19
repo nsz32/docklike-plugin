@@ -185,7 +185,7 @@ namespace Wnck
 
 	GtkWidget* buildActionMenu(GroupWindow* groupWindow, Group* group)
 	{
-		GtkWidget* menu = (groupWindow != NULL) ? wnck_action_menu_new(groupWindow->mWnckWindow) : gtk_menu_new();
+		GtkWidget* menu = (groupWindow != NULL && !groupWindow->getState(WNCK_WINDOW_STATE_SKIP_TASKLIST)) ? wnck_action_menu_new(groupWindow->mWnckWindow) : gtk_menu_new();
 
 		AppInfo* appInfo = (groupWindow != NULL) ? groupWindow->mGroup->mAppInfo : group->mAppInfo;
 
