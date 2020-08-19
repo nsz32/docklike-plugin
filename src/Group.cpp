@@ -257,7 +257,8 @@ void Group::scrollWindows(guint32 timestamp, GdkScrollDirection direction)
 void Group::closeAll()
 {
 	mWindows.forEach([](GroupWindow* w) -> void {
-		Wnck::close(w, 0);
+		if (!w->getState(WNCK_WINDOW_STATE_SKIP_TASKLIST))
+			Wnck::close(w, 0);
 	});
 }
 
