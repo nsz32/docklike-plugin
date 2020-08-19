@@ -86,6 +86,20 @@ namespace SettingsDialog
 
 		// =====================================================================
 
+		GObject* indicatorColor = gtk_builder_get_object(builder, "cp_indicatorColor");
+		std::cout << "COLOR :" << gdk_rgba_to_string(Settings::indicatorColor) << std::endl;
+		gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(indicatorColor), Settings::indicatorColor);
+		g_signal_connect(indicatorColor, "color-set",
+			G_CALLBACK(+[](GtkColorButton* indicatorColor, GtkWidget* g) {
+				gdk_rgba_free(Settings::indicatorColor);
+				GdkRGBA* color = (GdkRGBA*)malloc(sizeof(GdkRGBA));
+				gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(indicatorColor), color);
+				Settings::indicatorColor.set(gdk_rgba_copy(color));
+			}),
+			dialog);
+
+		// =====================================================================
+
 		GObject* iconSize = gtk_builder_get_object(builder, "e_iconSize");
 		gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(iconSize))), std::to_string(Settings::iconSize).c_str());
 		gtk_widget_set_sensitive(GTK_WIDGET(iconSize), Settings::forceIconSize);

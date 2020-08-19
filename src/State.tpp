@@ -58,6 +58,7 @@ class LogicalState
 	}
 
 	operator V() const { return v; }
+	operator V*() const { return v; }
 
   private:
 	V v;

@@ -32,6 +32,7 @@ namespace Settings
 	extern State<bool> noWindowsListIfSingle;
 
 	extern State<int> indicatorStyle;
+	extern State<GdkRGBA*> indicatorColor;
 
 	extern State<bool> keyComboActive;
 	extern State<bool> keyAloneActive;

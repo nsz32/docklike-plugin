@@ -362,7 +362,7 @@ void Group::onDraw(cairo_t* cr)
 		if (mSOpened)
 		{
 			if (mSFocus)
-				cairo_set_source_rgba(cr, 0.30, 0.65, 0.90, 1);
+				cairo_set_source_rgba(cr, (*Settings::indicatorColor).red, (*Settings::indicatorColor).green, (*Settings::indicatorColor).blue, 1);
 			else
 				cairo_set_source_rgba(cr, 0.7, 0.7, 0.7, 1);
 
@@ -401,9 +401,9 @@ void Group::onDraw(cairo_t* cr)
 
 			if (mSFocus)
 			{
-				rgb[0] = 0.30;
-				rgb[1] = 0.65;
-				rgb[2] = 0.90;
+				rgb[0] = (*Settings::indicatorColor).red;
+				rgb[1] = (*Settings::indicatorColor).green;
+				rgb[2] = (*Settings::indicatorColor).blue;
 			}
 			else
 			{
