@@ -15,6 +15,7 @@ namespace Settings
 	State<int> iconSize;
 
 	State<bool> noWindowsListIfSingle;
+	State<bool> onlyDisplayVisible;
 
 	State<int> indicatorStyle;
 	State<GdkRGBA*> indicatorColor;
@@ -72,6 +73,12 @@ namespace Settings
 		noWindowsListIfSingle.setup(g_key_file_get_boolean(mFile, "user", "noWindowsListIfSingle", NULL),
 			[](bool noWindowsListIfSingle) -> void {
 				g_key_file_set_boolean(mFile, "user", "noWindowsListIfSingle", noWindowsListIfSingle);
+				saveFile();
+			});
+		
+		onlyDisplayVisible.setup(g_key_file_get_boolean(mFile, "user", "onlyDisplayVisible", NULL),
+			[](bool onlyDisplayVisible) -> void {
+				g_key_file_set_boolean(mFile, "user", "onlyDisplayVisible", onlyDisplayVisible);
 				saveFile();
 			});
 

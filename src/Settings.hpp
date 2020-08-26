@@ -30,6 +30,7 @@ namespace Settings
 	extern State<int> iconSize;
 
 	extern State<bool> noWindowsListIfSingle;
+	extern State<bool> onlyDisplayVisible;
 
 	extern State<int> indicatorStyle;
 	extern State<GdkRGBA*> indicatorColor;
