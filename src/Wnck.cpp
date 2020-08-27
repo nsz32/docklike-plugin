@@ -111,12 +111,6 @@ namespace Wnck
 			}),
 			NULL);
 
-		g_signal_connect(G_OBJECT(mWnckScreen), "active-workspace-changed",
-			G_CALLBACK(+[](WnckScreen* screen, WnckWindow* wnckWindow) {
-				setVisibleGroups();
-			}),
-			NULL);
-
 		// already opened windows
 		for (GList* window_l = wnck_screen_get_windows(mWnckScreen);
 			 window_l != NULL;
@@ -127,7 +121,6 @@ namespace Wnck
 				new GroupWindow(wnckWindow));
 		}
 		setActiveWindow();
-		setVisibleGroups();
 	}
 
 	gulong getActiveWindowXID()
@@ -179,27 +172,6 @@ namespace Wnck
 		{
 			mGroupWindows.first()->onUnactivate();
 			mGroupWindows.moveToStart(activeXID)->onActivate();
-		}
-	}
-
-	void setVisibleGroups()
-	{
-		for (GList* window_l = wnck_screen_get_windows(mWnckScreen);
-			 window_l != NULL;
-			 window_l = window_l->next)
-		{
-			WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
-			GroupWindow* groupWindow = mGroupWindows.get(wnck_window_get_xid(wnckWindow));
-			WnckWorkspace* workspace = wnck_window_get_workspace(groupWindow->mWnckWindow);
-
-			if (groupWindow->mGroup->mPinned)
-				gtk_widget_show(groupWindow->mGroup->mButton);
-			else if (wnck_window_get_workspace(wnckWindow) == wnck_screen_get_active_workspace(mWnckScreen))
-				gtk_widget_show(groupWindow->mGroup->mButton);
-			else if (Settings::onlyDisplayVisible && wnck_window_get_workspace(wnckWindow) != wnck_screen_get_active_workspace(mWnckScreen))
-				gtk_widget_hide(groupWindow->mGroup->mButton);
-			else
-				gtk_widget_show(groupWindow->mGroup->mButton);
 		}
 	}
 

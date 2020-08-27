@@ -39,7 +39,6 @@ namespace Wnck
 	void switchToLastWindow(guint32 timestamp);
 
 	void setActiveWindow();
-	void setVisibleGroups();
 
 	extern WnckScreen* mWnckScreen;
 	extern Store::KeyStore<gulong, GroupWindow*> mGroupWindows;
