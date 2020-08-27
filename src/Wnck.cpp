@@ -123,11 +123,13 @@ namespace Wnck
 			 window_l = window_l->next)
 		{
 			WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
-			mGroupWindows.push(wnck_window_get_xid(wnckWindow),
-				new GroupWindow(wnckWindow));
+			GroupWindow* groupWindow = new GroupWindow(wnckWindow);
+			mGroupWindows.push(wnck_window_get_xid(wnckWindow), groupWindow);
+			
+			if (Settings::onlyDisplayVisible)
+				groupWindow->updateState(groupWindow->mState);
 		}
 		setActiveWindow();
-		setVisibleGroups();
 	}
 
 	gulong getActiveWindowXID()
