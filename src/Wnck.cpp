@@ -192,7 +192,6 @@ namespace Wnck
 			{
 				WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
 				GroupWindow* groupWindow = mGroupWindows.get(wnck_window_get_xid(wnckWindow));
-				WnckWorkspace* workspace = wnck_window_get_workspace(groupWindow->mWnckWindow);
 
 				groupWindow->updateState(groupWindow->mState);
 			}
