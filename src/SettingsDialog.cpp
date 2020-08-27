@@ -79,6 +79,7 @@ namespace SettingsDialog
 		g_signal_connect(onlyDisplayVisible, "toggled",
 			G_CALLBACK(+[](GtkToggleButton* onlyDisplayVisible) {
 				Settings::onlyDisplayVisible.set(gtk_toggle_button_get_active(onlyDisplayVisible));
+				Wnck::setVisibleGroups();
 			}),
 			NULL);
 

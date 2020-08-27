@@ -117,4 +117,22 @@ void GroupWindow::updateState(ushort state, ushort changeMask)
 		else
 			gtk_widget_show(GTK_WIDGET(mGroupMenuItem->mItem));
 	}
+
+	/* 
+	FIXME: If the setting is toggled on then off again
+	dock items for windows from other workspaces get lost forever. 
+	*/
+
+	if (Settings::onlyDisplayVisible)
+	{
+		WnckWorkspace* workspace = wnck_window_get_workspace(mWnckWindow);
+		WnckScreen* screen = wnck_workspace_get_screen(workspace);
+		WnckWorkspace* active_workspace = wnck_screen_get_active_workspace(screen);
+
+		if (workspace != active_workspace)
+			leaveGroup(mGroup);
+		else
+			getInGroup(mGroup);
+	
+	}
 }
