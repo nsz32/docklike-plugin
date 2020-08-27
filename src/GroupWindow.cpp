@@ -45,6 +45,12 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 			me->updateState(new_state, changed_mask);
 		}),
 		this);
+	
+	g_signal_connect(G_OBJECT(mWnckWindow), "workspace-changed",
+		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
+			me->updateState(me->mState);
+		}),
+		this);
 
 	// initial state
 	updateState(Wnck::getState(this));
