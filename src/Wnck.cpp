@@ -186,7 +186,13 @@ namespace Wnck
 
 	void setVisibleGroups()
 	{
-		mGroupWindows.forEach([](std::pair<gulong, GroupWindow*> g) -> void { g.second->updateState(); });
+		for (GList* window_l = wnck_screen_get_windows(mWnckScreen); window_l != NULL; window_l = window_l->next)
+		{
+			WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
+			GroupWindow* groupWindow = mGroupWindows.get(wnck_window_get_xid(wnckWindow));
+
+			groupWindow->updateState();
+		}
 	}
 
 	std::string getGroupName(GroupWindow* groupWindow)
