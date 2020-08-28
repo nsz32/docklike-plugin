@@ -71,9 +71,10 @@ namespace Plugin
 	void aboutDialog()
 	{
 		const gchar* authors[] = {
-			"© 2019-2020 Nicolas Szabo (original author)",
+			"Nicolas Szabo (original author)",
 			"<nszabo@vivaldi.net>  |  github.com/nsz32",
-			"David Keogh <davidtkeogh@gmail.com>",
+			" Contributors:",
+			"David Keogh <davidtkeogh@gmail.com>  |  github.com/davekeogh",
 			//"",
 			//_("Contributors:"),
 			//"(c) 2020 ",

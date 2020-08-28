@@ -96,7 +96,7 @@
 											<object class="GtkCheckButton" id="c_onlyDisplayVisible">
 												<property name="visible">True</property>
 												<property name="can_focus">False</property>
-												<property name="label" translatable="yes">Only show running applications from the current workspace</property>
+												<property name="label" translatable="yes">Show only applications from the current workspace</property>
 												<property name="use_underline">True</property>
 												<property name="xalign">0</property>
 											</object>

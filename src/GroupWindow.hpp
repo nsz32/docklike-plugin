@@ -28,8 +28,8 @@ class GroupWindow
 	GroupWindow(WnckWindow* wnckWindow);
 	~GroupWindow();
 
-	void getInGroup(Group* group);
-	void leaveGroup(Group* group);
+	void getInGroup();
+	void leaveGroup();
 
 	void onActivate();
 	void onUnactivate();
@@ -41,11 +41,12 @@ class GroupWindow
 	void showMenu();
 
 	Group* mGroup;
+	bool mGroupAssociated;
 
 	WnckWindow* mWnckWindow;
 	GroupMenuItem* mGroupMenuItem;
 
-	void updateState(unsigned short state, unsigned short changeMask = USHRT_MAX);
+	void updateState();
 	unsigned short mState;
 };
 

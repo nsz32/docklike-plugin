@@ -125,9 +125,9 @@ namespace Wnck
 			WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
 			GroupWindow* groupWindow = new GroupWindow(wnckWindow);
 			mGroupWindows.push(wnck_window_get_xid(wnckWindow), groupWindow);
-			
+
 			if (Settings::onlyDisplayVisible)
-				groupWindow->updateState(groupWindow->mState);
+				groupWindow->updateState();
 		}
 		setActiveWindow();
 	}
@@ -186,18 +186,7 @@ namespace Wnck
 
 	void setVisibleGroups()
 	{
-		if (Settings::onlyDisplayVisible)
-		{
-			for (GList* window_l = wnck_screen_get_windows(mWnckScreen);
-				window_l != NULL;
-				window_l = window_l->next)
-			{
-				WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
-				GroupWindow* groupWindow = mGroupWindows.get(wnck_window_get_xid(wnckWindow));
-
-				groupWindow->updateState(groupWindow->mState);
-			}
-		}
+		mGroupWindows.forEach([](std::pair<gulong, GroupWindow*> g) -> void { g.second->updateState(); });
 	}
 
 	std::string getGroupName(GroupWindow* groupWindow)

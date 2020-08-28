@@ -14,7 +14,9 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 	std::string groupName = Wnck::getGroupName(this); // check here for exotic group association (like libreoffice)
 	AppInfo* appInfo = AppInfos::search(groupName);
 
-	std::cout << "SEARCHING GROUPNAME:" << groupName << std::endl;
+	mGroup = Dock::prepareGroup(appInfo);
+
+	/*std::cout << "SEARCHING GROUPNAME:" << groupName << std::endl;
 	if (appInfo == NULL)
 		std::cout << "NO MATCH:" << 0 << std::endl;
 	else
@@ -22,9 +24,7 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 		std::cout << "> APPINFO NAME:" << appInfo->name << std::endl;
 		std::cout << "> APPINFO PATH:" << appInfo->path << std::endl;
 		std::cout << "> APPINFO ICON:" << appInfo->icon << std::endl;
-	}
-
-	getInGroup(Dock::prepareGroup(appInfo));
+	}*/
 
 	// signal connection
 	g_signal_connect(G_OBJECT(mWnckWindow), "name-changed",
@@ -42,18 +42,18 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 	g_signal_connect(G_OBJECT(mWnckWindow), "state-changed",
 		G_CALLBACK(+[](WnckWindow* window, WnckWindowState changed_mask,
 						WnckWindowState new_state, GroupWindow* me) {
-			me->updateState(new_state, changed_mask);
+			me->updateState();
 		}),
 		this);
-	
+
 	g_signal_connect(G_OBJECT(mWnckWindow), "workspace-changed",
 		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
-			me->updateState(me->mState);
+			me->updateState();
 		}),
 		this);
 
 	// initial state
-	updateState(Wnck::getState(this));
+	updateState();
 
 	mGroupMenuItem->updateIcon();
 	mGroupMenuItem->updateLabel();
@@ -61,20 +61,27 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 
 GroupWindow::~GroupWindow()
 {
-	leaveGroup(mGroup);
+	leaveGroup();
 	delete mGroupMenuItem;
 }
 
-void GroupWindow::getInGroup(Group* group)
+void GroupWindow::getInGroup()
 {
-	mGroup = group;
+	if (mGroupAssociated)
+		return;
+
 	mGroup->add(this);
+	mGroupAssociated = true;
 }
 
-void GroupWindow::leaveGroup(Group* group)
+void GroupWindow::leaveGroup()
 {
-	group->remove(this);
-	group->onWindowUnactivate();
+	if (!mGroupAssociated)
+		return;
+
+	mGroup->remove(this);
+	mGroup->onWindowUnactivate();
+	mGroupAssociated = false;
 }
 
 void GroupWindow::onActivate()
@@ -110,35 +117,29 @@ void GroupWindow::minimize()
 
 void GroupWindow::showMenu() {}
 
-void GroupWindow::updateState(ushort state, ushort changeMask)
+void GroupWindow::updateState()
 {
-	mState = state;
+	mState = Wnck::getState(this);
 
-	if (changeMask & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
-	{
-		mGroup->mWindowsCount.updateState();
-
-		if (state & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST)
-			gtk_widget_hide(GTK_WIDGET(mGroupMenuItem->mItem));
-		else
-			gtk_widget_show(GTK_WIDGET(mGroupMenuItem->mItem));
-	}
-
-	/* 
-	FIXME: If the setting is toggled on then off again
-	dock items for windows from other workspaces get lost forever. 
-	*/
-
+	bool onWorkspace = true;
 	if (Settings::onlyDisplayVisible)
 	{
-		WnckWorkspace* workspace = wnck_window_get_workspace(mWnckWindow);
-		WnckScreen* screen = wnck_workspace_get_screen(workspace);
-		WnckWorkspace* active_workspace = wnck_screen_get_active_workspace(screen);
+		WnckWorkspace* windowWorkspace = wnck_window_get_workspace(mWnckWindow);
+		if (windowWorkspace != NULL)
+		{
+			WnckWorkspace* activeWorkspace = wnck_screen_get_active_workspace(Wnck::mWnckScreen);
 
-		if (workspace != active_workspace)
-			leaveGroup(mGroup);
-		else
-			getInGroup(mGroup);
-	
+			if (windowWorkspace != activeWorkspace)
+				onWorkspace = false;
+		}
 	}
+
+	bool onTasklist = !(mState & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST);
+
+	if (onWorkspace && onTasklist)
+		getInGroup();
+	else
+		leaveGroup();
+
+	gtk_widget_show(GTK_WIDGET(mGroupMenuItem->mItem));
 }

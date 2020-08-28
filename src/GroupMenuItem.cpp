@@ -35,6 +35,8 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 	gtk_widget_show(GTK_WIDGET(mCloseButton));
 	gtk_grid_attach(mGrid, GTK_WIDGET(mCloseButton), 2, 0, 1, 1);
 
+	g_object_ref(mItem);
+
 	mDragSwitchTimeout.setup(250, [this]() {
 		mGroupWindow->activate(0);
 		return false;
