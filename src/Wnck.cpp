@@ -111,14 +111,23 @@ namespace Wnck
 			}),
 			NULL);
 
+		g_signal_connect(G_OBJECT(mWnckScreen), "active-workspace-changed",
+			G_CALLBACK(+[](WnckScreen* screen, WnckWindow* wnckWindow) {
+				setVisibleGroups();
+			}),
+			NULL);
+
 		// already opened windows
 		for (GList* window_l = wnck_screen_get_windows(mWnckScreen);
 			 window_l != NULL;
 			 window_l = window_l->next)
 		{
 			WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
-			mGroupWindows.push(wnck_window_get_xid(wnckWindow),
-				new GroupWindow(wnckWindow));
+			GroupWindow* groupWindow = new GroupWindow(wnckWindow);
+			mGroupWindows.push(wnck_window_get_xid(wnckWindow), groupWindow);
+			
+			if (Settings::onlyDisplayVisible)
+				groupWindow->updateState(groupWindow->mState);
 		}
 		setActiveWindow();
 	}
@@ -172,6 +181,22 @@ namespace Wnck
 		{
 			mGroupWindows.first()->onUnactivate();
 			mGroupWindows.moveToStart(activeXID)->onActivate();
+		}
+	}
+
+	void setVisibleGroups()
+	{
+		if (Settings::onlyDisplayVisible)
+		{
+			for (GList* window_l = wnck_screen_get_windows(mWnckScreen);
+				window_l != NULL;
+				window_l = window_l->next)
+			{
+				WnckWindow* wnckWindow = WNCK_WINDOW(window_l->data);
+				GroupWindow* groupWindow = mGroupWindows.get(wnck_window_get_xid(wnckWindow));
+
+				groupWindow->updateState(groupWindow->mState);
+			}
 		}
 	}
 

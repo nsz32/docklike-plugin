@@ -73,6 +73,15 @@ namespace SettingsDialog
 				Settings::noWindowsListIfSingle.set(gtk_toggle_button_get_active(noWindowsListIfSingle));
 			}),
 			NULL);
+		
+		GObject* onlyDisplayVisible = gtk_builder_get_object(builder, "c_onlyDisplayVisible");
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(onlyDisplayVisible), Settings::onlyDisplayVisible);
+		g_signal_connect(onlyDisplayVisible, "toggled",
+			G_CALLBACK(+[](GtkToggleButton* onlyDisplayVisible) {
+				Settings::onlyDisplayVisible.set(gtk_toggle_button_get_active(onlyDisplayVisible));
+				Wnck::setVisibleGroups();
+			}),
+			NULL);
 
 		// =====================================================================
 

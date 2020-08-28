@@ -45,6 +45,12 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 			me->updateState(new_state, changed_mask);
 		}),
 		this);
+	
+	g_signal_connect(G_OBJECT(mWnckWindow), "workspace-changed",
+		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
+			me->updateState(me->mState);
+		}),
+		this);
 
 	// initial state
 	updateState(Wnck::getState(this));
@@ -116,5 +122,23 @@ void GroupWindow::updateState(ushort state, ushort changeMask)
 			gtk_widget_hide(GTK_WIDGET(mGroupMenuItem->mItem));
 		else
 			gtk_widget_show(GTK_WIDGET(mGroupMenuItem->mItem));
+	}
+
+	/* 
+	FIXME: If the setting is toggled on then off again
+	dock items for windows from other workspaces get lost forever. 
+	*/
+
+	if (Settings::onlyDisplayVisible)
+	{
+		WnckWorkspace* workspace = wnck_window_get_workspace(mWnckWindow);
+		WnckScreen* screen = wnck_workspace_get_screen(workspace);
+		WnckWorkspace* active_workspace = wnck_screen_get_active_workspace(screen);
+
+		if (workspace != active_workspace)
+			leaveGroup(mGroup);
+		else
+			getInGroup(mGroup);
+	
 	}
 }

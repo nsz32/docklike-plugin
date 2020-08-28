@@ -26,3 +26,5 @@ src/.libs/
 *.lo
 *.la
 src/_gresources.c
+*TAGS
+GPATH
