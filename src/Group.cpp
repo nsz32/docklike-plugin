@@ -554,6 +554,7 @@ void Group::onButtonPress(GdkEventButton* event)
 	{
 		GtkWidget* menu = Wnck::buildActionMenu(mWindows.get(mTopWindowIndex), this);
 
+		xfce_panel_plugin_register_menu(Plugin::mXfPlugin, GTK_MENU(menu));
 		gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(mButton), NULL);
 		gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(mButton), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent*)event);
 	}

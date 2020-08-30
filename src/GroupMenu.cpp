@@ -85,8 +85,8 @@ void GroupMenu::popup()
 
 		xfce_panel_plugin_position_widget(Plugin::mXfPlugin, mWindow, mGroup->mButton, &wx, &wy);
 		gtk_window_move(GTK_WINDOW(mWindow), wx, wy);
-		if (mGroup->mWindowsCount > 0)
-			gtk_widget_show(mWindow);
+		//xfce_panel_plugin_block_autohide(Plugin::mXfPlugin, true);
+		gtk_widget_show(mWindow);
 
 		gtk_window_resize(GTK_WINDOW(mWindow), 1, 1);
 
@@ -97,7 +97,6 @@ void GroupMenu::popup()
 void GroupMenu::hide()
 {
 	gtk_widget_hide(mWindow);
-
 	mVisible = false;
 }
 
