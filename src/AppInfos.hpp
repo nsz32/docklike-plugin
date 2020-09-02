@@ -20,6 +20,9 @@ struct AppInfo
 	const std::string path;
 	const std::string icon;
 	const std::string name;
+	std::list<std::string> actions;
+
+	void launch();
 };
 
 namespace AppInfos
@@ -27,7 +30,6 @@ namespace AppInfos
 	void init();
 
 	AppInfo* search(std::string id);
-	void launch(AppInfo* appInfo);
 } // namespace AppInfos
 
 #endif

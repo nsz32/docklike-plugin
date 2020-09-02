@@ -220,7 +220,7 @@ namespace Wnck
 
 			g_signal_connect(G_OBJECT(launchAnother), "activate",
 				G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
-					AppInfos::launch(appInfo);
+					appInfo->launch();
 				}),
 				appInfo);
 

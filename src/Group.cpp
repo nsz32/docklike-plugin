@@ -568,7 +568,7 @@ void Group::onButtonRelease(GdkEventButton* event)
 	}
 	else if (event->state & GDK_SHIFT_MASK || (mPinned && mWindowsCount == 0))
 	{
-		AppInfos::launch(mAppInfo);
+		mAppInfo->launch();
 	}
 	else if (mActive)
 	{

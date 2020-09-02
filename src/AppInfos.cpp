@@ -8,6 +8,14 @@
 
 #include <gio/gdesktopappinfo.h>
 
+void AppInfo::launch()
+{
+	GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(this->path.c_str());
+	const gchar* const* actions = g_desktop_app_info_list_actions(info);
+
+	g_app_info_launch((GAppInfo*)info, NULL, NULL, NULL);
+}
+
 namespace AppInfos
 {
 	std::list<std::string> mXdgDataDirs;
@@ -233,12 +241,5 @@ namespace AppInfos
 		return new AppInfo({"", "", id});
 	}
 
-	void launch(AppInfo* appInfo) // TODO move to AppInfo struct
-	{
-		GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(appInfo->path.c_str());
-		const gchar* const* actions = g_desktop_app_info_list_actions(info);
-
-		g_app_info_launch((GAppInfo*)info, NULL, NULL, NULL);
-	}
 
 } // namespace AppInfos
