@@ -14,6 +14,7 @@ config.log
 config.status
 config.sub
 configure
+configure.ac
 depcomp
 install-sh
 libtool
@@ -26,5 +27,11 @@ src/.libs/
 *.lo
 *.la
 src/_gresources.c
+src/docklike.desktop
 *TAGS
 GPATH
+m4/
+po/.*
+po/*.gmo
+po/POTFILES
+po/stamp-it
