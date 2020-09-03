@@ -79,9 +79,6 @@ namespace Plugin
 			_("Contributors:"),
 			"© 2020 David Keogh",
 			"davidtkeogh@gmail.com <davidtkeogh@gmail.com>  |  github.com/davekeogh",
-			//"",
-			//_("Contributors:"),
-			//"(c) 2020 ",
 			NULL};
 
 		gtk_show_about_dialog(NULL,

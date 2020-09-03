@@ -29,17 +29,12 @@ libdocklike_la_LDFLAGS = -avoid-version -module -no-undefined -export-symbols-re
 
 libdocklike_la_LIBADD = @LIBXFCE4PANEL_LIBS@ @LIBXFCE4UI_LIBS@ $(X11_LIBS) $(GTK_LIBS) $(CAIRO_LIBS) $(WNCK_LIBS)
 
-#
-# Desktop Entry File
-#
+pluginsdir = $(datadir)/xfce4/panel/plugins
+plugins_in_files = docklike.desktop.in
+plugins_DATA = $(plugins_in_files:.desktop.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
 
-
-
-#
-# Extra
-#
-
-EXTRA_DIST = $(NULL)
+EXTRA_DIST = $(plugins_in_files)
 
 CLEANFILES = $(NULL)
 DISTCLEANFILES = $(NULL)

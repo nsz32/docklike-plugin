@@ -1,7 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4  ${ACLOCAL_FLAGS}
 
-NULL = 
-
 SUBDIRS = src po
 
 distclean-local:
@@ -21,5 +19,4 @@ DISTCLEANFILES =				\
 	mkinstalldirs				\
 	intltool-extract			\
 	intltool-merge				\
-	intltool-update				\
-	$(NULL)
+	intltool-update

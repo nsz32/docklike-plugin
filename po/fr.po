@@ -45,7 +45,24 @@ msgstr "Épingler"
 msgid "Close All"
 msgstr "Tout fermer"
 
-#. namespace Wnck
+#: ../src/SettingsDialog.cpp:21
+#, c-format
+msgid "<b>Only the first %u hotkeys(s) are enabled.</b>\n"
+msgstr "<b>Seules les %u premières touches de raccourci sont activées.</b>\n"
+
+#: ../src/SettingsDialog.cpp:25
+#, c-format
+msgid ""
+"The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
+"Check your Xfce settings."
+msgstr ""
+"La combinaison &lt;SUPER&gt;+%u semble déjà être utilisée par un autre processus.\n"
+"Vérifiez vos paramètres Xfce."
+
+#: ../src/docklike.desktop.in.h:1
+msgid "A modern, minimalist taskbar for XFCE"
+msgstr "Une barre des tâches moderne et minimaliste pour XFCE"
+
 #: ../src/_dialogs.xml.h:1
 msgid "_Close"
 msgstr "Fermer"
