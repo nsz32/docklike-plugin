@@ -15,6 +15,8 @@ namespace Plugin
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
+		xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, NULL);
+
 		mXfPlugin = xfPlugin;
 
 		GdkDisplay* display = gdk_display_get_default();
@@ -74,7 +76,7 @@ namespace Plugin
 			"© 2019-2020 Nicolas Szabo (original author)",
 			"<nszabo@vivaldi.net>  |  github.com/nsz32",
 			"",
-			"Contributors:",
+			_("Contributors:"),
 			"© 2020 David Keogh",
 			"davidtkeogh@gmail.com <davidtkeogh@gmail.com>  |  github.com/davekeogh",
 			//"",
@@ -83,7 +85,7 @@ namespace Plugin
 			NULL};
 
 		gtk_show_about_dialog(NULL,
-			"program-name", _("Docklike Taskbar"),
+			"program-name", "Docklike Taskbar",
 			"logo-icon-name", "preferences-system-windows",
 			"comments", _("A modern, minimalist taskbar for XFCE."),
 			//"version", PACKAGE_VERSION,

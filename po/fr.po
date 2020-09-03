@@ -1,0 +1,107 @@
+# Docklike-plugin i18n file
+# Copyright (C) 2020 Nicolas Szabo
+# This file is distributed under the same license as the Docklike package.
+# Nicolas Szabo <nszabo@vivaldi.net>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Docklike 0.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-03 12:55+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Nicolas Szabo <nszabo@vivaldi.net>\n"
+"Language-Team: FR\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Plugin.cpp:79
+msgid "Contributors:"
+msgstr "Contributeurs :"
+
+#: ../src/Plugin.cpp:90
+msgid "A modern, minimalist taskbar for XFCE."
+msgstr "Une barre des tâches moderne et minimaliste pour XFCE"
+
+#: ../src/Wnck.cpp:215
+msgid "Launch another"
+msgstr "Nouvelle instance"
+
+#: ../src/Wnck.cpp:215
+msgid "Launch"
+msgstr "Lancer"
+
+#: ../src/Wnck.cpp:230
+msgid "Unpin"
+msgstr "Désépingler"
+
+#: ../src/Wnck.cpp:230
+msgid "Pin"
+msgstr "Épingler"
+
+#: ../src/Wnck.cpp:253
+msgid "Close All"
+msgstr "Tout fermer"
+
+#. namespace Wnck
+#: ../src/_dialogs.xml.h:1
+msgid "_Close"
+msgstr "Fermer"
+
+#: ../src/_dialogs.xml.h:2
+msgid "Behavior"
+msgstr "Comportement"
+
+#: ../src/_dialogs.xml.h:3
+msgid "Don't show list for a single window"
+msgstr "Cacher la liste pour une seule fenêtre"
+
+#: ../src/_dialogs.xml.h:4
+msgid "Show only applications from the current workspace"
+msgstr "Ne voir que les applications de l'espace de travail courant"
+
+#: ../src/_dialogs.xml.h:5
+msgid "Appearence"
+msgstr "Apparence"
+
+#: ../src/_dialogs.xml.h:6
+msgid "Indicator style :"
+msgstr "Style de l'indicateur :"
+
+#: ../src/_dialogs.xml.h:7
+msgid "Bars"
+msgstr "Barres"
+
+#: ../src/_dialogs.xml.h:8
+msgid "Dots"
+msgstr "Points"
+
+#: ../src/_dialogs.xml.h:9
+msgid "Indicator color :"
+msgstr "Couleur de l'indicateur :"
+
+#: ../src/_dialogs.xml.h:10
+msgid "Force icons size :"
+msgstr "Forcer la taille des icônes :"
+
+#: ../src/_dialogs.xml.h:11
+msgid "Keyboard hotkeys"
+msgstr "Raccourcis clavier"
+
+#: ../src/_dialogs.xml.h:12
+msgid "Switch between applications with <SUPER>+[1, 2, ...]"
+msgstr "Changer d'application avec <SUPER>+[1, 2, ...]"
+
+#: ../src/_dialogs.xml.h:13
+msgid "Switch to the last window with <SUPER>"
+msgstr "Appeler l'application précédente avec <SUPER>"
+
+#: ../src/_dialogs.xml.h:14
+msgid ""
+"<b>This feature is disabled.</b>\n"
+"It requires X11 XInput2.0 extension which is is not provided by your system."
+msgstr ""
+"<b>Cette fonction est désactivée.</b>\n"
+"Elle nécéssite l'extension X11 XInput2.0 qui n'est pas fournie par votre système."
