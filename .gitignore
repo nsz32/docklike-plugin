@@ -23,7 +23,6 @@ missing
 stamp-h1
 src/.deps/
 src/.libs/
-*.in
 *.lo
 *.la
 src/_gresources.c
