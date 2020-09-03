@@ -73,12 +73,9 @@ namespace Plugin
 	void aboutDialog()
 	{
 		const gchar* authors[] = {
-			"© 2019-2020 Nicolas Szabo (original author)",
-			"<nszabo@vivaldi.net>  |  github.com/nsz32",
-			"",
+			"Nicolas Szabo <nszabo@vivaldi.net> © 2019-2020  |  github.com/nsz32",
 			_("Contributors:"),
-			"© 2020 David Keogh",
-			"davidtkeogh@gmail.com <davidtkeogh@gmail.com>  |  github.com/davekeogh",
+			"David Keogh <davidtkeogh@gmail.com> © 2020  |  github.com/davekeogh",
 			NULL};
 
 		gtk_show_about_dialog(NULL,
