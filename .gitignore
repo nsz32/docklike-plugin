@@ -34,3 +34,6 @@ po/.*
 po/*.gmo
 po/POTFILES
 po/stamp-it
+intltool-*
+Makefile.in
+po/Makefile*
