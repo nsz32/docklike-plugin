@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Docklike 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 12:55+0200\n"
+"POT-Creation-Date: 2020-09-04 19:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Nicolas Szabo <nszabo@vivaldi.net>\n"
+"Last-Translator: Yamada Hayao <hayao@fascode.net>\n"
 "Language-Team: JA\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../src/Plugin.cpp:79
 msgid "Contributors:"
-msgstr "Contrib貢献者uteurs :"
+msgstr "貢献者:"
 
 #: ../src/Plugin.cpp:90
 msgid "A modern, minimalist taskbar for XFCE."
@@ -32,7 +32,7 @@ msgstr "新しいウィンドウで起動"
 
 #: ../src/Wnck.cpp:215
 msgid "Launch"
-msgstr "起動"
+msgstr "アプリケーションを起動する"
 
 #: ../src/Wnck.cpp:230
 msgid "Unpin"
@@ -40,11 +40,11 @@ msgstr "ピン留めを解除"
 
 #: ../src/Wnck.cpp:230
 msgid "Pin"
-msgstr "ピン留め"
+msgstr "タスクバーにピン留め"
 
 #: ../src/Wnck.cpp:253
 msgid "Close All"
-msgstr "全て閉じる"
+msgstr "全てのウィンドウを閉じる"
 
 #: ../src/SettingsDialog.cpp:21
 #, c-format
@@ -57,7 +57,7 @@ msgid ""
 "The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
 "Check your Xfce settings."
 msgstr ""
-"&lt;SUPER&gt;+%u の組み合わせは、既に別のプロセス使用されているようです。\n"
+"&lt;SUPER&gt;+%u の組み合わせは既に別のプロセス使用されているようです。\n"
 "Xfceの設定を確認して下さい。"
 
 #: ../src/docklike.desktop.in.h:1
@@ -102,11 +102,11 @@ msgstr "インジケーターの色 :"
 
 #: ../src/_dialogs.xml.h:10
 msgid "Force icons size :"
-msgstr "アイコンサイズを強制する :"
+msgstr "アイコンサイズを強制的に変更する :"
 
 #: ../src/_dialogs.xml.h:11
 msgid "Keyboard hotkeys"
-msgstr "キーボードショート"
+msgstr "キーボードショートカット"
 
 #: ../src/_dialogs.xml.h:12
 msgid "Switch between applications with <SUPER>+[1, 2, ...]"
