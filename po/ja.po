@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../src/Plugin.cpp:79
 msgid "Contributors:"
-msgstr "Contrib貢献者uteurs :"
+msgstr "貢献者 :"
 
 #: ../src/Plugin.cpp:90
 msgid "A modern, minimalist taskbar for XFCE."
