@@ -1,4 +1,4 @@
-📌 Now support internationalization ! **Contribute in localizing** the plugin to your language :)
+📌 Now support internationalization ! **Contribute in localizing** the plugin to your tongue :)
 
 Docklike Taskbar for XFCE
 -----------------------------------
