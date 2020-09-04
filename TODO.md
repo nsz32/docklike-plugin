@@ -1,11 +1,6 @@
 TODO :
 
-+ Orientation
-+ Setings UI
-+ Launcher settings UI
-+ i18n
 + Support for special launcher like mailwatch, places, music player (via MPRIS), ...
-+ Show only windows from active workspace
 
 Exotics windows :
 - Libreoffice / Openoffice (imply changing the group of a window)
@@ -13,6 +8,9 @@ Exotics windows :
 DONE :
 
 > + Basic orientation managing
+> + Show only windows from active workspace
+> + i18n
+> + Settings UI
 > + Basic workspaces managing
 > + Drop down list of windows
 > + Icon resizing
