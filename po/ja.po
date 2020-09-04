@@ -62,7 +62,7 @@ msgstr ""
 
 #: ../src/docklike.desktop.in.h:1
 msgid "A modern, minimalist taskbar for XFCE"
-msgstr "XFCE用のモダンで小さなタスクバー
+msgstr "XFCE用のモダンで小さなタスクバー"
 
 #: ../src/_dialogs.xml.h:1
 msgid "_Close"
