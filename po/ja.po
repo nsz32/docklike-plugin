@@ -102,7 +102,7 @@ msgstr "インジケーターの色 :"
 
 #: ../src/_dialogs.xml.h:10
 msgid "Force icons size :"
-msgstr "アイコンサイズを強制する :"
+msgstr "アイコンサイズを強制的に変更する :"
 
 #: ../src/_dialogs.xml.h:11
 msgid "Keyboard hotkeys"
