@@ -1,5 +1,6 @@
 TODO :
 
++ Indicator orientation
 + Support for special launcher like mailwatch, places, music player (via MPRIS), ...
 
 Exotics windows :
