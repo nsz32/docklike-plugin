@@ -32,7 +32,7 @@ msgstr "新しいウィンドウで起動"
 
 #: ../src/Wnck.cpp:215
 msgid "Launch"
-msgstr "起動"
+msgstr "アプリケーションを起動する"
 
 #: ../src/Wnck.cpp:230
 msgid "Unpin"
@@ -40,11 +40,11 @@ msgstr "ピン留めを解除"
 
 #: ../src/Wnck.cpp:230
 msgid "Pin"
-msgstr "ピン留め"
+msgstr "タスクバーにピン留め"
 
 #: ../src/Wnck.cpp:253
 msgid "Close All"
-msgstr "全て閉じる"
+msgstr "全てのウィンドウを閉じる"
 
 #: ../src/SettingsDialog.cpp:21
 #, c-format
@@ -57,7 +57,7 @@ msgid ""
 "The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
 "Check your Xfce settings."
 msgstr ""
-"&lt;SUPER&gt;+%u の組み合わせは、既に別のプロセス使用されているようです。\n"
+"&lt;SUPER&gt;+%u の組み合わせは既に別のプロセス使用されているようです。\n"
 "Xfceの設定を確認して下さい。"
 
 #: ../src/docklike.desktop.in.h:1
