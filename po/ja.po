@@ -106,7 +106,7 @@ msgstr "アイコンサイズを強制する :"
 
 #: ../src/_dialogs.xml.h:11
 msgid "Keyboard hotkeys"
-msgstr "キーボードショート"
+msgstr "キーボードショートカット"
 
 #: ../src/_dialogs.xml.h:12
 msgid "Switch between applications with <SUPER>+[1, 2, ...]"
