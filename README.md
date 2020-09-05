@@ -1,3 +1,5 @@
+📌 Now support internationalization ! **Contribute in localizing** the plugin to your tongue :)
+
 Docklike Taskbar for XFCE
 -----------------------------------
 A modern, docklike, minimalist taskbar for XFCE
