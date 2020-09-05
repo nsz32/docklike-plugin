@@ -75,8 +75,11 @@ namespace Plugin
 		const gchar* authors[] = {
 			"Nicolas Szabo <nszabo@vivaldi.net> © 2019-2020  |  github.com/nsz32",
 			_("Contributors:"),
-			"David Keogh <davidtkeogh@gmail.com> © 2020  |  github.com/davekeogh",
+			"David Keogh <davidtkeogh@gmail.com> © 2020  |  github.com/davekeogh", "",
 			NULL};
+
+		const gchar* translators =
+			"Hayao <hayao@fascode.net> : ja  |  github.com/Hayao0819";
 
 		gtk_show_about_dialog(NULL,
 			"program-name", "Docklike Taskbar",
@@ -97,8 +100,8 @@ namespace Plugin
 			"website", "https://github.com/nsz32/docklike-plugin/",
 			"website-label", "docklike-plugin",
 			"authors", authors,
+			"translator-credits", translators,
 			//"documenters", documenters,
-			//"translator-credits", translator-credits,
 			NULL);
 	}
 
