@@ -212,11 +212,11 @@ namespace Wnck
 
 		if (!appInfo->path.empty())
 		{
-			GtkWidget* launchAnother = gtk_menu_item_new_with_label((groupWindow != NULL) ? "Launch another" : "Launch");
+			GtkWidget* launchAnother = gtk_menu_item_new_with_label((groupWindow != NULL) ? _("Launch another") : _("Launch"));
 
 			gtk_widget_show(launchAnother);
 
-			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(launchAnother), 0, 2, 0, 1);
+			gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(launchAnother), 0, 1, 0, 1);
 
 			g_signal_connect(G_OBJECT(launchAnother), "activate",
 				G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
@@ -227,13 +227,13 @@ namespace Wnck
 			if (group != NULL)
 			{
 				GtkWidget* separator = gtk_separator_menu_item_new();
-				GtkWidget* pinToggle = gtk_menu_item_new_with_label(group->mPinned ? "Unpin" : "Pin");
+				GtkWidget* pinToggle = gtk_menu_item_new_with_label(group->mPinned ? _("Unpin") : _("Pin"));
 
 				gtk_widget_show(separator);
 				gtk_widget_show(pinToggle);
 
-				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 2, 3, 0, 1);
-				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 2, 3, 0, 1);
+				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(separator), 1, 2, 0, 1);
+				gtk_menu_attach(GTK_MENU(menu), GTK_WIDGET(pinToggle), 1, 2, 0, 1);
 
 				g_signal_connect(G_OBJECT(pinToggle), "activate",
 					G_CALLBACK(+[](GtkMenuItem* menuitem, Group* group) {
@@ -250,7 +250,7 @@ namespace Wnck
 				GtkWidget* separator = gtk_separator_menu_item_new();
 				gtk_widget_show(separator);
 
-				GtkWidget* closeAll = gtk_menu_item_new_with_label("Close All");
+				GtkWidget* closeAll = gtk_menu_item_new_with_label(_("Close All"));
 				gtk_widget_show(closeAll);
 
 				gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);

@@ -14,6 +14,7 @@ config.log
 config.status
 config.sub
 configure
+configure.ac
 depcomp
 install-sh
 libtool
@@ -22,9 +23,17 @@ missing
 stamp-h1
 src/.deps/
 src/.libs/
-*.in
 *.lo
 *.la
 src/_gresources.c
+src/docklike.desktop
 *TAGS
 GPATH
+m4/
+po/.*
+po/*.gmo
+po/POTFILES
+po/stamp-it
+intltool-*
+Makefile.in
+po/Makefile*

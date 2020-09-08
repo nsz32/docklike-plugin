@@ -15,6 +15,8 @@ namespace Plugin
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
+		xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, NULL);
+
 		mXfPlugin = xfPlugin;
 
 		GdkDisplay* display = gdk_display_get_default();
@@ -71,19 +73,16 @@ namespace Plugin
 	void aboutDialog()
 	{
 		const gchar* authors[] = {
-			"© 2019-2020 Nicolas Szabo (original author)",
-			"<nszabo@vivaldi.net>  |  github.com/nsz32",
-			"",
-			"Contributors:",
-			"© 2020 David Keogh",
-			"davidtkeogh@gmail.com <davidtkeogh@gmail.com>  |  github.com/davekeogh",
-			//"",
-			//_("Contributors:"),
-			//"(c) 2020 ",
+			"Nicolas Szabo <nszabo@vivaldi.net> © 2019-2020  |  github.com/nsz32",
+			_("Contributors:"),
+			"David Keogh <davidtkeogh@gmail.com> © 2020  |  github.com/davekeogh", "",
 			NULL};
 
+		const gchar* translators =
+			"Hayao <hayao@fascode.net> : ja  |  github.com/Hayao0819";
+
 		gtk_show_about_dialog(NULL,
-			"program-name", _("Docklike Taskbar"),
+			"program-name", "Docklike Taskbar",
 			"logo-icon-name", "preferences-system-windows",
 			"comments", _("A modern, minimalist taskbar for XFCE."),
 			//"version", PACKAGE_VERSION,
@@ -101,8 +100,8 @@ namespace Plugin
 			"website", "https://github.com/nsz32/docklike-plugin/",
 			"website-label", "docklike-plugin",
 			"authors", authors,
+			"translator-credits", translators,
 			//"documenters", documenters,
-			//"translator-credits", translator-credits,
 			NULL);
 	}
 

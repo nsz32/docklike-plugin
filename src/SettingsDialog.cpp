@@ -18,12 +18,11 @@ namespace SettingsDialog
 		{
 			std::string tooltip;
 			if (Hotkeys::mGrabbedKeys > 0)
-				tooltip = "<b>Only the first " + std::to_string(Hotkeys::mGrabbedKeys) + " hotkeys(s) are enabled.</b>\n";
+				tooltip = g_strdup_printf(_("<b>Only the first %u hotkeys(s) are enabled.</b>\n"), Hotkeys::mGrabbedKeys);
 			else
 				tooltip = "";
 
-			tooltip += "The &lt;SUPER&gt;+" + std::to_string(Hotkeys::mGrabbedKeys + 1) +
-				" combination seems already in use by another process.\nCheck your other settings.";
+			tooltip += g_strdup_printf(_("The &lt;SUPER&gt;+%u combination seems already in use by another process.\nCheck your Xfce settings."), Hotkeys::mGrabbedKeys + 1);
 
 			gtk_widget_set_tooltip_markup(widget, tooltip.c_str());
 			gtk_image_set_from_icon_name(GTK_IMAGE(widget), (Hotkeys::mGrabbedKeys == 0) ? "gtk-dialog-error" : "gtk-dialog-warning", GTK_ICON_SIZE_SMALL_TOOLBAR);
@@ -73,7 +72,7 @@ namespace SettingsDialog
 				Settings::noWindowsListIfSingle.set(gtk_toggle_button_get_active(noWindowsListIfSingle));
 			}),
 			NULL);
-		
+
 		GObject* onlyDisplayVisible = gtk_builder_get_object(builder, "c_onlyDisplayVisible");
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(onlyDisplayVisible), Settings::onlyDisplayVisible);
 		g_signal_connect(onlyDisplayVisible, "toggled",

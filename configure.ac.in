@@ -1,0 +1,81 @@
+dnl
+dnl Docklike Taskbar - A modern, minimalist taskbar for Xfce
+dnl --------------------------------------------------------
+dnl (c) 2020		Nicolas Szabo <nszabo@vivaldi.net>
+dnl
+
+dnl ***************************
+dnl *** Version information ***
+dnl ***************************
+m4_define([project_version_major], [0])
+m4_define([project_version_minor], [9])
+m4_define([project_version_micro], [0])
+m4_define([project_version_build], [@REVISION@])
+m4_define([project_version_tag], [git]) # leave empty for release
+m4_define([project_version], [project_version_major().project_version_minor().project_version_micro()ifelse(project_version_tag(), [git], [project_version_tag()-project_version_build()], [project_version_tag()])])
+
+dnl ***************************
+dnl *** Initialize autoconf ***
+dnl ***************************
+AC_COPYRIGHT([Copyright (c) 2020 Nicolas Szabo])
+AC_INIT([Docklike], [project_version], [https://github.com/nsz32/docklike-plugin/issues], [xfce4-docklike-plugin], [https://github.com/nsz32/docklike-plugin])
+AC_PREREQ([2.50])
+AC_CANONICAL_TARGET()
+AC_REVISION([project_version_build])
+AC_CONFIG_MACRO_DIRS([m4])
+AC_PREFIX_DEFAULT([/usr])
+
+dnl ***************************
+dnl *** Initialize automake ***
+dnl ***************************
+AM_INIT_AUTOMAKE([1.8 no-dist-gzip dist-bzip2])
+AM_MAINTAINER_MODE()
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
+dnl **************************
+dnl *** Initialize libtool ***
+dnl **************************
+LT_PREREQ([2.2.6])
+LT_INIT([disable-static])
+
+dnl ********************************
+dnl *** Check for basic programs ***
+dnl ********************************
+AC_PROG_CXX()
+AC_PROG_LD()
+AC_PROG_INSTALL()
+AC_PROG_LN_S()
+IT_PROG_INTLTOOL([0.35.0])
+
+dnl **********************************
+dnl *** Check for standard headers ***
+dnl **********************************
+AC_HEADER_STDC()
+
+dnl ***********************************
+dnl *** Check for required packages ***
+dnl ***********************************
+XDT_CHECK_LIBX11_REQUIRE()
+XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.42.0])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.42.0])
+XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.24.0])
+XDT_CHECK_PACKAGE([CAIRO], [cairo], [1.16.0])
+XDT_CHECK_PACKAGE([WNCK], [libwnck-3.0], [3.30.0])
+XDT_CHECK_PACKAGE([X11], [x11], [1.6])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.14.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.14.0])
+XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [4.14.0])
+
+dnl ******************************
+dnl *** Check for i18n support ***
+dnl ******************************
+XDT_I18N([@LINGUAS@])
+
+dnl ************************
+dnl *** Makefile outputs ***
+dnl ************************
+AC_OUTPUT([
+Makefile
+src/Makefile
+po/Makefile.in
+])

@@ -1,0 +1,125 @@
+# Docklike-plugin i18n file
+# Copyright (C) 2020 Nicolas Szabo
+# This file is distributed under the same license as the Docklike package.
+# Yamada Hayao <hayao@fascode.net>, 2020.
+#
+#, fuzzy
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Docklike 0.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-04 19:24+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Yamada Hayao <hayao@fascode.net>\n"
+"Language-Team: JA\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Plugin.cpp:79
+msgid "Contributors:"
+msgstr "貢献者:"
+
+#: ../src/Plugin.cpp:90
+msgid "A modern, minimalist taskbar for XFCE."
+msgstr "XFCE用のモダンで小さなタスクバー"
+
+#: ../src/Wnck.cpp:215
+msgid "Launch another"
+msgstr "新しいウィンドウで起動"
+
+#: ../src/Wnck.cpp:215
+msgid "Launch"
+msgstr "アプリケーションを起動する"
+
+#: ../src/Wnck.cpp:230
+msgid "Unpin"
+msgstr "ピン留めを解除"
+
+#: ../src/Wnck.cpp:230
+msgid "Pin"
+msgstr "タスクバーにピン留め"
+
+#: ../src/Wnck.cpp:253
+msgid "Close All"
+msgstr "全てのウィンドウを閉じる"
+
+#: ../src/SettingsDialog.cpp:21
+#, c-format
+msgid "<b>Only the first %u hotkeys(s) are enabled.</b>\n"
+msgstr "<b>最初の %u ホットキーのみが有効です。</b>\n"
+
+#: ../src/SettingsDialog.cpp:25
+#, c-format
+msgid ""
+"The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
+"Check your Xfce settings."
+msgstr ""
+"&lt;SUPER&gt;+%u の組み合わせは既に別のプロセス使用されているようです。\n"
+"Xfceの設定を確認して下さい。"
+
+#: ../src/docklike.desktop.in.h:1
+msgid "A modern, minimalist taskbar for XFCE"
+msgstr "XFCE用のモダンで小さなタスクバー"
+
+#: ../src/_dialogs.xml.h:1
+msgid "_Close"
+msgstr "閉じる"
+
+#: ../src/_dialogs.xml.h:2
+msgid "Behavior"
+msgstr "動作"
+
+#: ../src/_dialogs.xml.h:3
+msgid "Don't show list for a single window"
+msgstr "1つのウィンドウのリストを表示しない"
+
+#: ../src/_dialogs.xml.h:4
+msgid "Show only applications from the current workspace"
+msgstr "現在のワークスペースのアプリケーションのみを表示する"
+
+#: ../src/_dialogs.xml.h:5
+msgid "Appearence"
+msgstr "外観"
+
+#: ../src/_dialogs.xml.h:6
+msgid "Indicator style :"
+msgstr "インジケーターのスタイル :"
+
+#: ../src/_dialogs.xml.h:7
+msgid "Bars"
+msgstr "バー"
+
+#: ../src/_dialogs.xml.h:8
+msgid "Dots"
+msgstr "ドット"
+
+#: ../src/_dialogs.xml.h:9
+msgid "Indicator color :"
+msgstr "インジケーターの色 :"
+
+#: ../src/_dialogs.xml.h:10
+msgid "Force icons size :"
+msgstr "アイコンサイズを強制的に変更する :"
+
+#: ../src/_dialogs.xml.h:11
+msgid "Keyboard hotkeys"
+msgstr "キーボードショートカット"
+
+#: ../src/_dialogs.xml.h:12
+msgid "Switch between applications with <SUPER>+[1, 2, ...]"
+msgstr "アプリケーションを <SUPER>+[1, 2, ...] で切り替える"
+
+#: ../src/_dialogs.xml.h:13
+msgid "Switch to the last window with <SUPER>"
+msgstr "<SUPER> で最後のウィンドウに切り替える"
+
+#: ../src/_dialogs.xml.h:14
+msgid ""
+"<b>This feature is disabled.</b>\n"
+"It requires X11 XInput2.0 extension which is is not provided by your system."
+msgstr ""
+"<b>この機能は無効化されています。</b>\n"
+"この機能はシステムから提供されていない X11 XInput2.0 extension が必要です。"
