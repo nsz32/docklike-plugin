@@ -1,4 +1,8 @@
-📌 Now support internationalization ! **Contribute in localizing** the plugin to your tongue :)
+📌 Now support internationalization : **Contribute in localizing** the plugin to your tongue !
+
+→ Simply go to the ```/po``` directory, and make your own ```[langcode].po``` file.
+
+
 
 Docklike Taskbar for XFCE
 -----------------------------------
