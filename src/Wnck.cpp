@@ -263,6 +263,28 @@ namespace Wnck
 					group);
 			}
 
+			if (group != NULL)
+			{
+				GtkWidget* separator = gtk_separator_menu_item_new();
+				gtk_widget_show(separator);
+				gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+
+				gint i;
+
+				for (i = 0; appInfo->actions[i]; i++)
+				{
+					GtkWidget* m = gtk_menu_item_new_with_label(_(appInfo->actions[i]));
+					gtk_widget_show(m);
+					gtk_menu_shell_append(GTK_MENU_SHELL(menu), m);
+
+					g_signal_connect(G_OBJECT(m), "activate",
+					G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
+						appInfo->launch_action(gtk_menu_item_get_label(menuitem));
+					}),
+					appInfo);
+				}
+			}
+
 			return menu;
 		}
 	}

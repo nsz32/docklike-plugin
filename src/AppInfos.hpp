@@ -20,9 +20,10 @@ struct AppInfo
 	const std::string path;
 	const std::string icon;
 	const std::string name;
-	std::list<std::string> actions;
+	const gchar * const *actions;
 
 	void launch();
+	void launch_action(const gchar *action);
 };
 
 namespace AppInfos

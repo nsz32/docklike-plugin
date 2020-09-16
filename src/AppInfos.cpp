@@ -16,6 +16,13 @@ void AppInfo::launch()
 	g_app_info_launch((GAppInfo*)info, NULL, NULL, NULL);
 }
 
+void AppInfo::launch_action(const gchar *action)
+{
+	GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(this->path.c_str());
+	
+	g_desktop_app_info_launch_action (info, action, NULL);
+}
+
 namespace AppInfos
 {
 	std::list<std::string> mXdgDataDirs;
@@ -76,8 +83,11 @@ namespace AppInfos
 		char* name_ = g_desktop_app_info_get_string(gAppInfo, "Name");
 		if (name_ != NULL)
 			name = name_;
+		
+		const gchar * const *actions;
+    	actions = g_desktop_app_info_list_actions (gAppInfo);
 
-		AppInfo* info = new AppInfo({path, icon, name});
+		AppInfo* info = new AppInfo({path, icon, name, actions});
 
 		id = Help::String::toLowercase(id);
 		mAppInfoIds.set(id, info);
