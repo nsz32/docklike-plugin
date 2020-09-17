@@ -220,7 +220,7 @@ namespace Wnck
 
 			g_signal_connect(G_OBJECT(launchAnother), "activate",
 				G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
-					AppInfos::launch(appInfo);
+					appInfo->launch();
 				}),
 				appInfo);
 
@@ -261,6 +261,32 @@ namespace Wnck
 						group->closeAll();
 					}),
 					group);
+			}
+
+			if (group != NULL)
+			{
+				for (int i = 0; appInfo->actions[i]; i++)
+				{
+					if (i == 0)
+					{
+						GtkWidget* separator = gtk_separator_menu_item_new();
+						gtk_widget_show(separator);
+						gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+					}
+					
+					GDesktopAppInfo* GDAppInfo = g_desktop_app_info_new_from_filename(appInfo->path.c_str());
+					GtkWidget* m = gtk_menu_item_new_with_label(_(g_desktop_app_info_get_action_name(GDAppInfo, appInfo->actions[i])));
+					
+					g_object_set_data((GObject*)m, "action", (gpointer)appInfo->actions[i]);
+					gtk_widget_show(m);
+					gtk_menu_shell_append(GTK_MENU_SHELL(menu), m);
+
+					g_signal_connect(G_OBJECT(m), "activate",
+					G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
+						appInfo->launch_action((const gchar*)g_object_get_data((GObject*)menuitem, "action"));
+					}),
+					appInfo);
+				}
 			}
 
 			return menu;
