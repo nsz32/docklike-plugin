@@ -265,21 +265,25 @@ namespace Wnck
 
 			if (group != NULL)
 			{
-				GtkWidget* separator = gtk_separator_menu_item_new();
-				gtk_widget_show(separator);
-				gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
-
-				gint i;
-
-				for (i = 0; appInfo->actions[i]; i++)
+				for (int i = 0; appInfo->actions[i]; i++)
 				{
-					GtkWidget* m = gtk_menu_item_new_with_label(_(appInfo->actions[i]));
+					if (i == 0)
+					{
+						GtkWidget* separator = gtk_separator_menu_item_new();
+						gtk_widget_show(separator);
+						gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+					}
+					
+					GDesktopAppInfo* GDAppInfo = g_desktop_app_info_new_from_filename(appInfo->path.c_str());
+					GtkWidget* m = gtk_menu_item_new_with_label(_(g_desktop_app_info_get_action_name(GDAppInfo, appInfo->actions[i])));
+					
+					g_object_set_data((GObject*)m, "action", (gpointer)appInfo->actions[i]);
 					gtk_widget_show(m);
 					gtk_menu_shell_append(GTK_MENU_SHELL(menu), m);
 
 					g_signal_connect(G_OBJECT(m), "activate",
 					G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
-						appInfo->launch_action(gtk_menu_item_get_label(menuitem));
+						appInfo->launch_action((const gchar*)g_object_get_data((GObject*)menuitem, "action"));
 					}),
 					appInfo);
 				}

@@ -11,7 +11,6 @@
 void AppInfo::launch()
 {
 	GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(this->path.c_str());
-	const gchar* const* actions = g_desktop_app_info_list_actions(info);
 
 	g_app_info_launch((GAppInfo*)info, NULL, NULL, NULL);
 }
@@ -20,7 +19,7 @@ void AppInfo::launch_action(const gchar *action)
 {
 	GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(this->path.c_str());
 	
-	g_desktop_app_info_launch_action (info, action, NULL);
+	g_desktop_app_info_launch_action(info, action, NULL);
 }
 
 namespace AppInfos
@@ -84,9 +83,7 @@ namespace AppInfos
 		if (name_ != NULL)
 			name = name_;
 		
-		const gchar * const *actions;
-    	actions = g_desktop_app_info_list_actions (gAppInfo);
-
+		const gchar * const *actions = g_desktop_app_info_list_actions (gAppInfo);
 		AppInfo* info = new AppInfo({path, icon, name, actions});
 
 		id = Help::String::toLowercase(id);
