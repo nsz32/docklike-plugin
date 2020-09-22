@@ -61,6 +61,7 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 				me->leaveGroup();
 				me->mGroup = group;
 				me->getInGroup();
+				Wnck::setActiveWindow();
 			}
 		}),
 		this);
