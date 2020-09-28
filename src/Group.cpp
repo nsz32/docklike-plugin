@@ -169,6 +169,7 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 
 	gtk_widget_add_events(mButton, GDK_SCROLL_MASK);
 	gtk_button_set_always_show_image(GTK_BUTTON(mButton), true);
+	gtk_widget_set_tooltip_text(mButton, mAppInfo->name.c_str());
 
 	if (mAppInfo != NULL && !mAppInfo->icon.empty())
 	{
