@@ -169,7 +169,6 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 
 	gtk_widget_add_events(mButton, GDK_SCROLL_MASK);
 	gtk_button_set_always_show_image(GTK_BUTTON(mButton), true);
-	gtk_widget_set_tooltip_text(mButton, mAppInfo->name.c_str());
 
 	if (mAppInfo != NULL && !mAppInfo->icon.empty())
 	{
@@ -190,6 +189,7 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 	}
 
 	resize();
+	updateStyle();
 }
 
 void Group::add(GroupWindow* window)
@@ -496,9 +496,13 @@ void Group::updateStyle()
 		gtk_widget_hide(mButton);
 
 	if (wCount)
+	{
+		gtk_widget_set_tooltip_text(mButton, NULL);
 		setStyle(Style::Opened, true);
+	}
 	else
 	{
+		gtk_widget_set_tooltip_text(mButton, mAppInfo->name.c_str());
 		setStyle(Style::Opened, false);
 		setStyle(Style::Focus, false);
 	}
