@@ -10,6 +10,8 @@
 #include <pthread.h>
 #include <sys/inotify.h>
 
+#include <gio/gdesktopappinfo.h>
+
 #include <iostream>
 
 #include "Helpers.hpp"
