@@ -241,7 +241,7 @@ namespace Wnck
 					{
 						GtkWidget* separator = gtk_separator_menu_item_new();
 						gtk_widget_show(separator);
-						gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+						gtk_menu_shell_insert(GTK_MENU_SHELL(menu), separator, 14);
 					}
 
 					GDesktopAppInfo* GDAppInfo = g_desktop_app_info_new_from_filename(appInfo->path.c_str());
@@ -249,7 +249,7 @@ namespace Wnck
 
 					g_object_set_data((GObject*)m, "action", (gpointer)appInfo->actions[i]);
 					gtk_widget_show(m);
-					gtk_menu_shell_append(GTK_MENU_SHELL(menu), m);
+					gtk_menu_shell_insert(GTK_MENU_SHELL(menu), m, 14 + i);
 
 					g_signal_connect(G_OBJECT(m), "activate",
 						G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {

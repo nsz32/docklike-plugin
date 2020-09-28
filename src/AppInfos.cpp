@@ -6,8 +6,6 @@
 
 #include "AppInfos.hpp"
 
-#include <gio/gdesktopappinfo.h>
-
 void AppInfo::launch()
 {
 	GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(this->path.c_str());
