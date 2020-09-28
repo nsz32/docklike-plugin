@@ -52,6 +52,20 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 		}),
 		this);
 
+	g_signal_connect(G_OBJECT(mWnckWindow), "class-changed",
+		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
+			std::string groupName = Wnck::getGroupName(me);
+			Group* group = Dock::prepareGroup(AppInfos::search(groupName));
+			if (group != me->mGroup)
+			{
+				me->leaveGroup();
+				me->mGroup = group;
+				me->getInGroup();
+				Wnck::setActiveWindow();
+			}
+		}),
+		this);
+
 	// initial state
 	updateState();
 

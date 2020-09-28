@@ -79,7 +79,7 @@ namespace Plugin
 			NULL};
 
 		const gchar* translators =
-			"Hayao <hayao@fascode.net> : ja  |  github.com/Hayao0819\n"
+			"Yamada Hayao <hayao@fascode.net> : ja  |  github.com/Hayao0819\n"
 			"Dmitry K <dkabishchev@ya.ru> : ru | github.com/dmitryKB";
 
 		gtk_show_about_dialog(NULL,
