@@ -12,6 +12,7 @@ namespace Plugin
 {
 	XfcePanelPlugin* mXfPlugin;
 	GdkDevice* mPointer;
+	GdkDisplay* display;
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
@@ -19,7 +20,7 @@ namespace Plugin
 
 		mXfPlugin = xfPlugin;
 
-		GdkDisplay* display = gdk_display_get_default();
+		display = gdk_display_get_default();
 		GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
 		mPointer = gdk_device_manager_get_client_pointer(deviceManager);
 

@@ -105,6 +105,19 @@
 												<property name="top_attach">1</property>
 											</packing>
 										</child>
+										<child>
+											<object class="GtkCheckButton" id="c_onlyDisplayScreen">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="label" translatable="yes">Show only applications from the current display</property>
+												<property name="use_underline">True</property>
+												<property name="xalign">0</property>
+											</object>
+											<packing>
+												<property name="left_attach">0</property>
+												<property name="top_attach">2</property>
+											</packing>
+										</child>
 									</object>
 								</child>
 							</object>

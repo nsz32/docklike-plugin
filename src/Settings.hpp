@@ -31,6 +31,7 @@ namespace Settings
 
 	extern State<bool> noWindowsListIfSingle;
 	extern State<bool> onlyDisplayVisible;
+	extern State<bool> onlyDisplayScreen;
 
 	extern State<int> indicatorStyle;
 	extern State<GdkRGBA*> indicatorColor;
