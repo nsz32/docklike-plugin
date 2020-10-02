@@ -59,6 +59,7 @@ namespace Wnck
 
 	void init()
 	{
+		// TODO: Find the screen the panel plugin is on, not the default
 		mWnckScreen = wnck_screen_get_default();
 		wnck_screen_force_update(mWnckScreen);
 
@@ -97,8 +98,7 @@ namespace Wnck
 			GroupWindow* groupWindow = new GroupWindow(wnckWindow);
 			mGroupWindows.push(wnck_window_get_xid(wnckWindow), groupWindow);
 
-			if (Settings::onlyDisplayVisible)
-				groupWindow->updateState();
+			groupWindow->updateState();
 		}
 		setActiveWindow();
 	}

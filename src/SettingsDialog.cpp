@@ -81,6 +81,15 @@ namespace SettingsDialog
 				Wnck::setVisibleGroups();
 			}),
 			NULL);
+		
+		GObject* onlyDisplayScreen = gtk_builder_get_object(builder, "c_onlyDisplayScreen");
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(onlyDisplayScreen), Settings::onlyDisplayScreen);
+		g_signal_connect(onlyDisplayScreen, "toggled",
+			G_CALLBACK(+[](GtkToggleButton* onlyDisplayScreen) {
+				Settings::onlyDisplayScreen.set(gtk_toggle_button_get_active(onlyDisplayScreen));
+				Wnck::setVisibleGroups();
+			}),
+			NULL);
 
 		// =====================================================================
 

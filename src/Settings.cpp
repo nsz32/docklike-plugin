@@ -16,6 +16,7 @@ namespace Settings
 
 	State<bool> noWindowsListIfSingle;
 	State<bool> onlyDisplayVisible;
+	State<bool> onlyDisplayScreen;
 
 	State<int> indicatorStyle;
 	State<GdkRGBA*> indicatorColor;
@@ -79,6 +80,12 @@ namespace Settings
 		onlyDisplayVisible.setup(g_key_file_get_boolean(mFile, "user", "onlyDisplayVisible", NULL),
 			[](bool onlyDisplayVisible) -> void {
 				g_key_file_set_boolean(mFile, "user", "onlyDisplayVisible", onlyDisplayVisible);
+				saveFile();
+			});
+		
+		onlyDisplayScreen.setup(g_key_file_get_boolean(mFile, "user", "onlyDisplayScreen", NULL),
+			[](bool onlyDisplayScreen) -> void {
+				g_key_file_set_boolean(mFile, "user", "onlyDisplayScreen", onlyDisplayScreen);
 				saveFile();
 			});
 
