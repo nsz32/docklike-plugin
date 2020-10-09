@@ -80,6 +80,10 @@ msgid "Show only applications from the current workspace"
 msgstr "Ne voir que les applications de l'espace de travail courant"
 
 #: ../src/_dialogs.xml.h:5
+msgid "Show only applications from the current display"
+msgstr "Ne voir que les applications de l'écran du plugin"
+
+#: ../src/_dialogs.xml.h:5
 msgid "Appearence"
 msgstr "Apparence"
 

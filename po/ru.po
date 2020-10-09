@@ -79,6 +79,10 @@ msgid "Show only applications from the current workspace"
 msgstr "Показывать окна только с текущего рабочего места"
 
 #: ../src/_dialogs.xml.h:5
+msgid "Show only applications from the current display"
+msgstr ""
+
+#: ../src/_dialogs.xml.h:5
 msgid "Appearence"
 msgstr "Внешний вид"
 
