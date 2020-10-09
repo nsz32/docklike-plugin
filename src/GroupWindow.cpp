@@ -155,6 +155,8 @@ void GroupWindow::updateState()
 	}
 
 	bool onScreen = true;
+
+	bool monitorChanged = false;
 	if (Settings::onlyDisplayScreen)
 	{
 		// Adapted from Xfce panel's tasklist-widget.c
@@ -167,10 +169,18 @@ void GroupWindow::updateState()
 		/* The window we are making a button for. */
 		wnck_window_get_geometry(mWnckWindow, &x, &y, &w, &h);
 
+		GdkMonitor* currMonitor = gdk_display_get_monitor_at_point(Plugin::display, x + (w / 2), y + (h / 2));
+
 		/* Ask Gdk if they are on the same monitor. */
-		if (gdk_display_get_monitor_at_window(Plugin::display, window) !=
-			gdk_display_get_monitor_at_point(Plugin::display, x + (w / 2), y + (h / 2)))
+		if (gdk_display_get_monitor_at_window(Plugin::display, window) != currMonitor)
 			onScreen = false;
+
+		if (mMonitor != currMonitor)
+		{
+			if (mMonitor != NULL)
+				monitorChanged = true;
+			mMonitor = currMonitor;
+		}
 	}
 
 	bool onTasklist = !(mState & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST);
@@ -178,7 +188,7 @@ void GroupWindow::updateState()
 	if (onWorkspace && onTasklist && onScreen)
 	{
 		getInGroup();
-		if (Settings::onlyDisplayScreen)
+		if (monitorChanged)
 			Wnck::setActiveWindow();
 	}
 	else

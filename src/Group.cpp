@@ -557,7 +557,22 @@ void Group::onButtonPress(GdkEventButton* event)
 {
 	if (event->button == 3)
 	{
-		GtkWidget* menu = Wnck::buildActionMenu(mWindows.get(mTopWindowIndex), this);
+		GroupWindow* win = Wnck::mGroupWindows.findIf([this](std::pair<gulong, GroupWindow*> e) -> bool {
+			return (e.second->mGroupAssociated && e.second->mGroup == this);
+		});
+
+		if (win == NULL)
+			return;
+
+		/*newTopWindow = Wnck::mGroupWindows.findIf([this](std::pair<gulong, GroupWindow*> e) -> bool {
+				if (e.second->mGroup == this)
+					return true;
+				return false;
+			});*/
+
+		//.forEach([](std::pair<AppInfo*, Group*> g) -> void { g.second->resize(); });
+
+		GtkWidget* menu = Wnck::buildActionMenu(win, this);
 
 		xfce_panel_plugin_register_menu(Plugin::mXfPlugin, GTK_MENU(menu));
 		gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(mButton), NULL);

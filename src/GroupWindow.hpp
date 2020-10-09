@@ -17,8 +17,8 @@
 #include "Group.hpp"
 #include "GroupMenuItem.hpp"
 #include "Helpers.hpp"
-#include "Wnck.hpp"
 #include "Plugin.hpp"
+#include "Wnck.hpp"
 
 class GroupMenuItem;
 class Group;
@@ -46,6 +46,8 @@ class GroupWindow
 
 	WnckWindow* mWnckWindow;
 	GroupMenuItem* mGroupMenuItem;
+
+	GdkMonitor* mMonitor = NULL;
 
 	void updateState();
 	unsigned short mState;
