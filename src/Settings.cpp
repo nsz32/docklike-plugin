@@ -18,6 +18,7 @@ namespace Settings
 	State<bool> onlyDisplayVisible;
 	State<bool> onlyDisplayScreen;
 
+	State<int> indicatorOrientation;
 	State<int> indicatorStyle;
 	State<GdkRGBA*> indicatorColor;
 
@@ -33,6 +34,14 @@ namespace Settings
 
 		mFile = g_key_file_new();
 		g_key_file_load_from_file(mFile, mPath.c_str(), G_KEY_FILE_NONE, NULL);
+
+		indicatorOrientation.setup(g_key_file_get_integer(mFile, "user", "indicatorOrientation", NULL),
+			[](int indicatorOrientation) -> void {
+				g_key_file_set_integer(mFile, "user", "indicatorOrientation", indicatorOrientation);
+				saveFile();
+
+				Dock::redraw();
+			});
 
 		forceIconSize.setup(g_key_file_get_boolean(mFile, "user", "forceIconSize", NULL),
 			[](bool forceIconSize) -> void {
@@ -76,13 +85,13 @@ namespace Settings
 				g_key_file_set_boolean(mFile, "user", "noWindowsListIfSingle", noWindowsListIfSingle);
 				saveFile();
 			});
-		
+
 		onlyDisplayVisible.setup(g_key_file_get_boolean(mFile, "user", "onlyDisplayVisible", NULL),
 			[](bool onlyDisplayVisible) -> void {
 				g_key_file_set_boolean(mFile, "user", "onlyDisplayVisible", onlyDisplayVisible);
 				saveFile();
 			});
-		
+
 		onlyDisplayScreen.setup(g_key_file_get_boolean(mFile, "user", "onlyDisplayScreen", NULL),
 			[](bool onlyDisplayScreen) -> void {
 				g_key_file_set_boolean(mFile, "user", "onlyDisplayScreen", onlyDisplayScreen);

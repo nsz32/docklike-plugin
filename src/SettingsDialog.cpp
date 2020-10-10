@@ -81,7 +81,7 @@ namespace SettingsDialog
 				Wnck::setVisibleGroups();
 			}),
 			NULL);
-		
+
 		GObject* onlyDisplayScreen = gtk_builder_get_object(builder, "c_onlyDisplayScreen");
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(onlyDisplayScreen), Settings::onlyDisplayScreen);
 		g_signal_connect(onlyDisplayScreen, "toggled",
@@ -90,6 +90,16 @@ namespace SettingsDialog
 				Wnck::setVisibleGroups();
 			}),
 			NULL);
+
+		// =====================================================================
+
+		GObject* indicatorOrientation = gtk_builder_get_object(builder, "co_indicatorOrientation");
+		gtk_combo_box_set_active(GTK_COMBO_BOX(indicatorOrientation), Settings::indicatorOrientation);
+		g_signal_connect(indicatorOrientation, "changed",
+			G_CALLBACK(+[](GtkComboBox* indicatorOrientation, GtkWidget* g) {
+				Settings::indicatorOrientation.set(gtk_combo_box_get_active(GTK_COMBO_BOX(indicatorOrientation)));
+			}),
+			dialog);
 
 		// =====================================================================
 
