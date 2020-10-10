@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Docklike 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 12:55+0200\n"
+"POT-Creation-Date: 2020-10-10 16:27+0200\n"
 "PO-Revision-Date: 2020-09-13 16:13+0400\n"
 "Last-Translator: Dmitry K <dkabishchev@ya.ru>\n"
 "Language-Team: RU\n"
@@ -16,31 +16,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/Plugin.cpp:79
+#: ../src/Plugin.cpp:78
 msgid "Contributors:"
 msgstr "При участии:"
 
-#: ../src/Plugin.cpp:90
+#: ../src/Plugin.cpp:89
 msgid "A modern, minimalist taskbar for XFCE."
 msgstr "Простая и современная панель задач для XFCE."
 
-#: ../src/Wnck.cpp:215
+#: ../src/Wnck.cpp:185
 msgid "Launch another"
 msgstr "Новое окно"
 
-#: ../src/Wnck.cpp:215
+#: ../src/Wnck.cpp:185
 msgid "Launch"
 msgstr "Запустить"
 
-#: ../src/Wnck.cpp:230
+#: ../src/Wnck.cpp:200
 msgid "Unpin"
 msgstr "Открепить"
 
-#: ../src/Wnck.cpp:230
+#: ../src/Wnck.cpp:200
 msgid "Pin"
 msgstr "Закрепить"
 
-#: ../src/Wnck.cpp:253
+#: ../src/Wnck.cpp:223
 msgid "Close All"
 msgstr "Закрыть все окна"
 
@@ -58,6 +58,7 @@ msgstr ""
 "Похоже, что комбинация &lt;SUPER&gt;+%u уже назначена на другое действие.\n"
 "Проверьте свои настройки Xfce."
 
+#. namespace SettingsDialog
 #: ../src/docklike.desktop.in.h:1
 msgid "A modern, minimalist taskbar for XFCE"
 msgstr "Простая и современная панель задач для XFCE."
@@ -82,46 +83,73 @@ msgstr "Показывать окна только с текущего рабо�
 msgid "Show only applications from the current display"
 msgstr ""
 
-#: ../src/_dialogs.xml.h:5
-msgid "Appearence"
+#: ../src/_dialogs.xml.h:6
+#, fuzzy
+msgid "Appearance"
 msgstr "Внешний вид"
 
-#: ../src/_dialogs.xml.h:6
+#: ../src/_dialogs.xml.h:7
 msgid "Indicator style :"
 msgstr "Стиль индикатора :"
 
-#: ../src/_dialogs.xml.h:7
+#: ../src/_dialogs.xml.h:8
 msgid "Bars"
 msgstr "Полоса"
 
-#: ../src/_dialogs.xml.h:8
+#: ../src/_dialogs.xml.h:9
 msgid "Dots"
 msgstr "Точки"
 
-#: ../src/_dialogs.xml.h:9
+#: ../src/_dialogs.xml.h:10
+msgid "Rectangles"
+msgstr ""
+
+#: ../src/_dialogs.xml.h:11
+#, fuzzy
+msgid "Indicator orientation :"
+msgstr ""
+
+#: ../src/_dialogs.xml.h:12
+msgid "Bottom"
+msgstr ""
+
+#: ../src/_dialogs.xml.h:13
+msgid "Right"
+msgstr ""
+
+#: ../src/_dialogs.xml.h:14
+msgid "Top"
+msgstr ""
+
+#: ../src/_dialogs.xml.h:15
+msgid "Left"
+msgstr ""
+
+#: ../src/_dialogs.xml.h:16
 msgid "Indicator color :"
 msgstr "Цвет индикатора :"
 
-#: ../src/_dialogs.xml.h:10
+#: ../src/_dialogs.xml.h:17
 msgid "Force icons size :"
 msgstr "Размер значков :"
 
-#: ../src/_dialogs.xml.h:11
+#: ../src/_dialogs.xml.h:18
 msgid "Keyboard hotkeys"
 msgstr "Комбинации клавиш"
 
-#: ../src/_dialogs.xml.h:12
+#: ../src/_dialogs.xml.h:19
 msgid "Switch between applications with <SUPER>+[1, 2, ...]"
 msgstr "Переключаться между окнами с помощью <SUPER>+[1, 2, ...]"
 
-#: ../src/_dialogs.xml.h:13
+#: ../src/_dialogs.xml.h:20
 msgid "Switch to the last window with <SUPER>"
 msgstr "Переключаться на ранее выбранное окно с помощью <SUPER>"
 
-#: ../src/_dialogs.xml.h:14
+#: ../src/_dialogs.xml.h:21
 msgid ""
 "<b>This feature is disabled.</b>\n"
 "It requires X11 XInput2.0 extension which is is not provided by your system."
 msgstr ""
 "<b>Эта функция недоступна.</b>\n"
-"Для её работы необходим X11 XInput2.0, который, вероятно, отсутствует в вашей системе."
+"Для её работы необходим X11 XInput2.0, который, вероятно, отсутствует в "
+"вашей системе."

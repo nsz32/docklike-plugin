@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Docklike 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 12:55+0200\n"
+"POT-Creation-Date: 2020-10-10 16:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Nicolas Szabo <nszabo@vivaldi.net>\n"
 "Language-Team: FR\n"
@@ -17,31 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/Plugin.cpp:79
+#: ../src/Plugin.cpp:78
 msgid "Contributors:"
 msgstr "Contributeurs :"
 
-#: ../src/Plugin.cpp:90
+#: ../src/Plugin.cpp:89
 msgid "A modern, minimalist taskbar for XFCE."
 msgstr "Une barre des tâches moderne et minimaliste pour XFCE"
 
-#: ../src/Wnck.cpp:215
+#: ../src/Wnck.cpp:185
 msgid "Launch another"
 msgstr "Nouvelle instance"
 
-#: ../src/Wnck.cpp:215
+#: ../src/Wnck.cpp:185
 msgid "Launch"
 msgstr "Lancer"
 
-#: ../src/Wnck.cpp:230
+#: ../src/Wnck.cpp:200
 msgid "Unpin"
 msgstr "Désépingler"
 
-#: ../src/Wnck.cpp:230
+#: ../src/Wnck.cpp:200
 msgid "Pin"
 msgstr "Épingler"
 
-#: ../src/Wnck.cpp:253
+#: ../src/Wnck.cpp:223
 msgid "Close All"
 msgstr "Tout fermer"
 
@@ -56,9 +56,11 @@ msgid ""
 "The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
 "Check your Xfce settings."
 msgstr ""
-"La combinaison &lt;SUPER&gt;+%u semble déjà être utilisée par un autre processus.\n"
+"La combinaison &lt;SUPER&gt;+%u semble déjà être utilisée par un autre "
+"processus.\n"
 "Vérifiez vos paramètres Xfce."
 
+#. namespace SettingsDialog
 #: ../src/docklike.desktop.in.h:1
 msgid "A modern, minimalist taskbar for XFCE"
 msgstr "Une barre des tâches moderne et minimaliste pour XFCE"
@@ -83,46 +85,73 @@ msgstr "Ne voir que les applications de l'espace de travail courant"
 msgid "Show only applications from the current display"
 msgstr "Ne voir que les applications de l'écran du plugin"
 
-#: ../src/_dialogs.xml.h:5
-msgid "Appearence"
+#: ../src/_dialogs.xml.h:6
+#, fuzzy
+msgid "Appearance"
 msgstr "Apparence"
 
-#: ../src/_dialogs.xml.h:6
+#: ../src/_dialogs.xml.h:7
 msgid "Indicator style :"
 msgstr "Style de l'indicateur :"
 
-#: ../src/_dialogs.xml.h:7
+#: ../src/_dialogs.xml.h:8
 msgid "Bars"
 msgstr "Barres"
 
-#: ../src/_dialogs.xml.h:8
+#: ../src/_dialogs.xml.h:9
 msgid "Dots"
 msgstr "Points"
 
-#: ../src/_dialogs.xml.h:9
+#: ../src/_dialogs.xml.h:10
+msgid "Rectangles"
+msgstr "Rectangles"
+
+#: ../src/_dialogs.xml.h:11
+#, fuzzy
+msgid "Indicator orientation :"
+msgstr "Orientation de l'indicateur :"
+
+#: ../src/_dialogs.xml.h:12
+msgid "Bottom"
+msgstr "Bas"
+
+#: ../src/_dialogs.xml.h:13
+msgid "Right"
+msgstr "Droite"
+
+#: ../src/_dialogs.xml.h:14
+msgid "Top"
+msgstr "Haut"
+
+#: ../src/_dialogs.xml.h:15
+msgid "Left"
+msgstr "Gauche"
+
+#: ../src/_dialogs.xml.h:16
 msgid "Indicator color :"
 msgstr "Couleur de l'indicateur :"
 
-#: ../src/_dialogs.xml.h:10
+#: ../src/_dialogs.xml.h:17
 msgid "Force icons size :"
 msgstr "Forcer la taille des icônes :"
 
-#: ../src/_dialogs.xml.h:11
+#: ../src/_dialogs.xml.h:18
 msgid "Keyboard hotkeys"
 msgstr "Raccourcis clavier"
 
-#: ../src/_dialogs.xml.h:12
+#: ../src/_dialogs.xml.h:19
 msgid "Switch between applications with <SUPER>+[1, 2, ...]"
 msgstr "Changer d'application avec <SUPER>+[1, 2, ...]"
 
-#: ../src/_dialogs.xml.h:13
+#: ../src/_dialogs.xml.h:20
 msgid "Switch to the last window with <SUPER>"
 msgstr "Appeler l'application précédente avec <SUPER>"
 
-#: ../src/_dialogs.xml.h:14
+#: ../src/_dialogs.xml.h:21
 msgid ""
 "<b>This feature is disabled.</b>\n"
 "It requires X11 XInput2.0 extension which is is not provided by your system."
 msgstr ""
 "<b>Cette fonction est désactivée.</b>\n"
-"Elle nécéssite l'extension X11 XInput2.0 qui n'est pas fournie par votre système."
+"Elle nécéssite l'extension X11 XInput2.0 qui n'est pas fournie par votre "
+"système."
