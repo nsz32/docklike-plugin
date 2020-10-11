@@ -181,6 +181,8 @@ void GroupWindow::updateState()
 				monitorChanged = true;
 			mMonitor = currMonitor;
 		}
+		else
+			monitorChanged = false;
 	}
 
 	bool onTasklist = !(mState & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST);
