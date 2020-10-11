@@ -554,7 +554,7 @@ void Group::onDraw(cairo_t* cr)
 
 			if (mSMany)
 			{
-				int space = floor(vw / 3.5);
+				int space = floor(vw / 4.5);
 				int sep = vw / 11.;
 				sep = std::max(sep - (sep % 2) + (vw % 2), 2);
 
@@ -585,18 +585,20 @@ void Group::onDraw(cairo_t* cr)
 			}
 			else
 			{
-				int space = floor(vw / 3.);
+				int space = floor(vw / 4.5);
+				space = space + (space % 2) + (vw % 2);
+				int start = (vw - space) / 2;
 
 				cairo_set_source_rgba(cr, rgb[0], rgb[1], rgb[2], 1);
 
 				if (Settings::indicatorOrientation == 0) // Bottom
-					cairo_rectangle(cr, space, round(h * BAR_WEIGHT), w - space * 2, round(h * (1 - BAR_WEIGHT)));
+					cairo_rectangle(cr, start, round(h * BAR_WEIGHT), space, round(h * (1 - BAR_WEIGHT)));
 				else if (Settings::indicatorOrientation == 1) // Right
-					cairo_rectangle(cr, round(w * BAR_WEIGHT), space, round(w * (1 - BAR_WEIGHT)), h - space * 2);
+					cairo_rectangle(cr, round(w * BAR_WEIGHT), start, round(w * (1 - BAR_WEIGHT)), space);
 				else if (Settings::indicatorOrientation == 2) // Top
-					cairo_rectangle(cr, space, 0, w - space * 2, round(h * (1 - BAR_WEIGHT)));
+					cairo_rectangle(cr, start, 0, space, round(h * (1 - BAR_WEIGHT)));
 				else // Left
-					cairo_rectangle(cr, 0, space, round(w * (1 - BAR_WEIGHT)), h - space * 2);
+					cairo_rectangle(cr, 0, start, round(w * (1 - BAR_WEIGHT)), space);
 
 				cairo_fill(cr);
 			}
