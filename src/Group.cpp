@@ -711,7 +711,7 @@ void Group::onButtonPress(GdkEventButton* event)
 			return (e.second->mGroupAssociated && e.second->mGroup == this);
 		});
 
-		if (win == NULL)
+		if (win == NULL && !mPinned)
 			return;
 
 		GtkWidget* menu = Wnck::buildActionMenu(win, this);
