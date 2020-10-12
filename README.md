@@ -47,7 +47,7 @@ Fast application switching : by hovering mouse while button pressed or scrolling
 
 Hotkeys : Use your Super key to start or switch applications extremely fast :
 
-![docklike-plugin](https://i.imgur.com/DroPCpp.jpg)
+![docklike-plugin](https://i.imgur.com/OykcJlT.png)
 
 Different styles :
 
