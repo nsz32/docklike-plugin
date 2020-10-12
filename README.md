@@ -17,6 +17,7 @@ Docklike is published in the ArchLinux User Repository (AUR) : `yay xfce4-dockli
 
 On other distros:
 ```
+git clone https://github.com/nsz32/docklike-plugin && cd docklike-plugin
 ./autogen.sh
 make
 sudo make install
