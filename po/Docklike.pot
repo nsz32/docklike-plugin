@@ -1,54 +1,54 @@
-# Docklike-plugin i18n file
-# Copyright (C) 2020 Nicolas Szabo
-# This file is distributed under the same license as the Docklike package.
-# Yamada Hayao <hayao@fascode.net>, 2020.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Docklike 0.9\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-10 16:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Yamada Hayao <hayao@fascode.net>\n"
-"Language-Team: JA\n"
-"Language: ja\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/Plugin.cpp:78
 msgid "Contributors:"
-msgstr "貢献者:"
+msgstr ""
 
 #: ../src/Plugin.cpp:89
 msgid "A modern, minimalist taskbar for XFCE."
-msgstr "XFCE用のモダンで小さなタスクバー"
+msgstr ""
 
 #: ../src/Wnck.cpp:185
 msgid "Launch another"
-msgstr "新しいウィンドウで起動"
+msgstr ""
 
 #: ../src/Wnck.cpp:185
 msgid "Launch"
-msgstr "アプリケーションを起動する"
+msgstr ""
 
 #: ../src/Wnck.cpp:200
 msgid "Unpin"
-msgstr "ピン留めを解除"
+msgstr ""
 
 #: ../src/Wnck.cpp:200
 msgid "Pin"
-msgstr "タスクバーにピン留め"
+msgstr ""
 
 #: ../src/Wnck.cpp:223
 msgid "Close All"
-msgstr "全てのウィンドウを閉じる"
+msgstr ""
 
 #: ../src/SettingsDialog.cpp:21
 #, c-format
 msgid "<b>Only the first %u hotkeys(s) are enabled.</b>\n"
-msgstr "<b>最初の %u ホットキーのみが有効です。</b>\n"
+msgstr ""
 
 #: ../src/SettingsDialog.cpp:25
 #, c-format
@@ -56,57 +56,53 @@ msgid ""
 "The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
 "Check your Xfce settings."
 msgstr ""
-"&lt;SUPER&gt;+%u の組み合わせは既に別のプロセス使用されているようです。\n"
-"Xfceの設定を確認して下さい。"
 
 #. namespace SettingsDialog
 #: ../src/docklike.desktop.in.h:1
 msgid "A modern, minimalist taskbar for XFCE"
-msgstr "XFCE用のモダンで小さなタスクバー"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:1
 msgid "_Close"
-msgstr "閉じる"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:2
 msgid "Behavior"
-msgstr "動作"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:3
 msgid "Don't show list for a single window"
-msgstr "1つのウィンドウのリストを表示しない"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:4
 msgid "Show only applications from the current workspace"
-msgstr "現在のワークスペースのアプリケーションのみを表示する"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:5
 msgid "Show only applications from the current display"
 msgstr ""
 
 #: ../src/_dialogs.xml.h:6
-#, fuzzy
 msgid "Appearance"
-msgstr "外観"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:7
 msgid "Indicator style :"
-msgstr "インジケーターのスタイル :"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:8
 msgid "Bars"
-msgstr "バー"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:9
 msgid "Dots"
-msgstr "ドット"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:10
 msgid "Rectangles"
 msgstr ""
 
 #: ../src/_dialogs.xml.h:11
-#, fuzzy
 msgid "Indicator orientation :"
 msgstr ""
 
@@ -128,28 +124,26 @@ msgstr ""
 
 #: ../src/_dialogs.xml.h:16
 msgid "Indicator color :"
-msgstr "インジケーターの色 :"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:17
 msgid "Force icons size :"
-msgstr "アイコンサイズを強制的に変更する :"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:18
 msgid "Keyboard hotkeys"
-msgstr "キーボードショートカット"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:19
 msgid "Switch between applications with <SUPER>+[1, 2, ...]"
-msgstr "アプリケーションを <SUPER>+[1, 2, ...] で切り替える"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:20
 msgid "Switch to the last window with <SUPER>"
-msgstr "<SUPER> で最後のウィンドウに切り替える"
+msgstr ""
 
 #: ../src/_dialogs.xml.h:21
 msgid ""
 "<b>This feature is disabled.</b>\n"
 "It requires X11 XInput2.0 extension which is is not provided by your system."
 msgstr ""
-"<b>この機能は無効化されています。</b>\n"
-"この機能はシステムから提供されていない X11 XInput2.0 extension が必要です。"

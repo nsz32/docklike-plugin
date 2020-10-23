@@ -82,6 +82,25 @@ namespace SettingsDialog
 			}),
 			NULL);
 
+		GObject* onlyDisplayScreen = gtk_builder_get_object(builder, "c_onlyDisplayScreen");
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(onlyDisplayScreen), Settings::onlyDisplayScreen);
+		g_signal_connect(onlyDisplayScreen, "toggled",
+			G_CALLBACK(+[](GtkToggleButton* onlyDisplayScreen) {
+				Settings::onlyDisplayScreen.set(gtk_toggle_button_get_active(onlyDisplayScreen));
+				Wnck::setVisibleGroups();
+			}),
+			NULL);
+
+		// =====================================================================
+
+		GObject* indicatorOrientation = gtk_builder_get_object(builder, "co_indicatorOrientation");
+		gtk_combo_box_set_active(GTK_COMBO_BOX(indicatorOrientation), Settings::indicatorOrientation);
+		g_signal_connect(indicatorOrientation, "changed",
+			G_CALLBACK(+[](GtkComboBox* indicatorOrientation, GtkWidget* g) {
+				Settings::indicatorOrientation.set(gtk_combo_box_get_active(GTK_COMBO_BOX(indicatorOrientation)));
+			}),
+			dialog);
+
 		// =====================================================================
 
 		GObject* indicatorStyle = gtk_builder_get_object(builder, "co_indicatorStyle");

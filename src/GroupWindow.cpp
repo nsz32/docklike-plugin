@@ -52,6 +52,26 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 		}),
 		this);
 
+	g_signal_connect(G_OBJECT(mWnckWindow), "geometry-changed",
+		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
+			me->updateState();
+		}),
+		this);
+
+	g_signal_connect(G_OBJECT(mWnckWindow), "class-changed",
+		G_CALLBACK(+[](WnckWindow* window, GroupWindow* me) {
+			std::string groupName = Wnck::getGroupName(me);
+			Group* group = Dock::prepareGroup(AppInfos::search(groupName));
+			if (group != me->mGroup)
+			{
+				me->leaveGroup();
+				me->mGroup = group;
+				me->getInGroup();
+				Wnck::setActiveWindow();
+			}
+		}),
+		this);
+
 	// initial state
 	updateState();
 
@@ -134,10 +154,45 @@ void GroupWindow::updateState()
 		}
 	}
 
+	bool onScreen = true;
+
+	bool monitorChanged = false;
+	if (Settings::onlyDisplayScreen)
+	{
+		// Adapted from Xfce panel's tasklist-widget.c
+		gint x, y, w, h;
+		GdkWindow* window;
+
+		/* The tasklist itself. */
+		window = gtk_widget_get_window(GTK_WIDGET(Plugin::mXfPlugin));
+
+		/* The window we are making a button for. */
+		wnck_window_get_geometry(mWnckWindow, &x, &y, &w, &h);
+
+		GdkMonitor* currMonitor = gdk_display_get_monitor_at_point(Plugin::display, x + (w / 2), y + (h / 2));
+
+		/* Ask Gdk if they are on the same monitor. */
+		if (gdk_display_get_monitor_at_window(Plugin::display, window) != currMonitor)
+			onScreen = false;
+
+		if (mMonitor != currMonitor)
+		{
+			if (mMonitor != NULL)
+				monitorChanged = true;
+			mMonitor = currMonitor;
+		}
+		else
+			monitorChanged = false;
+	}
+
 	bool onTasklist = !(mState & WnckWindowState::WNCK_WINDOW_STATE_SKIP_TASKLIST);
 
-	if (onWorkspace && onTasklist)
+	if (onWorkspace && onTasklist && onScreen)
+	{
 		getInGroup();
+		if (monitorChanged)
+			Wnck::setActiveWindow();
+	}
 	else
 		leaveGroup();
 

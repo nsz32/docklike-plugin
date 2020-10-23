@@ -6,7 +6,19 @@
 
 #include "AppInfos.hpp"
 
-#include <gio/gdesktopappinfo.h>
+void AppInfo::launch()
+{
+	GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(this->path.c_str());
+
+	g_app_info_launch((GAppInfo*)info, NULL, NULL, NULL);
+}
+
+void AppInfo::launch_action(const gchar* action)
+{
+	GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(this->path.c_str());
+
+	g_desktop_app_info_launch_action(info, action, NULL);
+}
 
 namespace AppInfos
 {
@@ -69,7 +81,8 @@ namespace AppInfos
 		if (name_ != NULL)
 			name = name_;
 
-		AppInfo* info = new AppInfo({path, icon, name});
+		const gchar* const* actions = g_desktop_app_info_list_actions(gAppInfo);
+		AppInfo* info = new AppInfo({path, icon, name, actions});
 
 		id = Help::String::toLowercase(id);
 		mAppInfoIds.set(id, info);
@@ -179,8 +192,25 @@ namespace AppInfos
 		loadXDGDirectories();
 	}
 
+	// ADDIT GroupName aliases
+	std::map<std::string, std::string> mGroupNameRename = {
+		{"soffice", "libreoffice-startcenter"},
+		{"libreoffice", "libreoffice-startcenter"},
+		{"radium_linux.bin", "radium"},
+	};
+
+	void groupNameTransform(std::string& groupName)
+	{
+		// Rename from table
+		std::map<std::string, std::string>::iterator itRenamed;
+		if ((itRenamed = mGroupNameRename.find(groupName)) != mGroupNameRename.end())
+			groupName = itRenamed->second;
+	}
+
 	AppInfo* search(std::string id)
 	{
+		groupNameTransform(id);
+
 		AppInfo* ai = mAppInfoWMClasses.get(id);
 		if (ai != NULL)
 			return ai;
@@ -231,14 +261,6 @@ namespace AppInfos
 		}
 
 		return new AppInfo({"", "", id});
-	}
-
-	void launch(AppInfo* appInfo) // TODO move to AppInfo struct
-	{
-		GDesktopAppInfo* info = g_desktop_app_info_new_from_filename(appInfo->path.c_str());
-		const gchar* const* actions = g_desktop_app_info_list_actions(info);
-
-		g_app_info_launch((GAppInfo*)info, NULL, NULL, NULL);
 	}
 
 } // namespace AppInfos

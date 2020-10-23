@@ -126,7 +126,7 @@ namespace Dock
 					else if (group->mWindowsCount > 0)
 						group->activate(timestamp);
 					else
-						AppInfos::launch(group->mAppInfo);
+						group->mAppInfo->launch();
 					return;
 				}
 				else

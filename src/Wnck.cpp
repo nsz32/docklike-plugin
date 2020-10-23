@@ -17,35 +17,6 @@ namespace Wnck
 
 	namespace // private:
 	{
-		// ADDIT GroupName aliases
-		std::map<std::string, std::string> mGroupNameRename = {
-			{"soffice", "libreoffice"},
-			{"radium_linux.bin", "radium"},
-		};
-
-		void groupNameTransform(std::string& groupName, WnckWindow* wnckWindow)
-		{
-			// Rename from table
-			std::map<std::string, std::string>::iterator itRenamed;
-			if ((itRenamed = mGroupNameRename.find(groupName)) != mGroupNameRename.end())
-				groupName = itRenamed->second;
-
-			// LibreOffice <- needs window name tracking
-			/*BAD if(groupName == "libreoffice")
-			{
-					std::string winName = getName(wnckWindow);
-					std::cout << "NAME:" << winName << std::endl;
-					if(!winName.empty())
-					{
-							std::string name =
-			Help::String::toLowercase(Help::String::getLastWord(winName)); if(name ==
-			"calc" || name == "draw" || name == "impress" || name == "math") groupName
-			= "libreoffice-" + name; else groupName = "libreoffice-writer";
-
-							return;
-					}
-			}*/
-		}
 
 		std::string getGroupNameSys(WnckWindow* wnckWindow)
 		{
@@ -88,6 +59,7 @@ namespace Wnck
 
 	void init()
 	{
+		// TODO: Find the screen the panel plugin is on, not the default
 		mWnckScreen = wnck_screen_get_default();
 		wnck_screen_force_update(mWnckScreen);
 
@@ -126,8 +98,7 @@ namespace Wnck
 			GroupWindow* groupWindow = new GroupWindow(wnckWindow);
 			mGroupWindows.push(wnck_window_get_xid(wnckWindow), groupWindow);
 
-			if (Settings::onlyDisplayVisible)
-				groupWindow->updateState();
+			groupWindow->updateState();
 		}
 		setActiveWindow();
 	}
@@ -199,7 +170,6 @@ namespace Wnck
 	std::string getGroupName(GroupWindow* groupWindow)
 	{
 		std::string groupName = Help::String::toLowercase(getGroupNameSys(groupWindow->mWnckWindow));
-		groupNameTransform(groupName, groupWindow->mWnckWindow);
 
 		return groupName;
 	}
@@ -220,7 +190,7 @@ namespace Wnck
 
 			g_signal_connect(G_OBJECT(launchAnother), "activate",
 				G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
-					AppInfos::launch(appInfo);
+					appInfo->launch();
 				}),
 				appInfo);
 
@@ -261,6 +231,32 @@ namespace Wnck
 						group->closeAll();
 					}),
 					group);
+			}
+
+			if (group != NULL)
+			{
+				for (int i = 0; appInfo->actions[i]; i++)
+				{
+					if (i == 0 && group->mSOpened)
+					{
+						GtkWidget* separator = gtk_separator_menu_item_new();
+						gtk_widget_show(separator);
+						gtk_menu_shell_insert(GTK_MENU_SHELL(menu), separator, 0);
+					}
+
+					GDesktopAppInfo* GDAppInfo = g_desktop_app_info_new_from_filename(appInfo->path.c_str());
+					GtkWidget* m = gtk_menu_item_new_with_label(_(g_desktop_app_info_get_action_name(GDAppInfo, appInfo->actions[i])));
+
+					g_object_set_data((GObject*)m, "action", (gpointer)appInfo->actions[i]);
+					gtk_widget_show(m);
+					gtk_menu_shell_insert(GTK_MENU_SHELL(menu), m, 0 + i);
+
+					g_signal_connect(G_OBJECT(m), "activate",
+						G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
+							appInfo->launch_action((const gchar*)g_object_get_data((GObject*)menuitem, "action"));
+						}),
+						appInfo);
+				}
 			}
 
 			return menu;

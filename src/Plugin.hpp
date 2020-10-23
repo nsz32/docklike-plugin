@@ -33,6 +33,7 @@ namespace Plugin
 {
 	extern XfcePanelPlugin* mXfPlugin;
 	extern GdkDevice* mPointer;
+	extern GdkDisplay* display;
 
 	void getPointerPosition(gint* x, gint* y);
 	void aboutDialog();
