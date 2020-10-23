@@ -73,7 +73,7 @@ msgstr "Поведение"
 
 #: ../src/_dialogs.xml.h:3
 msgid "Don't show list for a single window"
-msgstr "Скрывать выпадающий список для одинарных окон"
+msgstr "Скрыть выпадающий список для одинарных окон"
 
 #: ../src/_dialogs.xml.h:4
 msgid "Show only applications from the current workspace"
@@ -105,7 +105,7 @@ msgstr "Линии"
 
 #: ../src/_dialogs.xml.h:11
 msgid "Indicator orientation :"
-msgstr "Расположение индикатора:"
+msgstr "Положение индикатора:"
 
 #: ../src/_dialogs.xml.h:12
 msgid "Bottom"
