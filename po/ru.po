@@ -22,7 +22,7 @@ msgstr "При участии:"
 
 #: ../src/Plugin.cpp:89
 msgid "A modern, minimalist taskbar for XFCE."
-msgstr "Простая и современная панель задач для XFCE."
+msgstr "Простая и современная панель задач для XFCE"
 
 #: ../src/Wnck.cpp:185
 msgid "Launch another"
@@ -55,13 +55,13 @@ msgid ""
 "The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
 "Check your Xfce settings."
 msgstr ""
-"Похоже, что комбинация &lt;SUPER&gt;+%u уже назначена на другое действие.\n"
+"Похоже, что комбинация &lt;SUPER&gt;+%u уже используется.\n"
 "Проверьте свои настройки Xfce."
 
 #. namespace SettingsDialog
 #: ../src/docklike.desktop.in.h:1
 msgid "A modern, minimalist taskbar for XFCE"
-msgstr "Простая и современная панель задач для XFCE."
+msgstr "Простая и современная панель задач для XFCE"
 
 #: ../src/_dialogs.xml.h:1
 msgid "_Close"
@@ -73,7 +73,7 @@ msgstr "Поведение"
 
 #: ../src/_dialogs.xml.h:3
 msgid "Don't show list for a single window"
-msgstr "Скрыть выпадающий список для одинарных окон"
+msgstr "Скрывать выпадающий список для одинарных окон"
 
 #: ../src/_dialogs.xml.h:4
 msgid "Show only applications from the current workspace"
@@ -81,7 +81,7 @@ msgstr "Показывать окна только с текущего рабо�
 
 #: ../src/_dialogs.xml.h:5
 msgid "Show only applications from the current display"
-msgstr ""
+msgstr "Показывать окна только с текущего монитора"
 
 #: ../src/_dialogs.xml.h:6
 #, fuzzy
@@ -90,7 +90,7 @@ msgstr "Внешний вид"
 
 #: ../src/_dialogs.xml.h:7
 msgid "Indicator style :"
-msgstr "Стиль индикатора :"
+msgstr "Стиль индикатора:"
 
 #: ../src/_dialogs.xml.h:8
 msgid "Bars"
@@ -102,36 +102,36 @@ msgstr "Точки"
 
 #: ../src/_dialogs.xml.h:10
 msgid "Rectangles"
-msgstr ""
+msgstr "Линии"
 
 #: ../src/_dialogs.xml.h:11
 #, fuzzy
 msgid "Indicator orientation :"
-msgstr ""
+msgstr "Расположение индикатора:"
 
 #: ../src/_dialogs.xml.h:12
 msgid "Bottom"
-msgstr ""
+msgstr "Снизу"
 
 #: ../src/_dialogs.xml.h:13
 msgid "Right"
-msgstr ""
+msgstr "Справа"
 
 #: ../src/_dialogs.xml.h:14
 msgid "Top"
-msgstr ""
+msgstr "Сверху"
 
 #: ../src/_dialogs.xml.h:15
 msgid "Left"
-msgstr ""
+msgstr "Слева"
 
 #: ../src/_dialogs.xml.h:16
 msgid "Indicator color :"
-msgstr "Цвет индикатора :"
+msgstr "Цвет индикатора:"
 
 #: ../src/_dialogs.xml.h:17
 msgid "Force icons size :"
-msgstr "Размер значков :"
+msgstr "Размер значков:"
 
 #: ../src/_dialogs.xml.h:18
 msgid "Keyboard hotkeys"
@@ -139,11 +139,11 @@ msgstr "Комбинации клавиш"
 
 #: ../src/_dialogs.xml.h:19
 msgid "Switch between applications with <SUPER>+[1, 2, ...]"
-msgstr "Переключаться между окнами с помощью <SUPER>+[1, 2, ...]"
+msgstr "Переключать окна с помощью <SUPER>+[1, 2, ...]"
 
 #: ../src/_dialogs.xml.h:20
 msgid "Switch to the last window with <SUPER>"
-msgstr "Переключаться на ранее выбранное окно с помощью <SUPER>"
+msgstr "Переключать ранее выбранные окна с помощью <SUPER>"
 
 #: ../src/_dialogs.xml.h:21
 msgid ""
