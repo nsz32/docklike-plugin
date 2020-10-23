@@ -84,7 +84,6 @@ msgid "Show only applications from the current display"
 msgstr "Показывать окна только с текущего монитора"
 
 #: ../src/_dialogs.xml.h:6
-#, fuzzy
 msgid "Appearance"
 msgstr "Внешний вид"
 
@@ -105,7 +104,6 @@ msgid "Rectangles"
 msgstr "Линии"
 
 #: ../src/_dialogs.xml.h:11
-#, fuzzy
 msgid "Indicator orientation :"
 msgstr "Расположение индикатора:"
 
