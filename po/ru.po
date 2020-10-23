@@ -105,7 +105,7 @@ msgstr "Линии"
 
 #: ../src/_dialogs.xml.h:11
 msgid "Indicator orientation :"
-msgstr "Положение индикатора:"
+msgstr "Расположение индикатора:"
 
 #: ../src/_dialogs.xml.h:12
 msgid "Bottom"
