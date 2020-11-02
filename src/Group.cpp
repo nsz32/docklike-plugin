@@ -28,6 +28,8 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 
 	mSFocus = mSOpened = mSMany = mSHover = mSSuper = false;
 
+	//--------------------------------------------------
+
 	mWindowsCount.setup(
 		0, [this]() -> uint {
 			uint count = 0;
@@ -61,6 +63,8 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 		onMouseEnter();
 		return false;
 	});
+
+	//--------------------------------------------------
 
 	g_signal_connect(
 		G_OBJECT(mButton), "button-press-event",
@@ -157,6 +161,8 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 			return false;
 		}),
 		this);
+
+	//--------------------------------------------------
 
 	gtk_drag_dest_set(mButton, GTK_DEST_DEFAULT_DROP, entries, 1, GDK_ACTION_MOVE);
 
@@ -790,7 +796,6 @@ void Group::onDragLeave(const GdkDragContext* context, guint time)
 void Group::onDragDataGet(const GdkDragContext* context, GtkSelectionData* selectionData, guint info, guint time)
 {
 	Group* me = this;
-	std::cout << "pme:" << me << std::endl;
 
 	// TODO is the source object copied or passed by a pointer ?
 	gtk_selection_data_set(selectionData, gdk_atom_intern("button", false), 32, (const guchar*)me, sizeof(gpointer) * 32);

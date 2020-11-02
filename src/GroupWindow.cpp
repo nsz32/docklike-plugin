@@ -16,6 +16,8 @@ GroupWindow::GroupWindow(WnckWindow* wnckWindow)
 
 	mGroup = Dock::prepareGroup(appInfo);
 
+	//--------------------------------------------------
+
 	/*std::cout << "SEARCHING GROUPNAME:" << groupName << std::endl;
 	if (appInfo == NULL)
 		std::cout << "NO MATCH:" << 0 << std::endl;

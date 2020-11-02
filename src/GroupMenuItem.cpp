@@ -42,6 +42,8 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 		return false;
 	});
 
+	//--------------------------------------------------
+
 	g_signal_connect(G_OBJECT(mItem), "button-press-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, GroupMenuItem* me) {
 			if (event->button == 1)
@@ -52,9 +54,6 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 			/*else if (event->button == 3) //TODO debug
 			{
 				GtkWidget* menu = Wnck::buildActionMenu(me->mGroupWindow, NULL);
-
-				std::cout << "tst:" << me->mGroupWindow << std::endl
-						  << std::flush;
 
 				gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(me->mItem), NULL);
 				gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(me->mItem), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent*)event);

@@ -25,6 +25,8 @@ GroupMenu::GroupMenu(Group* dockButton)
 	gtk_container_add(GTK_CONTAINER(mWindow), mBox);
 	gtk_widget_show(mBox);
 
+	//--------------------------------------------------
+
 	g_signal_connect(G_OBJECT(mWindow), "enter-notify-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, GroupMenu* me) {
 			me->mGroup->setStyle(Group::Style::Hover, true);
