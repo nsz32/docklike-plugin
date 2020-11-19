@@ -1,0 +1,155 @@
+# Docklike-plugin i18n file
+# Copyright (C) 2020 Nicolas Szabo
+# This file is distributed under the same license as the Docklike package.
+# Nicolas Szabo <nszabo@vivaldi.net>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Docklike 0.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-19 18:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Adem Kürşat UZUN <ademkursatuzun@gmail.com>\n"
+"Language-Team: TR\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Plugin.cpp:78
+msgid "Contributors:"
+msgstr "Katkıda bulunanlar :"
+
+#: ../src/Plugin.cpp:89
+msgid "A modern, minimalist taskbar for XFCE."
+msgstr "XFCE için modern, minimalist bir görev çubuğu."
+
+#: ../src/Wnck.cpp:185
+msgid "Launch another"
+msgstr "Yeni bir tane başlat"
+
+#: ../src/Wnck.cpp:185
+msgid "Launch"
+msgstr "Başlat"
+
+#: ../src/Wnck.cpp:200
+msgid "Unpin"
+msgstr "Sabitlemeyi kaldır"
+
+#: ../src/Wnck.cpp:200
+msgid "Pin"
+msgstr "Sabitle"
+
+#: ../src/Wnck.cpp:223
+msgid "Close All"
+msgstr "Tümünü Kapat"
+
+#: ../src/SettingsDialog.cpp:21
+#, c-format
+msgid "<b>Only the first %u hotkeys(s) are enabled.</b>\n"
+msgstr "<b>Sadece ilk %u kısayol tuşları aktif hale getirildi.</b>\n"
+
+#: ../src/SettingsDialog.cpp:25
+#, c-format
+msgid ""
+"The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
+"Check your Xfce settings."
+msgstr ""
+"&lt;SUPER&gt;+%u kombinasyonu halihazırda başka bir program tarafından kullanılıyor.\n"
+"Xfce ayarlarınızı kontrol edin."
+
+#. namespace SettingsDialog
+#: ../src/docklike.desktop.in.h:1
+msgid "A modern, minimalist taskbar for XFCE"
+msgstr "XFCE için modern, minimalist bir görev çubuğu."
+
+#: ../src/_dialogs.xml.h:1
+msgid "_Close"
+msgstr "_Kapat"
+
+#: ../src/_dialogs.xml.h:2
+msgid "Behavior"
+msgstr "Davranış"
+
+#: ../src/_dialogs.xml.h:3
+msgid "Don't show list for a single window"
+msgstr "Listeyi tek pencerede gösterme"
+
+#: ../src/_dialogs.xml.h:4
+msgid "Show only applications from the current workspace"
+msgstr "Sadece mevcut çalışma alanındaki uygulamaları göster"
+
+#: ../src/_dialogs.xml.h:5
+msgid "Show only applications from the current display"
+msgstr "Sadece mevcut ekrandaki uygulamaları göster"
+
+#: ../src/_dialogs.xml.h:6
+#, fuzzy
+msgid "Appearance"
+msgstr "Görünüm"
+
+#: ../src/_dialogs.xml.h:7
+msgid "Indicator style :"
+msgstr "Gösterge stili :"
+
+#: ../src/_dialogs.xml.h:8
+msgid "Bars"
+msgstr "Barlar"
+
+#: ../src/_dialogs.xml.h:9
+msgid "Dots"
+msgstr "Noktalar"
+
+#: ../src/_dialogs.xml.h:10
+msgid "Rectangles"
+msgstr "Dikdörtgenler"
+
+#: ../src/_dialogs.xml.h:11
+#, fuzzy
+msgid "Indicator orientation :"
+msgstr "Gösterge yönü:"
+
+#: ../src/_dialogs.xml.h:12
+msgid "Bottom"
+msgstr "Aşağı"
+
+#: ../src/_dialogs.xml.h:13
+msgid "Right"
+msgstr "Sağ"
+
+#: ../src/_dialogs.xml.h:14
+msgid "Top"
+msgstr "Yukarı"
+
+#: ../src/_dialogs.xml.h:15
+msgid "Left"
+msgstr "Sol"
+
+#: ../src/_dialogs.xml.h:16
+msgid "Indicator color :"
+msgstr "Gösterge rengi :"
+
+#: ../src/_dialogs.xml.h:17
+msgid "Force icons size :"
+msgstr "Simgelerin boyutlarını zorla :"
+
+#: ../src/_dialogs.xml.h:18
+msgid "Keyboard hotkeys"
+msgstr "Klavye kısayol tuşları"
+
+#: ../src/_dialogs.xml.h:19
+msgid "Switch between applications with <SUPER>+[1, 2, ...]"
+msgstr "<SUPER>+[1, 2, ...] ile uygulamalar araşında geçiş yap"
+
+#: ../src/_dialogs.xml.h:20
+msgid "Switch to the last window with <SUPER>"
+msgstr "<SUPER> ile son pencereye geçiş yap"
+
+#: ../src/_dialogs.xml.h:21
+msgid ""
+"<b>This feature is disabled.</b>\n"
+"It requires X11 XInput2.0 extension which is is not provided by your system."
+msgstr ""
+"<b>Bu özellik kapalı.</b>\n"
+"Sisteminiz tarafından sağlanmayan X11 XInput2.0 eklentisini gerektiriyor."
