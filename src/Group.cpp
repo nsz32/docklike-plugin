@@ -353,6 +353,12 @@ void Group::onDraw(cairo_t* cr)
 
 	//hovers ===================================================================
 
+	if(mSHover || mSOpened)
+		gtk_widget_set_opacity(mButton, 1);
+	else
+		gtk_widget_set_opacity(mButton, 0.92);
+
+
 	if (mSSuper)
 		aBack += 0.25;
 	if (mSHover && mSFocus)
