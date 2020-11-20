@@ -80,10 +80,11 @@ namespace Plugin
 			NULL};
 
 		const gchar* translators =
-			"Yamada Hayao <hayao@fascode.net> : ja  |  github.com/Hayao0819\n"
+			"Yamada Hayao <hayao@fascode.net> : ja  |  github.com/hayao0819\n"
 			"Dmitry K <dkabishchev@ya.ru> : ru  |  github.com/dmitryKB\n"
 			"Fábio Meneghetti <fabiom@riseup.net> : pt  |  github.com/fabiom\n"
-			"Mirko Brombin <send@mirko.pm> : it  |  github.com/mirkobrombin";
+			"Mirko Brombin <send@mirko.pm> : it  |  github.com/mirkobrombin\n"
+			"Adem Kürşat Uzun <ademkursatuzun@gmail.com> : tr  |  github.com/akursat";
 
 		gtk_show_about_dialog(NULL,
 			"program-name", "Docklike Taskbar",
