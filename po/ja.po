@@ -78,11 +78,11 @@ msgstr "1つのウィンドウのリストを表示しない"
 
 #: ../src/_dialogs.xml.h:4
 msgid "Show only applications from the current workspace"
-msgstr "現在のワークスペースのアプリケーションのみを表示する"
+msgstr "現在のワークスペースのアプリケーションのみ表示する"
 
 #: ../src/_dialogs.xml.h:5
 msgid "Show only applications from the current display"
-msgstr ""
+msgstr "現在のディスプレイのアプリケーションのみ表示する"
 
 #: ../src/_dialogs.xml.h:6
 #, fuzzy
