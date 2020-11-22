@@ -78,11 +78,11 @@ msgstr "1つのウィンドウのリストを表示しない"
 
 #: ../src/_dialogs.xml.h:4
 msgid "Show only applications from the current workspace"
-msgstr "現在のワークスペースのアプリケーションのみを表示する"
+msgstr "現在のワークスペースのアプリケーションのみ表示する"
 
 #: ../src/_dialogs.xml.h:5
 msgid "Show only applications from the current display"
-msgstr ""
+msgstr "現在のディスプレイのアプリケーションのみ表示する"
 
 #: ../src/_dialogs.xml.h:6
 #, fuzzy
@@ -103,28 +103,28 @@ msgstr "ドット"
 
 #: ../src/_dialogs.xml.h:10
 msgid "Rectangles"
-msgstr ""
+msgstr "長方形"
 
 #: ../src/_dialogs.xml.h:11
 #, fuzzy
 msgid "Indicator orientation :"
-msgstr ""
+msgstr "インジケータの向き :"
 
 #: ../src/_dialogs.xml.h:12
 msgid "Bottom"
-msgstr ""
+msgstr "下"
 
 #: ../src/_dialogs.xml.h:13
 msgid "Right"
-msgstr ""
+msgstr "右"
 
 #: ../src/_dialogs.xml.h:14
 msgid "Top"
-msgstr ""
+msgstr "上"
 
 #: ../src/_dialogs.xml.h:15
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: ../src/_dialogs.xml.h:16
 msgid "Indicator color :"
