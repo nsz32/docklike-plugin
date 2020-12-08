@@ -13,7 +13,9 @@ A modern, docklike, minimalist taskbar for XFCE
 Build & Install
 -----------------------------------
 
-Docklike is published in the ArchLinux User Repository (AUR) : `yay xfce4-docklike-plugin-git`
+Docklike is published in
+* ArchLinux User Repository (AUR) : `yay xfce4-docklike-plugin-git`
+* Xubuntu : https://launchpad.net/~xubuntu-dev/+archive/ubuntu/extras
 
 On other distros:
 ```
