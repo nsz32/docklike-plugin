@@ -144,7 +144,7 @@ msgstr "Wechseln Sie zwischen Anwendungen mit <SUPER>+[1, 2, ...]"
 
 #: ../src/_dialogs.xml.h:20
 msgid "Switch to the last window with <SUPER>"
-msgstr "Wechseln Sie mit zum letzten Fenster mit <SUPER>"
+msgstr "Wechseln Sie zum letzten Fenster mit <SUPER>"
 
 #: ../src/_dialogs.xml.h:21
 msgid ""
