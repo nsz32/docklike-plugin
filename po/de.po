@@ -31,7 +31,7 @@ msgstr "Starte einen Weiteren"
 
 #: ../src/Wnck.cpp:185
 msgid "Launch"
-msgstr "Starte"
+msgstr "Starten"
 
 #: ../src/Wnck.cpp:200
 msgid "Unpin"
@@ -82,7 +82,7 @@ msgstr "Nur Anwendungen aus dem aktuellen Arbeitsbereich anzeigen"
 
 #: ../src/_dialogs.xml.h:5
 msgid "Show only applications from the current display"
-msgstr "Nur Anwendungen aus der aktuellen Anzeige anzeigen"
+msgstr "Nur Anwendungen vom aktuellen Bildschirm anzeigen"
 
 #: ../src/_dialogs.xml.h:6
 #, fuzzy
