@@ -107,7 +107,6 @@ msgid "Rectangles"
 msgstr "Rectangles"
 
 #: ../src/_dialogs.xml.h:11
-#, fuzzy
 msgid "Indicator orientation :"
 msgstr "Orientation de l'indicateur :"
 
