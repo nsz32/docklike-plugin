@@ -73,8 +73,13 @@ namespace AppInfos
 
 		std::string icon;
 		char* icon_ = g_desktop_app_info_get_string(gAppInfo, "Icon");
-		if (icon_ != NULL)
-			icon = Help::String::trim(icon_);
+		if (icon_ == NULL)
+		{
+			pthread_mutex_unlock(&AppInfosLock);
+			return;
+		}
+
+		icon = Help::String::trim(icon_);
 
 		std::string name;
 		char* name_ = g_desktop_app_info_get_string(gAppInfo, "Name");
