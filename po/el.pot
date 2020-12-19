@@ -1,6 +1,6 @@
-# SOME DESCRIPTIVE TITLE.
+# Docklike-plugin i18n file
 # Copyright (C) 2020 Lucas Hadjilucas
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the Docklike package.
 # Lucas Hadjilucas <puzzle@outlook.com>, 2020.
 #
 #, fuzzy
