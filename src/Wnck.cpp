@@ -261,6 +261,7 @@ namespace Wnck
 
 			return menu;
 		}
+		return FALSE;
 	}
 
 	void switchToLastWindow(guint32 timestamp)
