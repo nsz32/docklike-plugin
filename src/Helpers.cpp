@@ -82,7 +82,7 @@ namespace Help
 
 		std::string pathBasename(const std::string str)
 		{
-			char buffer[512];
+			char buffer[1024];
 			strcpy(buffer, str.c_str());
 			return basename(buffer);
 		}
