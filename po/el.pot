@@ -1,0 +1,151 @@
+# Docklike-plugin i18n file
+# Copyright (C) 2020 Lucas Hadjilucas
+# This file is distributed under the same license as the Docklike package.
+# Lucas Hadjilucas <puzzle@outlook.com>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Docklike 0.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-20 00:24+0200\n"
+"PO-Revision-Date: 2020-12-20 00:24+0200\n"
+"Last-Translator: Lucas Hadjilucas <puzzle@outlook.com>\n"
+"Language-Team: EL\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Plugin.cpp:78
+msgid "Contributors:"
+msgstr "Συνεργάτες:"
+
+#: ../src/Plugin.cpp:89
+msgid "A modern, minimalist taskbar for XFCE."
+msgstr "Μία σύγχρονη, μινιμαλιστική γραμμή εργασιών για το XFCE."
+
+#: ../src/Wnck.cpp:185
+msgid "Launch another"
+msgstr "Έναρξη νέας εφαρμογής"
+
+#: ../src/Wnck.cpp:185
+msgid "Launch"
+msgstr "Έναρξη εφαρμογής"
+
+#: ../src/Wnck.cpp:200
+msgid "Unpin"
+msgstr "Ξεκαρφίτσωμα"
+
+#: ../src/Wnck.cpp:200
+msgid "Pin"
+msgstr "Καρφίτσωμα"
+
+#: ../src/Wnck.cpp:223
+msgid "Close All"
+msgstr "Κλείσιμο όλων των εφαρμογών"
+
+#: ../src/SettingsDialog.cpp:21
+#, c-format
+msgid "<b>Only the first %u hotkeys(s) are enabled.</b>\n"
+msgstr "<b>Μόνο τα πρώτα %u πλήκτρα πρόσβασης είναι ενεργοποιημένα.</b>\n"
+
+#: ../src/SettingsDialog.cpp:25
+#, c-format
+msgid ""
+"The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
+"Check your Xfce settings."
+msgstr "Ο συνδυασμός πληκτρολογίου &lt;SUPER&gt;+%u είναι κρατημένος απο μια άλλη εφαρμογή.\n"
+"Παρακαλώ ελέγξτε τις ρυθμίσεις στο XFCE."
+
+#. namespace SettingsDialog
+#: ../src/docklike.desktop.in.h:1
+msgid "A modern, minimalist taskbar for XFCE"
+msgstr "Μία σύγχρονη, μινιμαλιστική γραμμή εργασιών για το XFCE."
+
+#: ../src/_dialogs.xml.h:1
+msgid "_Close"
+msgstr "_Κλείσιμο"
+
+#: ../src/_dialogs.xml.h:2
+msgid "Behavior"
+msgstr "Συμπεριφορά"
+
+#: ../src/_dialogs.xml.h:3
+msgid "Don't show list for a single window"
+msgstr "Μή εμφάνισή λίστας για ένα μόνο παράθυρο"
+
+#: ../src/_dialogs.xml.h:4
+msgid "Show only applications from the current workspace"
+msgstr "Εμφάνιση εφαρμογών μόνο απο την παρούσα επιφάνειας εργασίας"
+
+#: ../src/_dialogs.xml.h:5
+msgid "Show only applications from the current display"
+msgstr "Εμφάνιση εφαρμογών μόνο απο την παρούσα οθόνη"
+
+#: ../src/_dialogs.xml.h:6
+msgid "Appearance"
+msgstr "Παρουσίαση"
+
+#: ../src/_dialogs.xml.h:7
+msgid "Indicator style :"
+msgstr "Τρόπος παρουσίασης δείκτη :"
+
+#: ../src/_dialogs.xml.h:8
+msgid "Bars"
+msgstr "Ράβδοι"
+
+#: ../src/_dialogs.xml.h:9
+msgid "Dots"
+msgstr "Τελείες"
+
+#: ../src/_dialogs.xml.h:10
+msgid "Rectangles"
+msgstr "Ορθογώνια"
+
+#: ../src/_dialogs.xml.h:11
+msgid "Indicator orientation :"
+msgstr "Προσανατολισμός δείκτη :"
+
+#: ../src/_dialogs.xml.h:12
+msgid "Bottom"
+msgstr "Κάτω μέρος"
+
+#: ../src/_dialogs.xml.h:13
+msgid "Right"
+msgstr "Δεξιά"
+
+#: ../src/_dialogs.xml.h:14
+msgid "Top"
+msgstr "Πάνω"
+
+#: ../src/_dialogs.xml.h:15
+msgid "Left"
+msgstr "Αριστερά"
+
+#: ../src/_dialogs.xml.h:16
+msgid "Indicator color :"
+msgstr "Χρώμα δείκτη :"
+
+#: ../src/_dialogs.xml.h:17
+msgid "Force icons size :"
+msgstr "Περιορισμός μεγέθους εικονιδίων :"
+
+#: ../src/_dialogs.xml.h:18
+msgid "Keyboard hotkeys"
+msgstr "Συνδυασμοί πληκτρολογίου"
+
+#: ../src/_dialogs.xml.h:19
+msgid "Switch between applications with <SUPER>+[1, 2, ...]"
+msgstr "Εναλλαγή μεταξύ εφαρμογών με τον συνδυασμό <SUPER>+[1, 2, ...]"
+
+#: ../src/_dialogs.xml.h:20
+msgid "Switch to the last window with <SUPER>"
+msgstr "Εναλλαγή στο τελευταίο παράθυρο με το πλήκτρο <SUPER>"
+
+#: ../src/_dialogs.xml.h:21
+msgid ""
+"<b>This feature is disabled.</b>\n"
+"It requires X11 XInput2.0 extension which is is not provided by your system."
+msgstr "<b>Αυτή η λειτουργία είναι απενεργοποιημένη.</b>\n"
+"Απαιτείται η επέκταση X11 XInput2.0 η οποία δεν υποστηρίζεται από το σύστημά σας."
