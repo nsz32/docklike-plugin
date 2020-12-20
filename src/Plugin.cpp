@@ -84,7 +84,10 @@ namespace Plugin
 			"Dmitry K <dkabishchev@ya.ru> : ru  |  github.com/dmitryKB\n"
 			"Fábio Meneghetti <fabiom@riseup.net> : pt  |  github.com/fabiom\n"
 			"Mirko Brombin <send@mirko.pm> : it  |  github.com/mirkobrombin\n"
-			"Adem Kürşat Uzun <ademkursatuzun@gmail.com> : tr  |  github.com/akursat";
+			"Adem Kürşat Uzun <ademkursatuzun@gmail.com> : tr  |  github.com/akursat\n"
+			"Santiago Soler <santiago.r.soler@gmail.com> : es  |  github.com/santisoler\n"
+			//" : de  |  github.com/freddii\n"
+			"Lucas Hadjilucas <puzzle@outlook.com> : el  |  github.com/hadjilucasL\n";
 
 		gtk_show_about_dialog(NULL,
 			"program-name", "Docklike Taskbar",
