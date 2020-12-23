@@ -661,7 +661,10 @@ void Group::updateStyle()
 
 	if (wCount)
 	{
-		gtk_widget_set_tooltip_text(mButton, NULL);
+		if (wCount == 1 && Settings::noWindowsListIfSingle)
+			gtk_widget_set_tooltip_text(mButton, mAppInfo->name.c_str());
+		else
+			gtk_widget_set_tooltip_text(mButton, NULL);
 		setStyle(Style::Opened, true);
 	}
 	else
