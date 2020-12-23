@@ -259,6 +259,16 @@ namespace Wnck
 				}
 			}
 
+			GtkWidget* m = gtk_menu_item_new_with_label(_("Edit"));
+			gtk_widget_show(m);
+			gtk_menu_shell_insert(GTK_MENU_SHELL(menu), m, 0);
+
+			g_signal_connect(G_OBJECT(m), "activate",
+				G_CALLBACK(+[](GtkMenuItem* menuitem, AppInfo* appInfo) {
+					appInfo->edit();
+				}),
+				appInfo);
+
 			return menu;
 		}
 		return FALSE;

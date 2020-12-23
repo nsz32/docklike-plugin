@@ -20,6 +20,13 @@ void AppInfo::launch_action(const gchar* action)
 	g_desktop_app_info_launch_action(info, action, NULL);
 }
 
+void AppInfo::edit()
+{
+	gchar* command = g_strconcat("exo-desktop-item-edit ", g_shell_quote(this->path.c_str()), NULL);
+	g_spawn_command_line_async(command, NULL);
+	g_free(command);
+}
+
 namespace AppInfos
 {
 	std::list<std::string> mXdgDataDirs;

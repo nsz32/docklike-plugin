@@ -26,6 +26,7 @@ struct AppInfo
 
 	void launch();
 	void launch_action(const gchar *action);
+	void edit();
 };
 
 namespace AppInfos
