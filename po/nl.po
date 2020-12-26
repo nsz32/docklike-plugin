@@ -49,7 +49,7 @@ msgstr "Sluit alle"
 #, c-format
 msgid ""
 "<b>Only the first %u hotkeys(s) are enabled.</b>\n"
-msgstr "<b>Alleen de eerste %u sneltoetsen zijn ingeschakeld.</b>"
+msgstr "<b>Alleen de eerste %u sneltoetsen zijn ingeschakeld.</b>\n"
 
 #: ../src/SettingsDialog.cpp:25
 #, c-format
