@@ -1,36 +1,39 @@
+# Docklike Taskbar for XFCE
+
+A modern, docklike, minimalist taskbar for XFCE
+
 📌 Now support internationalization : **Contribute in localizing** the plugin to your tongue !
 
 → Simply go to the ```/po``` directory, and make your own ```[langcode].po``` file.
 
-
-
-Docklike Taskbar for XFCE
------------------------------------
-A modern, docklike, minimalist taskbar for XFCE
-
 ![docklike-plugin](https://i.imgur.com/O0nvthj.jpg)
 
-Build & Install
------------------------------------
+## Build & Install
 
 Docklike is published in
-* ArchLinux User Repository (AUR) :  
+
+### ArchLinux User Repository (AUR)
+
 `yay -S xfce4-docklike-plugin-git`
 
-* Xubuntu 20.04 and above :  
-```
+### Xubuntu 20.04 and above
+
+```bash
 sudo add-apt-repository ppa:xubuntu-dev/extras
 sudo apt update
 sudo apt install xfce4-docklike-plugin
 ```
 
-* On other distros:
-```
+### On other distros
+
+```bash
 git clone https://github.com/nsz32/docklike-plugin && cd docklike-plugin
 ./autogen.sh
 make
 sudo make install
 ```
+
+Use `./autogen.sh --prefix=/usr/local` to change install location
 
 Dependencies :
 libxfce4panel-2.0
@@ -40,8 +43,8 @@ cairo-1.16
 libwnck-3.0
 x11-1.6
 
-Features
------------------------------------
+## Features
+
 Pinnable applications and grouped windows (dock-like) :
 
 ![docklike-plugin](https://i.imgur.com/b4qDHCB.jpg)
