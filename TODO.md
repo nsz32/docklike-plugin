@@ -1,6 +1,5 @@
 TODO :
 
-+ Indicator orientation
 + Support for special launcher like mailwatch, places, music player (via MPRIS), ...
 
 Exotics windows :
@@ -8,6 +7,7 @@ Exotics windows :
 
 DONE :
 
+> + Indicator orientation
 > + Basic orientation managing
 > + Show only windows from active workspace
 > + i18n
