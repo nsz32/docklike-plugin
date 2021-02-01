@@ -1,11 +1,10 @@
-TODO :
+# TODO
 
 + Support for special launcher like mailwatch, places, music player (via MPRIS), ...
++ Editing launchers with exo-desktop-item-edit
++ Exotics windows : Libreoffice / Openoffice (imply changing the group of a window)
 
-Exotics windows :
-- Libreoffice / Openoffice (imply changing the group of a window)
-
-DONE :
+## DONE
 
 > + Indicator orientation
 > + Basic orientation managing
