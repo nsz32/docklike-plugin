@@ -55,6 +55,7 @@ AC_HEADER_STDC()
 dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
+m4_define([xfce_build_version], [4.14.0])
 XDT_CHECK_LIBX11_REQUIRE()
 XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.42.0])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.42.0])
@@ -62,9 +63,9 @@ XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.24.0])
 XDT_CHECK_PACKAGE([CAIRO], [cairo], [1.16.0])
 XDT_CHECK_PACKAGE([WNCK], [libwnck-3.0], [3.30.0])
 XDT_CHECK_PACKAGE([X11], [x11], [1.6])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.14.0])
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.14.0])
-XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [4.14.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [xfce_build_version()])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [xfce_build_version()])
+XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [xfce_build_version()])
 
 dnl ******************************
 dnl *** Check for i18n support ***

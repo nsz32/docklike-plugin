@@ -1,0 +1,155 @@
+# Docklike-plugin i18n file
+# Copyright (C) 2020 Nicolas Szabo
+# This file is distributed under the same license as the Docklike package.
+# Nicolas Szabo <nszabo@vivaldi.net>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-10 16:27+0200\n"
+"PO-Revision-Date: 2020-12-23 15:59+0000\n"
+"Last-Translator: Jan Kazemier <j.kazemier@gmail.com>\n"
+"Language-Team: NL\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/Plugin.cpp:78
+msgid "Contributors:"
+msgstr "Bijdragers:"
+
+#: ../src/Plugin.cpp:89
+msgid "A modern, minimalist taskbar for XFCE."
+msgstr "Een moderne, minimalistische taakbalk voor XFCE."
+
+#: ../src/Wnck.cpp:185
+msgid "Launch another"
+msgstr "Start nog een"
+
+#: ../src/Wnck.cpp:185
+msgid "Launch"
+msgstr "Start"
+
+#: ../src/Wnck.cpp:200
+msgid "Unpin"
+msgstr "Losmaken"
+
+#: ../src/Wnck.cpp:200
+msgid "Pin"
+msgstr "Vastpinnen"
+
+#: ../src/Wnck.cpp:223
+msgid "Close All"
+msgstr "Sluit alle"
+
+#: ../src/SettingsDialog.cpp:21
+#, c-format
+msgid ""
+"<b>Only the first %u hotkeys(s) are enabled.</b>\n"
+msgstr "<b>Alleen de eerste %u sneltoetsen zijn ingeschakeld.</b>\n"
+
+#: ../src/SettingsDialog.cpp:25
+#, c-format
+msgid ""
+"The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
+"Check your Xfce settings."
+msgstr ""
+"De combinatie &lt;SUPER&gt;+%u is reeds in gebruik door een ander proces. \n"
+"Controleer de instellingen van XFCE."
+
+#. namespace SettingsDialog
+#: ../src/docklike.desktop.in.h:1
+msgid "A modern, minimalist taskbar for XFCE"
+msgstr "Een moderne, minimalistische taakbalk voor XFCE."
+
+#: ../src/_dialogs.xml.h:1
+msgid "_Close"
+msgstr "Sluiten"
+
+#: ../src/_dialogs.xml.h:2
+msgid "Behavior"
+msgstr "Gedrag"
+
+#: ../src/_dialogs.xml.h:3
+msgid "Don't show list for a single window"
+msgstr "Toon geen lijst voor een enkel venster"
+
+#: ../src/_dialogs.xml.h:4
+msgid "Show only applications from the current workspace"
+msgstr "Alleen applicaties uit de huidige werkruimte tonen"
+
+#: ../src/_dialogs.xml.h:5
+msgid "Show only applications from the current display"
+msgstr "Alleen applicaties op het huidige beeldscherm tonen"
+
+#: ../src/_dialogs.xml.h:6
+msgid "Appearance"
+msgstr "Uiterlijk"
+
+#: ../src/_dialogs.xml.h:7
+msgid "Indicator style :"
+msgstr "Indicatorstijl:"
+
+#: ../src/_dialogs.xml.h:8
+msgid "Bars"
+msgstr "Balken"
+
+#: ../src/_dialogs.xml.h:9
+msgid "Dots"
+msgstr "Stippen"
+
+#: ../src/_dialogs.xml.h:10
+msgid "Rectangles"
+msgstr "Vierkanten"
+
+#: ../src/_dialogs.xml.h:11
+msgid "Indicator orientation :"
+msgstr "Orientatie indicator:"
+
+#: ../src/_dialogs.xml.h:12
+msgid "Bottom"
+msgstr "Onder"
+
+#: ../src/_dialogs.xml.h:13
+msgid "Right"
+msgstr "Rechts"
+
+#: ../src/_dialogs.xml.h:14
+msgid "Top"
+msgstr "Boven"
+
+#: ../src/_dialogs.xml.h:15
+msgid "Left"
+msgstr "Links"
+
+#: ../src/_dialogs.xml.h:16
+msgid "Indicator color :"
+msgstr "Indicatorkleur:"
+
+#: ../src/_dialogs.xml.h:17
+msgid "Force icons size :"
+msgstr "Forceer icoongrootte:"
+
+#: ../src/_dialogs.xml.h:18
+msgid "Keyboard hotkeys"
+msgstr "Sneltoetsen"
+
+#: ../src/_dialogs.xml.h:19
+msgid "Switch between applications with <SUPER>+[1, 2, ...]"
+msgstr "Wissel tussen applicaties met <SUPER>+[1, 2, ...]"
+
+#: ../src/_dialogs.xml.h:20
+msgid "Switch to the last window with <SUPER>"
+msgstr "Wissel naar het laatste venster met"
+
+#: ../src/_dialogs.xml.h:21
+msgid ""
+"<b>This feature is disabled.</b>\n"
+"It requires X11 XInput2.0 extension which is is not provided by your system."
+msgstr ""
+"<b>Deze functie is niet beschikbaar.</b>\n"
+"Deze functie heeft de X11 XInput2.0-extentie nodig, welke niet op uw systeem "
+"beschikbaar is."

@@ -1,0 +1,51 @@
+From bd421924ad6aa1b1fed1900253b3dbd670155c54 Mon Sep 17 00:00:00 2001
+From: Gregor Santner <gsantner@mailbox.org>
+Date: Wed, 23 Dec 2020 10:51:01 +0100
+Subject: [PATCH] Ubuntu 18.04 build compatibility patch
+
+* See PR https://github.com/nsz32/docklike-plugin/pull/66
+* Closes issues 52, closes 41
+* sudo apt install xfce4-dev-tools libxfce4panel-2.0  libxfce4ui-2-dev libwnck-3-dev libwnck-3.0
+---
+ configure.ac.in | 8 ++++----
+ src/Helpers.cpp | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/configure.ac.in b/configure.ac.in
+index 640bff3..ebfcdcc 100644
+--- a/configure.ac.in
++++ b/configure.ac.in
+@@ -55,13 +55,13 @@ AC_HEADER_STDC()
+ dnl ***********************************
+ dnl *** Check for required packages ***
+ dnl ***********************************
+-m4_define([xfce_build_version], [4.14.0])
++m4_define([xfce_build_version], [4.12.0])
+ XDT_CHECK_LIBX11_REQUIRE()
+ XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.42.0])
+ XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.42.0])
+-XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.24.0])
+-XDT_CHECK_PACKAGE([CAIRO], [cairo], [1.16.0])
+-XDT_CHECK_PACKAGE([WNCK], [libwnck-3.0], [3.30.0])
++XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.22.0])
++XDT_CHECK_PACKAGE([CAIRO], [cairo], [1.15.0])
++XDT_CHECK_PACKAGE([WNCK], [libwnck-3.0], [3.24.0])
+ XDT_CHECK_PACKAGE([X11], [x11], [1.6])
+ XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [xfce_build_version()])
+ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [xfce_build_version()])
+diff --git a/src/Helpers.cpp b/src/Helpers.cpp
+index 22a734b..d989950 100644
+--- a/src/Helpers.cpp
++++ b/src/Helpers.cpp
+@@ -161,7 +161,7 @@ namespace Help
+ 		void Timeout::start()
+ 		{
+ 			stop();
+-			mTimeoutId = g_timeout_add(mDuration, G_SOURCE_FUNC(+[](Timeout* me) {
++			mTimeoutId = g_timeout_add(mDuration, (GSourceFunc) (+[](Timeout* me) {
+ 				bool cont = me->mFunction();
+ 
+ 				if (!cont)
+-- 
+2.17.1
+
