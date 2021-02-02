@@ -1,5 +1,7 @@
 # TODO
 
++ Rename to xfce4-dock-plugin to match other xfce plugins
++ Fix all build warnings
 + Support for special launcher like mailwatch, places, music player (via MPRIS), ...
 + Editing launchers with exo-desktop-item-edit
 + Exotics windows : Libreoffice / Openoffice (imply changing the group of a window)
