@@ -51,16 +51,21 @@ sudo apt install xfce4-docklike-plugin
 ## Features & Screenshots
 
 Pinnable applications and grouped windows:
+
 ![screenshot](https://i.imgur.com/O0nvthj.jpg)
 
 Use Ctrl to reorder your applications or access the settings panel (with right click):
+
 ![screenshot](https://i.imgur.com/CUFp6QP.jpg)
 
 Fast application switching : by hovering mouse while button pressed or scrolling:
+
 ![screenshot](https://i.imgur.com/bpR1E6j.jpg)
 
 Use your Super key to start or switch applications extremely fast:
+
 ![screenshot](https://i.imgur.com/OykcJlT.png)
 
 Different indicator styles:
+
 ![screenshot](https://i.imgur.com/9nWqkCG.jpg)
