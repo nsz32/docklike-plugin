@@ -17,7 +17,10 @@ libdocklike_la_SOURCES =							\
 		Dock.cpp Dock.hpp							\
 		Wnck.cpp Wnck.hpp							\
 		SettingsDialog.cpp SettingsDialog.hpp		\
+		State.tpp 									\
+		Store.tpp									\
 		register.c									\
+		_gresources.xml _dialogs.xml				\
 		_gresources.c
 
 _gresources.c: _gresources.xml _dialogs.xml
@@ -37,4 +40,4 @@ plugins_DATA = $(plugins_in_files:.desktop.in=.desktop)
 EXTRA_DIST = $(plugins_in_files)
 
 CLEANFILES = $(NULL)
-DISTCLEANFILES = $(NULL)
+DISTCLEANFILES = docklike.desktop
