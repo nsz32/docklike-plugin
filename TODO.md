@@ -1,6 +1,5 @@
 # TODO
 
-+ Fix all build warnings (Helpers.cpp, Theme.cpp)
 + Editing launchers with exo-desktop-item-edit
 + Exotic windows : Libreoffice / Openoffice (imply changing the group of a window)
 
