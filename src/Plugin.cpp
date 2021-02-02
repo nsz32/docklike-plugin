@@ -13,6 +13,7 @@ namespace Plugin
 	XfcePanelPlugin* mXfPlugin;
 	GdkDevice* mPointer;
 	GdkDisplay* display;
+	GdkSeat* seat;
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
@@ -21,8 +22,8 @@ namespace Plugin
 		mXfPlugin = xfPlugin;
 
 		display = gdk_display_get_default();
-		GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
-		mPointer = gdk_device_manager_get_client_pointer(deviceManager);
+		seat = gdk_display_get_default_seat (display);
+		mPointer = gdk_seat_get_pointer (seat);
 
 		Settings::init();
 		AppInfos::init();

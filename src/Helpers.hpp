@@ -37,8 +37,8 @@ namespace Help
 
 		int getChildPosition(GtkContainer* container, GtkWidget* child);
 
-		void cssClassAdd(GtkWidget* widget, char* className);
-		void cssClassRemove(GtkWidget* widget, char* className);
+		void cssClassAdd(GtkWidget* widget, const char* className);
+		void cssClassRemove(GtkWidget* widget, const char* className);
 
 		class Timeout
 		{

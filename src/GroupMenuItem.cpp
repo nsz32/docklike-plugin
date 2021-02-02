@@ -6,7 +6,7 @@
 
 #include "GroupMenuItem.hpp"
 
-static GtkTargetEntry entries[1] = {{"any", 0, 0}};
+static GtkTargetEntry entries[1] = {{(gchar *) "any", 0, 0}};
 
 GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 {
@@ -48,7 +48,7 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, GroupMenuItem* me) {
 			if (event->button == 1)
 			{
-				gdk_device_ungrab((event)->device, (event)->time);
+				// gdk_device_ungrab((event)->device, (event)->time);
 				me->mGroupWindow->activate((event)->time);
 			}
 			/*else if (event->button == 3) //TODO debug

@@ -107,7 +107,7 @@ namespace Wnck
 	{
 		WnckWindow* activeWindow = wnck_screen_get_active_window(mWnckScreen);
 		if (!WNCK_IS_WINDOW(activeWindow))
-			return NULL;
+			return 0;
 
 		return wnck_window_get_xid(activeWindow);
 	}
@@ -148,7 +148,7 @@ namespace Wnck
 	void setActiveWindow()
 	{
 		gulong activeXID = getActiveWindowXID();
-		if (activeXID != NULL)
+		if (activeXID)
 		{
 			mGroupWindows.first()->onUnactivate();
 			mGroupWindows.moveToStart(activeXID)->onActivate();
