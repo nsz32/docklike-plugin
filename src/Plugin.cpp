@@ -22,8 +22,8 @@ namespace Plugin
 		mXfPlugin = xfPlugin;
 
 		display = gdk_display_get_default();
-		seat = gdk_display_get_default_seat (display);
-		mPointer = gdk_seat_get_pointer (seat);
+		seat = gdk_display_get_default_seat(display);
+		mPointer = gdk_seat_get_pointer(seat);
 
 		Settings::init();
 		AppInfos::init();

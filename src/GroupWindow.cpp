@@ -111,7 +111,7 @@ void GroupWindow::onActivate()
 	Help::Gtk::cssClassAdd(GTK_WIDGET(mGroupMenuItem->mItem), "active");
 	gtk_widget_queue_draw(GTK_WIDGET(mGroupMenuItem->mItem));
 
-	if(mGroupAssociated)
+	if (mGroupAssociated)
 		mGroup->onWindowActivate(this);
 }
 
@@ -120,7 +120,7 @@ void GroupWindow::onUnactivate()
 	Help::Gtk::cssClassRemove(GTK_WIDGET(mGroupMenuItem->mItem), "active");
 	gtk_widget_queue_draw(GTK_WIDGET(mGroupMenuItem->mItem));
 
-	if(mGroupAssociated)
+	if (mGroupAssociated)
 		mGroup->onWindowUnactivate();
 }
 
