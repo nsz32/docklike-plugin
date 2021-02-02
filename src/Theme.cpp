@@ -33,7 +33,7 @@ namespace Theme
 		std::string bgColor;
 
 		gtk_style_context_get_property(mStyleContext, "background-color", GTK_STATE_FLAG_NORMAL, &gv);
-		rgba = (GdkRGBA*) g_value_get_boxed(&gv);
+		rgba = (GdkRGBA*)g_value_get_boxed(&gv);
 		rgba->red = 1 - rgba->red;
 		rgba->green = 1 - rgba->green;
 		rgba->blue = 1 - rgba->blue;

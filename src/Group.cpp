@@ -71,7 +71,7 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me) {
 			if (event->button != 3 && event->state & GDK_CONTROL_MASK)
 				gtk_drag_begin_with_coordinates(widget, targetList, GDK_ACTION_MOVE, event->button, (GdkEvent*)event, -1, -1);
-			
+
 			if (event->state & GDK_CONTROL_MASK)
 			{
 				me->mGroupMenu.hide();
