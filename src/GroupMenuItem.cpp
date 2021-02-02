@@ -77,7 +77,7 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 
 	g_signal_connect(G_OBJECT(mItem), "drag-motion",
 		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time, GroupMenuItem* me) {
-			if (me->mDragSwitchTimeout.mTimeoutId == NULL)
+			if (!me->mDragSwitchTimeout.mTimeoutId)
 				me->mDragSwitchTimeout.start();
 
 			me->mGroupWindow->mGroup->mLeaveTimeout.stop();

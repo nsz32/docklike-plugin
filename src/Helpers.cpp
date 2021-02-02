@@ -148,7 +148,7 @@ namespace Help
 
 		Timeout::Timeout()
 		{
-			mDuration = mTimeoutId = NULL;
+			mDuration = mTimeoutId = 0;
 			// mFunction = NULL;
 		}
 
@@ -165,7 +165,7 @@ namespace Help
 				bool cont = me->mFunction();
 
 				if (!cont)
-					me->mTimeoutId = NULL;
+					me->mTimeoutId = 0;
 				return cont;
 			}),
 				this);
@@ -173,11 +173,8 @@ namespace Help
 
 		void Timeout::stop()
 		{
-			if (mTimeoutId != NULL)
-			{
+			if (mTimeoutId)
 				g_source_remove(mTimeoutId);
-				mTimeoutId = NULL;
-			}
 		}
 	} // namespace Gtk
 
