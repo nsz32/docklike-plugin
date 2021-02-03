@@ -60,6 +60,9 @@ namespace Theme
 			"background-color:@dl_menu_item_bgcolor_hover; "
 			"color:@dl_menu_item_color_hover; }"
 			".menu_item.active button { color:@dl_menu_item_color_hover; }"
+
+			".menu_item.active label { color:@dl_menu_item_color; }"
+
 			".menu_item button:hover { background-color:alpha(#888, 0.5); }"
 
 			".stld box { margin:0; padding:0; border:0; border-radius:0; }"
