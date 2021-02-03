@@ -8,14 +8,23 @@ A modern, docklike, minimalist taskbar for XFCE
 
 Contribute in localizing the plugin to your native tongue.
 
-Simply go to the ```/po``` directory, and make your own ```[langcode].po``` file by editing ```Docklike,pot```. Then add yourself to ```TRANSLATORS``` and open a pull request.
+Simply go to the ```/po``` directory, and make your own ```[langcode].po``` file by editing ```Docklike.pot```. Then open a pull request.
 
 ## Build & Install
+
+```bash
+tar xvf xfce4-docklike-plugin-0.1.0.tar.gz && cd xfce4-docklike-plugin-0.1.0
+./configure
+make
+sudo make install
+```
+
+Use `./configure --prefix=/usr/local` to change install location
 
 ### From git
 
 ```bash
-git clone https://github.com/nsz32/docklike-plugin &&  cd docklike-plugin
+git clone https://github.com/davekeogh/xfce4-docklike-plugin &&  cd xfce4-docklike-plugin
 ./autogen.sh
 make
 sudo make install
