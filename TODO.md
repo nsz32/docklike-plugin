@@ -1,11 +1,12 @@
 # TODO
 
-+ Investigate the theme issue on Greybird w/ menu items.
++ Simplify Theme.cpp
 + Editing launchers with exo-desktop-item-edit
 + Exotic windows : Libreoffice / Openoffice (imply changing the group of a window)
 
 ## DONE
 
+> + Fix all build warnings
 > + Indicator orientation
 > + Basic orientation managing
 > + Show only windows from active workspace
