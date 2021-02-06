@@ -64,6 +64,7 @@ namespace Hotkeys
 	void grabUngrabHotkeys(bool grab, unsigned int startKey = 0)
 	{
 		GdkWindow* rootwin = gdk_get_default_root_window();
+		GdkDisplay* display = gdk_window_get_display(rootwin);
 
 		if (grab)
 			mGrabbedKeys = NbHotkeys;
@@ -75,7 +76,7 @@ namespace Hotkeys
 			for (int ignoredModifiers : {0, (int)GDK_MOD2_MASK, (int)GDK_LOCK_MASK, (int)(GDK_MOD2_MASK | GDK_LOCK_MASK)})
 				if (grab)
 				{
-					gdk_error_trap_push();
+					gdk_x11_display_error_trap_push(display);
 
 					XGrabKey(
 						GDK_WINDOW_XDISPLAY(rootwin),
@@ -85,7 +86,7 @@ namespace Hotkeys
 						GrabModeAsync,
 						GrabModeAsync);
 
-					if (gdk_error_trap_pop())
+					if (gdk_x11_display_error_trap_pop(display))
 					{
 						grabUngrabHotkeys(false, k - m1Keycode);
 						return;

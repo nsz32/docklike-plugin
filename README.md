@@ -1,63 +1,80 @@
-📌 Now support internationalization : **Contribute in localizing** the plugin to your tongue !
+# Docklike Taskbar for XFCE
 
-→ Simply go to the ```/po``` directory, and make your own ```[langcode].po``` file.
-
-
-
-Docklike Taskbar for XFCE
------------------------------------
 A modern, docklike, minimalist taskbar for XFCE
 
-![docklike-plugin](https://i.imgur.com/O0nvthj.jpg)
+![screenshot](https://i.imgur.com/b4qDHCB.jpg)
 
-Build & Install
------------------------------------
+## Internationalization
 
-Docklike is published in
-* ArchLinux User Repository (AUR) :  
-`yay -S xfce4-docklike-plugin-git`
+Contribute in localizing the plugin to your native tongue.
 
-* Xubuntu 20.04 and above :  
+Simply go to the ```/po``` directory, and make your own ```[langcode].po``` file by editing ```Docklike.pot```. Then open a pull request.
+
+## Build & Install
+
+```bash
+tar xvf xfce4-docklike-plugin-0.1.0.tar.gz && cd xfce4-docklike-plugin-0.1.0
+./configure
+make
+sudo make install
 ```
-sudo add-apt-repository ppa:xubuntu-dev/extras
-sudo apt update
-sudo apt install xfce4-docklike-plugin
-```
 
-* On other distros:
-```
-git clone https://github.com/nsz32/docklike-plugin && cd docklike-plugin
+Use `./configure --prefix=/usr/local` to change install location
+
+### From git
+
+```bash
+git clone https://github.com/davekeogh/xfce4-docklike-plugin &&  cd xfce4-docklike-plugin
 ./autogen.sh
 make
 sudo make install
 ```
 
-Dependencies :
-libxfce4panel-2.0
-libxfce4ui-2
-gtk-3.0
-cairo-1.16
-libwnck-3.0
-x11-1.6
+Use `./autogen.sh --prefix=/usr/local` to change install location
 
-Features
------------------------------------
-Pinnable applications and grouped windows (dock-like) :
+### 3rd party packages
 
-![docklike-plugin](https://i.imgur.com/b4qDHCB.jpg)
+Provided by users. Submit a pull request if you have one for your distribution.
 
-Use Ctrl to reorder your applications or access the settings panel (with right click) :
+#### ArchLinux User Repository (AUR)
 
-![docklike-plugin](https://i.imgur.com/CUFp6QP.jpg)
+`yay -S xfce4-docklike-plugin-git`
 
-Fast application switching : by hovering mouse while button pressed or scrolling :
+#### Xubuntu 20.04 and above
 
-![docklike-plugin](https://i.imgur.com/bpR1E6j.jpg)
+```bash
+sudo add-apt-repository ppa:xubuntu-dev/extras
+sudo apt update
+sudo apt install xfce4-docklike-plugin
+```
 
-Hotkeys : Use your Super key to start or switch applications extremely fast :
+#### Dependencies
 
-![docklike-plugin](https://i.imgur.com/OykcJlT.png)
++ libxfce4panel-2.0
++ libxfce4ui-2
++ gtk-3.0
++ cairo-1.16
++ libwnck-3.0
++ x11-1.6
 
-Different styles :
+## Features & Screenshots
 
-![docklike-plugin](https://i.imgur.com/9nWqkCG.jpg)
+Pinnable applications and grouped windows:
+
+![screenshot](https://i.imgur.com/O0nvthj.jpg)
+
+Use Ctrl to reorder your applications or access the settings panel (with right click):
+
+![screenshot](https://i.imgur.com/CUFp6QP.jpg)
+
+Fast application switching : by hovering mouse while button pressed or scrolling:
+
+![screenshot](https://i.imgur.com/bpR1E6j.jpg)
+
+Use your Super key to start or switch applications extremely fast:
+
+![screenshot](https://i.imgur.com/OykcJlT.png)
+
+Different indicator styles:
+
+![screenshot](https://i.imgur.com/9nWqkCG.jpg)

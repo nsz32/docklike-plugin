@@ -1,13 +1,13 @@
-TODO :
+# TODO
 
-+ Indicator orientation
-+ Support for special launcher like mailwatch, places, music player (via MPRIS), ...
++ Simplify Theme.cpp
++ Editing launchers with exo-desktop-item-edit
++ Exotic windows : Libreoffice / Openoffice (imply changing the group of a window)
 
-Exotics windows :
-- Libreoffice / Openoffice (imply changing the group of a window)
+## DONE
 
-DONE :
-
+> + Fix all build warnings
+> + Indicator orientation
 > + Basic orientation managing
 > + Show only windows from active workspace
 > + i18n

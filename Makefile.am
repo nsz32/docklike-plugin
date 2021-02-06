@@ -5,7 +5,7 @@ SUBDIRS = src po
 distclean-local:
 	rm -rf *.cache *~
 
-EXTRA_DIST = AUTHORS LICENCE intltool-extract.in intltool-merge.in intltool-update.in
+EXTRA_DIST = AUTHORS COPYING README.md TODO.md
 
 DISTCLEANFILES =				\
 	aclocal.m4					\

@@ -28,13 +28,16 @@ namespace Theme
 
 	void load()
 	{
-		GdkRGBA color;
-		gtk_style_context_get_background_color(mStyleContext, GTK_STATE_FLAG_FOCUSED, &color);
-		color.red = 1 - color.red;
-		color.green = 1 - color.green;
-		color.blue = 1 - color.blue;
+		GValue gv = G_VALUE_INIT;
+		GdkRGBA* rgba;
+		std::string bgColor;
 
-		std::string bgColor = gdk_rgba_to_string(&color);
+		gtk_style_context_get_property(mStyleContext, "background-color", GTK_STATE_FLAG_NORMAL, &gv);
+		rgba = (GdkRGBA*)g_value_get_boxed(&gv);
+		rgba->red = 1 - rgba->red;
+		rgba->green = 1 - rgba->green;
+		rgba->blue = 1 - rgba->blue;
+		bgColor = gdk_rgba_to_string(rgba);
 
 		std::string cssStyle =
 			setupColors() +
@@ -57,6 +60,9 @@ namespace Theme
 			"background-color:@dl_menu_item_bgcolor_hover; "
 			"color:@dl_menu_item_color_hover; }"
 			".menu_item.active button { color:@dl_menu_item_color_hover; }"
+
+			".menu_item.active label { color:@dl_menu_item_color; }"
+
 			".menu_item button:hover { background-color:alpha(#888, 0.5); }"
 
 			".stld box { margin:0; padding:0; border:0; border-radius:0; }"

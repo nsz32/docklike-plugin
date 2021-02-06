@@ -136,19 +136,19 @@ namespace Help
 			return g_value_get_int(&gv);
 		}
 
-		void cssClassAdd(GtkWidget* widget, char* className)
+		void cssClassAdd(GtkWidget* widget, const char* className)
 		{
 			gtk_style_context_add_class(gtk_widget_get_style_context(widget), className);
 		}
 
-		void cssClassRemove(GtkWidget* widget, char* className)
+		void cssClassRemove(GtkWidget* widget, const char* className)
 		{
 			gtk_style_context_remove_class(gtk_widget_get_style_context(widget), className);
 		}
 
 		Timeout::Timeout()
 		{
-			mDuration = mTimeoutId = NULL;
+			mDuration = mTimeoutId = 0;
 			// mFunction = NULL;
 		}
 
@@ -165,7 +165,7 @@ namespace Help
 				bool cont = me->mFunction();
 
 				if (!cont)
-					me->mTimeoutId = NULL;
+					me->mTimeoutId = 0;
 				return cont;
 			}),
 				this);
@@ -173,11 +173,8 @@ namespace Help
 
 		void Timeout::stop()
 		{
-			if (mTimeoutId != NULL)
-			{
+			if (mTimeoutId)
 				g_source_remove(mTimeoutId);
-				mTimeoutId = NULL;
-			}
 		}
 	} // namespace Gtk
 

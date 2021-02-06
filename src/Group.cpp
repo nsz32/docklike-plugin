@@ -9,7 +9,7 @@
 #include "Dock.hpp"
 #include "GroupMenu.hpp"
 
-static GtkTargetEntry entries[1] = {{"application/docklike_group", 0, 0}};
+static GtkTargetEntry entries[1] = {{(gchar*)"application/docklike_group", 0, 0}};
 static GtkTargetList* targetList = gtk_target_list_new(entries, 1);
 
 Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
@@ -69,11 +69,9 @@ Group::Group(AppInfo* appInfo, bool pinned) : mGroupMenu(this)
 	g_signal_connect(
 		G_OBJECT(mButton), "button-press-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, Group* me) {
-			gdk_device_ungrab((event)->device, (event)->time);
 			if (event->button != 3 && event->state & GDK_CONTROL_MASK)
-			{
 				gtk_drag_begin_with_coordinates(widget, targetList, GDK_ACTION_MOVE, event->button, (GdkEvent*)event, -1, -1);
-			}
+
 			if (event->state & GDK_CONTROL_MASK)
 			{
 				me->mGroupMenu.hide();
@@ -353,11 +351,10 @@ void Group::onDraw(cairo_t* cr)
 
 	//hovers ===================================================================
 
-	if(mSHover || mSOpened)
+	if (mSHover || mSOpened)
 		gtk_widget_set_opacity(mButton, 1);
 	else
 		gtk_widget_set_opacity(mButton, 0.92);
-
 
 	if (mSSuper)
 		aBack += 0.25;
@@ -661,7 +658,10 @@ void Group::updateStyle()
 
 	if (wCount)
 	{
-		gtk_widget_set_tooltip_text(mButton, NULL);
+		if (wCount == 1 && Settings::noWindowsListIfSingle)
+			gtk_widget_set_tooltip_text(mButton, mAppInfo->name.c_str());
+		else
+			gtk_widget_set_tooltip_text(mButton, NULL);
 		setStyle(Style::Opened, true);
 	}
 	else
@@ -759,8 +759,9 @@ void Group::onButtonRelease(GdkEventButton* event)
 bool Group::onDragMotion(GtkWidget* widget, GdkDragContext* context, int x, int y, guint time)
 {
 	GdkModifierType mask;
+	GdkDevice* device = gdk_drag_context_get_device(context);
 
-	gdk_window_get_pointer(gtk_widget_get_window(widget), NULL, NULL, &mask);
+	gdk_window_get_device_position(gtk_widget_get_window(widget), device, NULL, NULL, &mask);
 	if (mask & GDK_CONTROL_MASK)
 		gtk_drag_cancel(context);
 

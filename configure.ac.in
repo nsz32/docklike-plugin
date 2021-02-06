@@ -1,24 +1,26 @@
 dnl
 dnl Docklike Taskbar - A modern, minimalist taskbar for Xfce
 dnl --------------------------------------------------------
-dnl (c) 2020		Nicolas Szabo <nszabo@vivaldi.net>
+dnl (c) 2019-2020		Nicolas Szabo <nszabo@vivaldi.net>
+dnl (c) 2020-2021		David Keogh <davidtkeogh@gmail.com>
 dnl
 
 dnl ***************************
 dnl *** Version information ***
 dnl ***************************
 m4_define([project_version_major], [0])
-m4_define([project_version_minor], [9])
+m4_define([project_version_minor], [1])
 m4_define([project_version_micro], [0])
 m4_define([project_version_build], [@REVISION@])
-m4_define([project_version_tag], [git]) # leave empty for release
+m4_define([project_version_tag], []) # leave empty for release
 m4_define([project_version], [project_version_major().project_version_minor().project_version_micro()ifelse(project_version_tag(), [git], [project_version_tag()-project_version_build()], [project_version_tag()])])
 
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
-AC_COPYRIGHT([Copyright (c) 2020 Nicolas Szabo])
-AC_INIT([Docklike], [project_version], [https://github.com/nsz32/docklike-plugin/issues], [xfce4-docklike-plugin], [https://github.com/nsz32/docklike-plugin])
+AC_COPYRIGHT([Copyright (c) 2019-2020 Nicolas Szabo])
+AC_COPYRIGHT([Copyright (c) 2020-2021 David Keogh])
+AC_INIT([xfce4-docklike-plugin], [project_version], [https://github.com/davekeogh/xfce4-docklike-plugin/issues], [xfce4-docklike-plugin], [https://github.com/davekeogh/xfce4-docklike-plugin])
 AC_PREREQ([2.50])
 AC_CANONICAL_TARGET()
 AC_REVISION([project_version_build])
@@ -28,7 +30,7 @@ AC_PREFIX_DEFAULT([/usr])
 dnl ***************************
 dnl *** Initialize automake ***
 dnl ***************************
-AM_INIT_AUTOMAKE([1.8 no-dist-gzip dist-bzip2])
+AM_INIT_AUTOMAKE([1.8 dist-bzip2 dist-xz])
 AM_MAINTAINER_MODE()
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 

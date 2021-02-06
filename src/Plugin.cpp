@@ -8,11 +8,15 @@
 
 #include "Helpers.hpp"
 
+/* the website url */
+#define PLUGIN_WEBSITE "https://github.com/davekeogh/xfce4-docklike-plugin"
+
 namespace Plugin
 {
 	XfcePanelPlugin* mXfPlugin;
 	GdkDevice* mPointer;
 	GdkDisplay* display;
+	GdkSeat* seat;
 
 	void init(XfcePanelPlugin* xfPlugin)
 	{
@@ -21,8 +25,8 @@ namespace Plugin
 		mXfPlugin = xfPlugin;
 
 		display = gdk_display_get_default();
-		GdkDeviceManager* deviceManager = gdk_display_get_device_manager(display);
-		mPointer = gdk_device_manager_get_client_pointer(deviceManager);
+		seat = gdk_display_get_default_seat(display);
+		mPointer = gdk_seat_get_pointer(seat);
 
 		Settings::init();
 		AppInfos::init();
@@ -74,27 +78,28 @@ namespace Plugin
 	void aboutDialog()
 	{
 		const gchar* authors[] = {
-			"Nicolas Szabo <nszabo@vivaldi.net> © 2019-2020  |  github.com/nsz32",
-			_("Contributors:"),
-			"David Keogh <davidtkeogh@gmail.com> © 2020  |  github.com/davekeogh", "",
+			"Nicolas Szabo <nszabo@vivaldi.net> © 2019-2020",
+			"David Keogh <davidtkeogh@gmail.com> © 2020-2021"
+			"\n",
 			NULL};
 
 		const gchar* translators =
-			"Yamada Hayao <hayao@fascode.net> : ja  |  github.com/hayao0819\n"
-			"Dmitry K <dkabishchev@ya.ru> : ru  |  github.com/dmitryKB\n"
-			"Fábio Meneghetti <fabiom@riseup.net> : pt  |  github.com/fabiom\n"
-			"Mirko Brombin <send@mirko.pm> : it  |  github.com/mirkobrombin\n"
-			"Adem Kürşat Uzun <ademkursatuzun@gmail.com> : tr  |  github.com/akursat\n"
-			"Santiago Soler <santiago.r.soler@gmail.com> : es  |  github.com/santisoler\n"
-			//" : de  |  github.com/freddii\n"
-			"Lucas Hadjilucas <puzzle@outlook.com> : el  |  github.com/hadjilucasL\n";
+			"Yamada Hayao <hayao@fascode.net> : ja\n"
+			"Dmitry K <dkabishchev@ya.ru> : ru\n"
+			"Fábio Meneghetti <fabiom@riseup.net> : pt\n"
+			"Mirko Brombin <send@mirko.pm> : it\n"
+			"Adem Kürşat Uzun <ademkursatuzun@gmail.com> : tr\n"
+			"Santiago Soler <santiago.r.soler@gmail.com> : es\n"
+			"fredii: de\n"
+			"Lucas Hadjilucas <puzzle@outlook.com> : el\n"
+			"Jan Kazemier : nl\n";
 
 		gtk_show_about_dialog(NULL,
 			"program-name", "Docklike Taskbar",
 			"logo-icon-name", "preferences-system-windows",
 			"comments", _("A modern, minimalist taskbar for XFCE."),
-			//"version", PACKAGE_VERSION,
-			"copyright", "Copyright © 2019-2020",
+			"version", PACKAGE_VERSION,
+			"copyright", "Copyright © 2019-2021",
 			"license", "This program is free software : you can redistribute it and / or modify it under\n"
 					   "the terms of the GNU General Public License as published by the Free Software\n"
 					   "Foundation, either version 3 of the License, or (at your option) any later version.\n\n"
@@ -105,8 +110,8 @@ namespace Plugin
 
 					   "You should have received a copy of the GNU General Public License\n"
 					   "along with this program.  If not, see <https://www.gnu.org/licenses/>.",
-			"website", "https://github.com/nsz32/docklike-plugin/",
-			"website-label", "docklike-plugin",
+			"website", PLUGIN_WEBSITE,
+			"website-label", "xfce4-docklike-plugin",
 			"authors", authors,
 			"translator-credits", translators,
 			//"documenters", documenters,

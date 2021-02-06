@@ -6,7 +6,7 @@
 
 #include "GroupMenuItem.hpp"
 
-static GtkTargetEntry entries[1] = {{"any", 0, 0}};
+static GtkTargetEntry entries[1] = {{(gchar*)"any", 0, 0}};
 
 GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 {
@@ -47,17 +47,7 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 	g_signal_connect(G_OBJECT(mItem), "button-press-event",
 		G_CALLBACK(+[](GtkWidget* widget, GdkEventButton* event, GroupMenuItem* me) {
 			if (event->button == 1)
-			{
-				gdk_device_ungrab((event)->device, (event)->time);
 				me->mGroupWindow->activate((event)->time);
-			}
-			/*else if (event->button == 3) //TODO debug
-			{
-				GtkWidget* menu = Wnck::buildActionMenu(me->mGroupWindow, NULL);
-
-				gtk_menu_attach_to_widget(GTK_MENU(menu), GTK_WIDGET(me->mItem), NULL);
-				gtk_menu_popup_at_widget(GTK_MENU(menu), GTK_WIDGET(me->mItem), GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST, (GdkEvent*)event);
-			}*/
 			return true;
 		}),
 		this);
@@ -87,7 +77,7 @@ GroupMenuItem::GroupMenuItem(GroupWindow* groupWindow)
 
 	g_signal_connect(G_OBJECT(mItem), "drag-motion",
 		G_CALLBACK(+[](GtkWidget* widget, GdkDragContext* context, gint x, gint y, guint time, GroupMenuItem* me) {
-			if (me->mDragSwitchTimeout.mTimeoutId == NULL)
+			if (!me->mDragSwitchTimeout.mTimeoutId)
 				me->mDragSwitchTimeout.start();
 
 			me->mGroupWindow->mGroup->mLeaveTimeout.stop();

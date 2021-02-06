@@ -8,8 +8,8 @@
 #define WNCK_HPP
 
 #include <fcntl.h>
-#include <libwnck/libwnck.h>
 #include <gio/gdesktopappinfo.h>
+#include <libwnck/libwnck.h>
 
 #include <map>
 
