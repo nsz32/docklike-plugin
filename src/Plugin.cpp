@@ -9,7 +9,7 @@
 #include "Helpers.hpp"
 
 /* the website url */
-#define PLUGIN_WEBSITE "https://github.com/davekeogh/xfce4-docklike-plugin"
+#define PLUGIN_WEBSITE "https://github.com/nsz32/docklike-plugin"
 
 namespace Plugin
 {
