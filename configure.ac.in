@@ -20,7 +20,7 @@ dnl *** Initialize autoconf ***
 dnl ***************************
 AC_COPYRIGHT([Copyright (c) 2019-2020 Nicolas Szabo])
 AC_COPYRIGHT([Copyright (c) 2020-2021 David Keogh])
-AC_INIT([xfce4-docklike-plugin], [project_version], [https://github.com/davekeogh/xfce4-docklike-plugin/issues], [xfce4-docklike-plugin], [https://github.com/davekeogh/xfce4-docklike-plugin])
+AC_INIT([xfce4-docklike-plugin], [project_version], [https://github.com/nsz32/docklike-plugin/issues], [xfce4-docklike-plugin], [https://github.com/nsz32/docklike-plugin])
 AC_PREREQ([2.50])
 AC_CANONICAL_TARGET()
 AC_REVISION([project_version_build])

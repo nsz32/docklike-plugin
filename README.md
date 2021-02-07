@@ -24,7 +24,7 @@ Use `./configure --prefix=/usr/local` to change install location
 ### From git
 
 ```bash
-git clone https://github.com/davekeogh/xfce4-docklike-plugin &&  cd xfce4-docklike-plugin
+git clone https://github.com/nsz32/docklike-plugin &&  cd docklike-plugin
 ./autogen.sh
 make
 sudo make install
