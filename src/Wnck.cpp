@@ -98,8 +98,10 @@ namespace Wnck
 			GroupWindow* groupWindow = new GroupWindow(wnckWindow);
 			mGroupWindows.push(wnck_window_get_xid(wnckWindow), groupWindow);
 
+			groupWindow->leaveGroup();
 			groupWindow->updateState();
 		}
+
 		setActiveWindow();
 	}
 
