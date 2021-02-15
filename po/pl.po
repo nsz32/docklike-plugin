@@ -1,0 +1,154 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-10 16:27+0200\n"
+"PO-Revision-Date: 2021-02-10 15:35+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4\n"
+"Last-Translator: Matthaiks\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: pl\n"
+
+#: ../src/Plugin.cpp:78
+msgid "Contributors:"
+msgstr "Współtwórcy:"
+
+#: ../src/Plugin.cpp:89
+msgid "A modern, minimalist taskbar for XFCE."
+msgstr "Nowoczesny, minimalistyczny pasek zadań dla XFCE."
+
+#: ../src/Wnck.cpp:185
+msgid "Launch another"
+msgstr "Uruchom kolejne"
+
+#: ../src/Wnck.cpp:185
+msgid "Launch"
+msgstr "Uruchom"
+
+#: ../src/Wnck.cpp:200
+msgid "Unpin"
+msgstr "Odepnij"
+
+#: ../src/Wnck.cpp:200
+msgid "Pin"
+msgstr "Przypnij"
+
+#: ../src/Wnck.cpp:223
+msgid "Close All"
+msgstr "Zamknij wszystkie"
+
+#: ../src/SettingsDialog.cpp:21
+#, c-format
+msgid "<b>Only the first %u hotkeys(s) are enabled.</b>\n"
+msgstr "<b>Włączono tylko pierwsze skróty klawiszowe %u</b>\n"
+
+#: ../src/SettingsDialog.cpp:25
+#, c-format
+msgid ""
+"The &lt;SUPER&gt;+%u combination seems already in use by another process.\n"
+"Check your Xfce settings."
+msgstr ""
+"Wydaje się, że kombinacja &lt;SUPER&gt;+%u jest już używana przez inny proces.\n"
+"Sprawdź ustawienia Xfce."
+
+#. namespace SettingsDialog
+#: ../src/docklike.desktop.in.h:1
+msgid "A modern, minimalist taskbar for XFCE"
+msgstr "Nowoczesny, minimalistyczny pasek zadań dla XFCE"
+
+#: ../src/_dialogs.xml.h:1
+msgid "_Close"
+msgstr "_Zamknij"
+
+#: ../src/_dialogs.xml.h:2
+msgid "Behavior"
+msgstr "Zachowanie"
+
+#: ../src/_dialogs.xml.h:3
+msgid "Don't show list for a single window"
+msgstr "Nie pokazuj listy dla pojedynczego okna"
+
+#: ../src/_dialogs.xml.h:4
+msgid "Show only applications from the current workspace"
+msgstr "Pokazuj tylko aplikacje z bieżącego obszaru roboczego"
+
+#: ../src/_dialogs.xml.h:5
+msgid "Show only applications from the current display"
+msgstr "Pokazuj tylko aplikacje z bieżącego ekranu"
+
+#: ../src/_dialogs.xml.h:6
+msgid "Appearance"
+msgstr "Wygląd"
+
+#: ../src/_dialogs.xml.h:7
+msgid "Indicator style :"
+msgstr "Styl wskaźnika:"
+
+#: ../src/_dialogs.xml.h:8
+msgid "Bars"
+msgstr "Paski"
+
+#: ../src/_dialogs.xml.h:9
+msgid "Dots"
+msgstr "Kropki"
+
+#: ../src/_dialogs.xml.h:10
+msgid "Rectangles"
+msgstr "Prostokąty"
+
+#: ../src/_dialogs.xml.h:11
+msgid "Indicator orientation :"
+msgstr "Orientacja wskaźnika:"
+
+#: ../src/_dialogs.xml.h:12
+msgid "Bottom"
+msgstr "Dolna"
+
+#: ../src/_dialogs.xml.h:13
+msgid "Right"
+msgstr "Prawa"
+
+#: ../src/_dialogs.xml.h:14
+msgid "Top"
+msgstr "Górna"
+
+#: ../src/_dialogs.xml.h:15
+msgid "Left"
+msgstr "Lewa"
+
+#: ../src/_dialogs.xml.h:16
+msgid "Indicator color :"
+msgstr "Kolor wskaźnika:"
+
+#: ../src/_dialogs.xml.h:17
+msgid "Force icons size :"
+msgstr "Wymuś rozmiar ikon:"
+
+#: ../src/_dialogs.xml.h:18
+msgid "Keyboard hotkeys"
+msgstr "Skróty klawiszowe"
+
+#: ../src/_dialogs.xml.h:19
+msgid "Switch between applications with <SUPER>+[1, 2, ...]"
+msgstr "Przełączaj się między aplikacjami za pomocą <SUPER>+[1, 2, ...]"
+
+#: ../src/_dialogs.xml.h:20
+msgid "Switch to the last window with <SUPER>"
+msgstr "Przechodź do ostatniego okna za pomocą <SUPER>"
+
+#: ../src/_dialogs.xml.h:21
+msgid ""
+"<b>This feature is disabled.</b>\n"
+"It requires X11 XInput2.0 extension which is is not provided by your system."
+msgstr ""
+"<b>Ta funkcja jest wyłączona.</b>\n"
+"Wymaga rozszerzenia XInput2.0 X11, które nie zostało dostarczone przez ten system."
