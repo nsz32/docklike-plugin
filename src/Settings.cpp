@@ -40,7 +40,7 @@ namespace Settings
 		else {
 			gchar* default_config = xfce_resource_lookup(XFCE_RESOURCE_CONFIG, "xfce4/panel/docklike.rc");
 
-			if (default_config, G_FILE_TEST_IS_REGULAR)
+			if (g_file_test(default_config, G_FILE_TEST_IS_REGULAR))
 				g_key_file_load_from_file(mFile, default_config, G_KEY_FILE_NONE, NULL);
 		
 			g_free(default_config);
