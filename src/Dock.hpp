@@ -7,8 +7,6 @@
 #ifndef TASKBAR_HPP
 #define TASKBAR_HPP
 
-
-
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
 
@@ -21,6 +19,7 @@
 #include "Settings.hpp"
 #include "Store.tpp"
 #include "Wnck.hpp"
+
 class Group;
 
 namespace Dock
