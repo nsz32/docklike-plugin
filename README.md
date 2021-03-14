@@ -13,7 +13,7 @@ Simply go to the ```/po``` directory, and make your own ```[langcode].po``` file
 ## Build & Install
 
 ```bash
-tar xvf xfce4-docklike-plugin-0.1.0.tar.gz && cd xfce4-docklike-plugin-0.2.0
+tar xvf xfce4-docklike-plugin-0.2.0.tar.gz && cd xfce4-docklike-plugin-0.2.0
 ./configure
 make
 sudo make install
