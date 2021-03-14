@@ -92,7 +92,8 @@ namespace Plugin
 			"Santiago Soler <santiago.r.soler@gmail.com> : es\n"
 			"fredii: de\n"
 			"Lucas Hadjilucas <puzzle@outlook.com> : el\n"
-			"Jan Kazemier : nl\n";
+			"Jan Kazemier : nl\n"
+			"Matthaiks : pl\n";
 
 		gtk_show_about_dialog(NULL,
 			"program-name", "Docklike Taskbar",
