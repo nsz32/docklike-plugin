@@ -18,6 +18,8 @@ namespace Settings
 	State<bool> onlyDisplayVisible;
 	State<bool> onlyDisplayScreen;
 
+	State<int> middleButtonBehavior;
+
 	State<int> indicatorOrientation;
 	State<int> indicatorStyle;
 	State<GdkRGBA*> indicatorColor;
@@ -45,6 +47,12 @@ namespace Settings
 		
 			g_free(default_config);
 		}
+
+		middleButtonBehavior.setup(g_key_file_get_integer(mFile, "user", "middleButtonBehavior", NULL),
+			[](int middleButtonBehavior) -> void {
+				g_key_file_set_integer(mFile, "user", "middleButtonBehavior", middleButtonBehavior);
+				saveFile();
+			});
 
 		indicatorOrientation.setup(g_key_file_get_integer(mFile, "user", "indicatorOrientation", NULL),
 			[](int indicatorOrientation) -> void {

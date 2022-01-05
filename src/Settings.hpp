@@ -33,6 +33,8 @@ namespace Settings
 	extern State<bool> onlyDisplayVisible;
 	extern State<bool> onlyDisplayScreen;
 
+	extern State<int> middleButtonBehavior;
+
 	extern State<int> indicatorOrientation;
 	extern State<int> indicatorStyle;
 	extern State<GdkRGBA*> indicatorColor;

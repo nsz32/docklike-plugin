@@ -95,6 +95,16 @@ namespace SettingsDialog
 
 		// =====================================================================
 
+		GObject* middleButtonBehavior = gtk_builder_get_object(builder, "co_middleButtonBehavior");
+		gtk_combo_box_set_active(GTK_COMBO_BOX(middleButtonBehavior), Settings::middleButtonBehavior);
+		g_signal_connect(middleButtonBehavior, "changed",
+			G_CALLBACK(+[](GtkComboBox* middleButtonBehavior, GtkWidget* g) {
+				Settings::middleButtonBehavior.set(gtk_combo_box_get_active(GTK_COMBO_BOX(middleButtonBehavior)));
+			}),
+			dialog);
+
+		// =====================================================================
+
 		GObject* indicatorOrientation = gtk_builder_get_object(builder, "co_indicatorOrientation");
 		gtk_combo_box_set_active(GTK_COMBO_BOX(indicatorOrientation), Settings::indicatorOrientation);
 		g_signal_connect(indicatorOrientation, "changed",
