@@ -48,6 +48,13 @@ sudo apt update
 sudo apt install xfce4-docklike-plugin
 ```
 
+#### Fedora 34 and above
+```bash
+sudo dnf copr enable tgerov/xfce4-docklike-plugin
+sudo dnf install xfce4-docklike-plugin
+```
+
+
 #### Dependencies
 
 + libxfce4panel-2.0
