@@ -89,6 +89,7 @@
 											<packing>
 												<property name="left_attach">0</property>
 												<property name="top_attach">0</property>
+												<property name="width">2</property>
 											</packing>
 										</child>
 										<child>
@@ -102,6 +103,7 @@
 											<packing>
 												<property name="left_attach">0</property>
 												<property name="top_attach">1</property>
+												<property name="width">2</property>
 											</packing>
 										</child>
 										<child>
@@ -115,6 +117,33 @@
 											<packing>
 												<property name="left_attach">0</property>
 												<property name="top_attach">2</property>
+												<property name="width">2</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkLabel">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="halign">start</property>
+												<property name="label" translatable="yes">Middle button :</property>
+											</object>
+											<packing>
+												<property name="left_attach">0</property>
+												<property name="top_attach">3</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkComboBoxText" id="co_middleButtonBehavior">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<items>
+													<item translatable="yes">Close All</item>
+													<item translatable="yes">Launch another</item>
+												</items>
+											</object>
+											<packing>
+												<property name="left_attach">1</property>
+												<property name="top_attach">3</property>
 											</packing>
 										</child>
 									</object>
