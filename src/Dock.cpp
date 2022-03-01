@@ -23,6 +23,7 @@ namespace Dock
 		mBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 		gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(mBox)), "stld");
 		gtk_widget_show(mBox);
+		gtk_widget_set_name(mBox, "docklike-taskbar");
 
 		// pinned groups
 		std::list<std::string> pinnedApps = Settings::pinnedAppList;
