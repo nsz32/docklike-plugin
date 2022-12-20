@@ -10,7 +10,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install Dependencies
-      run: sudo apt update && sudo apt-get install build-essential dpkg binutils intltool xorg-dev libglib2.0-dev libgtk-3-dev libwnck-3-dev libxfce4ui-2-dev libxfce4panel-2.0-dev
+      run: sudo apt update && sudo apt-get install build-essential dpkg binutils intltool xfce4-dev-tools xorg-dev libglib2.0-dev libgtk-3-dev libwnck-3-dev libxfce4ui-2-dev libxfce4panel-2.0-dev
 
     - name: Build
       run: |
