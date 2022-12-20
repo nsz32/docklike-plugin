@@ -1,0 +1,11 @@
+Package: xfce4-docklike-plugin
+Version: 0.4.0
+Architecture: amd64
+Maintainer: Unit 193 <unit193@debian.org>
+Installed-Size: 314
+Depends: libc6 (>= 2.7), libglib2.0-0 (>= 2.24.0), libgtk-3-0 (>= 3.19.12), libxfce4panel-2.0-4 (>= 4.11.0), libxfce4ui-2-0 (>= 4.13.0)
+Section: xfce
+Priority: optional
+Multi-Arch: same
+Homepage: https://docs.xfce.org/panel-plugins/xfce4-docklike-plugin
+Description: A modern, docklike, minimalist taskbar for XFCE
