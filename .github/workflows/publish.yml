@@ -15,7 +15,7 @@ jobs:
     - name: Build
       run: |
         mkdir usr
-        ./configure --prefix=/home/runner/work/docklike-plugin/docklike-plugin/usr
+        ./autogen.sh --prefix=/home/runner/work/docklike-plugin/docklike-plugin/usr
         make
         make install
 
