@@ -1,0 +1,41 @@
+name: Publish package
+
+on: [push]
+
+jobs:
+  build-xfce4-docklike-plugin:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Dependencies
+      run: sudo apt update && sudo apt-get install build-essential dpkg binutils intltool xorg-dev libglib2.0-dev libgtk-3-dev libwnck-3-dev libxfce4ui-2-dev libxfce4panel-2.0-dev
+
+    - name: Build
+      run: |
+        mkdir usr
+        ./autogen.sh --prefix=/home/runner/work/docklike-plugin/docklike-plugin/usr
+        make
+        make install
+
+    - name: Build Deb File for Ubuntu
+      run: |
+        mkdir xfce4-docklike-plugin-ubuntu
+        cp -R DEBIAN xfce4-docklike-plugin-ubuntu
+        cp -R usr xfce4-docklike-plugin-ubuntu
+        dpkg -b xfce4-docklike-plugin-ubuntu
+
+    - name: Build Deb File for Debian
+      run: |
+        bash build_for_bebian.sh xfce4-docklike-plugin-ubuntu.deb
+
+    - name: Automatic Release
+      uses: marvinpinto/action-automatic-releases@latest
+      with: 
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "Latest Build"
+        files: |
+          *.deb
